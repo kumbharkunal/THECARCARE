@@ -1,0 +1,176 @@
+/* Shared controls: compare slider, chips, offer card */
+@layer components {
+  .compare {
+    position: relative;
+  }
+  .compare-frame {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius-card);
+    background: var(--color-mist);
+    touch-action: pan-y;
+    user-select: none;
+    -webkit-user-select: none;
+    cursor: ew-resize;
+  }
+  .compare-img {
+    object-fit: cover;
+  }
+  .compare-before {
+    position: absolute;
+    inset: 0;
+  }
+  /* "Before" is the same photograph treated in code, so both halves always line up. */
+  .compare-before-ceramic .compare-img {
+    filter: saturate(0.55) contrast(0.82) brightness(0.97);
+  }
+  .compare-haze {
+    position: absolute;
+    inset: 0;
+    background: rgb(235 240 250 / 0.2);
+  }
+  .compare-swirls {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    mix-blend-mode: screen;
+  }
+  .compare-swirls path {
+    fill: none;
+    stroke: rgb(255 255 255 / 0.9);
+    stroke-width: 0.9;
+    vector-effect: non-scaling-stroke;
+  }
+  .compare-before-glare .compare-img {
+    filter: brightness(1.22) contrast(0.78) saturate(0.85);
+  }
+  .compare-bloom {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      circle at var(--sx) var(--sy),
+      rgb(255 255 255 / 0.96) 0,
+      rgb(255 249 232 / 0.72) 9%,
+      rgb(255 255 255 / 0.26) 27%,
+      rgb(255 255 255 / 0) 56%
+    );
+  }
+  .compare-chip {
+    position: absolute;
+    top: 12px;
+    padding: 5px 11px;
+    border-radius: 999px;
+    background: rgb(251 252 254 / 0.9);
+    font-size: var(--text-small);
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--color-ink);
+    pointer-events: none;
+  }
+  .compare-chip-before {
+    left: 12px;
+  }
+  .compare-chip-after {
+    right: 12px;
+  }
+  .compare-handle {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    transform: translateX(50%);
+  }
+  .compare-line {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 2px;
+    margin-left: -1px;
+    background: var(--color-paper);
+    box-shadow: 0 0 0 1px rgb(14 26 51 / 0.12);
+  }
+  .compare-knob {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    width: 64px;
+    height: 44px;
+    margin: -22px 0 0 -32px;
+    border-radius: 999px;
+    background: var(--color-paper);
+    color: var(--color-ink);
+    box-shadow: var(--shadow-float);
+    pointer-events: auto;
+    cursor: grab;
+    touch-action: none;
+    transition: transform 140ms var(--ease-squeegee);
+  }
+  .compare-knob:active {
+    cursor: grabbing;
+    transform: scale(0.96);
+  }
+  .compare-caption {
+    margin-top: 10px;
+    font-size: var(--text-small);
+    color: var(--color-ink-soft);
+  }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 0 16px;
+    border-radius: 999px;
+    border: 1px solid var(--color-rule);
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-size: var(--text-small);
+    font-weight: 550;
+    cursor: pointer;
+    transition:
+      background-color 180ms ease,
+      color 180ms ease,
+      border-color 180ms ease,
+      transform 140ms var(--ease-squeegee);
+  }
+  .chip:active {
+    transform: scale(0.97);
+  }
+  .chip[aria-checked="true"],
+  .chip[aria-pressed="true"] {
+    background: var(--color-care-blue);
+    border-color: var(--color-care-blue);
+    color: var(--color-paper);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .chip:not([aria-checked="true"]):not([aria-pressed="true"]):hover {
+      border-color: var(--color-care-blue);
+    }
+  }
+  .chip-min {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    opacity: 0.8;
+  }
+
+  .offer {
+    padding: 24px;
+    border-radius: var(--radius-card);
+    background: var(--color-paper);
+  }
+  .offer-text {
+    font-size: clamp(1.5rem, 1rem + 1.4vw, 2.125rem);
+    line-height: 1.02;
+  }
+}

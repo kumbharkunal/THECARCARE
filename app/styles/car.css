@@ -1,0 +1,179 @@
+/* The drawn car (services, shade guide) and the services stage */
+@layer components {
+  .car {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+  .car-lines path,
+  .car-lines circle,
+  .car-lines line {
+    fill: none;
+    stroke: var(--color-care-blue);
+    stroke-width: 1.75;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    vector-effect: non-scaling-stroke;
+  }
+  .car-lines .car-crease {
+    stroke-opacity: 0.4;
+  }
+  .car-lines .car-lamp {
+    stroke-width: 2.5;
+  }
+  .car-ground {
+    stroke: var(--color-rule);
+    stroke-width: 1.5;
+    vector-effect: non-scaling-stroke;
+  }
+
+  /* Glass: tinted for sun film; the shade guide sets its own opacity per pane. */
+  .z-glass {
+    fill: var(--color-ink);
+    fill-opacity: 0;
+    stroke: none;
+    transition: fill-opacity 700ms var(--ease-squeegee);
+  }
+  .car[data-zone="sun-film"] .z-glass {
+    fill-opacity: 0.16;
+  }
+
+  .z-uv,
+  .z-ppf,
+  .z-gloss,
+  .z-interior {
+    opacity: 0;
+    transition: opacity 360ms ease;
+  }
+  .car[data-zone="sun-film"] .z-uv,
+  .car[data-zone="ppf"] .z-ppf,
+  .car[data-zone="ceramic"] .z-gloss,
+  .car[data-zone="detailing"] .z-interior {
+    opacity: 1;
+  }
+  .z-uv-ray {
+    stroke: var(--color-lavender);
+    stroke-width: 2;
+    stroke-dasharray: 7 7;
+    stroke-linecap: round;
+    vector-effect: non-scaling-stroke;
+  }
+  .z-uv-stop {
+    fill: var(--color-lavender);
+  }
+  .z-ppf path {
+    fill: none;
+    stroke: var(--color-shield-green);
+    stroke-width: 3.25;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    vector-effect: non-scaling-stroke;
+  }
+  .z-gloss-line {
+    fill: none;
+    stroke: var(--color-lavender);
+    stroke-width: 5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    vector-effect: non-scaling-stroke;
+    opacity: 0.6;
+  }
+  .z-interior path,
+  .z-interior ellipse {
+    fill: none;
+    stroke: var(--color-ink-soft);
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    vector-effect: non-scaling-stroke;
+  }
+
+  /* Services: sticky car beside four blocks (desktop), a car per block (phone) */
+  .services {
+    background: var(--color-porcelain);
+  }
+  .services-stage {
+    margin-top: clamp(40px, 6vw, 96px);
+  }
+  .services-car {
+    display: none;
+  }
+  .services-list {
+    display: grid;
+    gap: clamp(56px, 10vw, 88px);
+  }
+  .service-car {
+    margin-bottom: 20px;
+    padding: 6% 4% 2%;
+    border-radius: var(--radius-card);
+    background: var(--color-paper);
+  }
+  .service-name {
+    color: var(--color-ink);
+    transition: color 300ms ease;
+  }
+  .service-body {
+    margin-top: 12px;
+    max-width: 46ch;
+  }
+  .service-facts {
+    margin-top: 18px;
+    display: grid;
+    gap: 8px;
+    font-size: var(--text-small);
+    line-height: 1.4;
+  }
+  .service-facts li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  @media (min-width: 1024px) {
+    .services-stage {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: var(--gap);
+    }
+    .services-car {
+      display: block;
+      grid-column: 1 / span 7;
+      position: sticky;
+      top: calc(50svh - 15vw);
+      align-self: start;
+      padding: 7% 5% 3%;
+      border-radius: var(--radius-card);
+      background: var(--color-paper);
+    }
+    .services-caption {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-top: 4%;
+      font-size: var(--text-small);
+      color: var(--color-ink-soft);
+    }
+    .services-caption-name {
+      font-size: var(--text-lead);
+      color: var(--color-ink);
+    }
+    .services-list {
+      grid-column: 9 / span 4;
+      gap: 0;
+    }
+    .service {
+      min-height: 74svh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+    }
+    .service-car {
+      display: none;
+    }
+    .service[data-active="false"] .service-name {
+      color: var(--color-ink-soft);
+    }
+  }
+}

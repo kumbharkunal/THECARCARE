@@ -1,6 +1,16 @@
 @import "tailwindcss";
 @import "./styles/shell.css";
 @import "./styles/hero.css";
+@import "./styles/car.css";
+@import "./styles/ui.css";
+@import "./styles/sunfilm.css";
+@import "./styles/ppf.css";
+@import "./styles/why.css";
+@import "./styles/process.css";
+@import "./styles/faq.css";
+@import "./styles/visit.css";
+@import "./styles/footer.css";
+@import "./styles/motion.css";
 
 /* ------------------------------------------------------------------ tokens */
 @theme {

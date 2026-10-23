@@ -1,0 +1,267 @@
+/* Sun film: benefit stack and the road-legal shade guide */
+@layer components {
+  .sunfilm {
+    background: var(--color-mist);
+  }
+  .benefits {
+    margin-top: clamp(48px, 7vw, 112px);
+    display: grid;
+    gap: 20px;
+  }
+  .benefit-card {
+    display: grid;
+    overflow: hidden;
+    border-radius: var(--radius-card);
+    background: var(--color-paper);
+  }
+  .benefit-media {
+    position: relative;
+  }
+  .benefit-img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+  }
+  .benefit-media .compare-frame {
+    aspect-ratio: 1 / 1 !important;
+    border-radius: 0;
+  }
+  .benefit-media .compare-caption {
+    position: absolute;
+    left: 12px;
+    bottom: 12px;
+    margin: 0;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: rgb(251 252 254 / 0.9);
+    color: var(--color-ink);
+    pointer-events: none;
+  }
+  .benefit-copy {
+    padding: 24px 22px 28px;
+  }
+  .benefit-n {
+    display: block;
+    font-weight: 500;
+    font-size: 3.5rem;
+    line-height: 0.85;
+    letter-spacing: -0.04em;
+    color: var(--color-care-blue);
+  }
+  .benefit-title {
+    margin-top: 18px;
+    font-size: clamp(1.75rem, 1rem + 2.6vw, 3.25rem);
+    line-height: 0.98;
+  }
+  .benefit-line {
+    margin-top: 12px;
+    max-width: 40ch;
+  }
+
+  @media (min-width: 1024px) {
+    .benefits {
+      gap: 0;
+    }
+    .benefit {
+      position: sticky;
+      top: calc(var(--nav-offset) + var(--i) * 14px);
+      padding-bottom: 5svh;
+    }
+    .benefit-card {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+      height: min(74svh, 660px);
+      transform-origin: 50% 0%;
+    }
+    .benefit-media,
+    .benefit-media .compare,
+    .benefit-media .compare-frame {
+      height: 100%;
+    }
+    .benefit-media .compare-frame {
+      aspect-ratio: auto !important;
+    }
+    .benefit-img {
+      height: 100%;
+      aspect-ratio: auto;
+    }
+    .benefit-copy {
+      display: flex;
+      flex-direction: column;
+      padding: clamp(32px, 4vw, 72px);
+    }
+    .benefit-n {
+      font-size: clamp(5rem, 2rem + 6vw, 9rem);
+    }
+    .benefit-title {
+      margin-top: auto;
+      font-size: var(--text-head);
+    }
+    .benefit-line {
+      font-size: var(--text-lead);
+      line-height: 1.35;
+    }
+  }
+
+  /* Shade guide */
+  .shade {
+    margin-top: clamp(72px, 9vw, 160px);
+    display: grid;
+    gap: 32px;
+  }
+  .shade-diagram {
+    padding: 8% 4% 3%;
+    border-radius: var(--radius-card);
+    background: var(--color-paper);
+  }
+  .shade-title {
+    font-size: clamp(1.875rem, 1rem + 2.4vw, 3rem);
+    line-height: 0.98;
+  }
+  .shade-readout {
+    margin-top: 28px;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .shade-vlt {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    font-size: clamp(3rem, 1.8rem + 3vw, 4.75rem);
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: -0.04em;
+  }
+  .shade-vlt-label {
+    font-family: var(--font-sans);
+    font-size: var(--text-lead);
+    font-weight: 650;
+    letter-spacing: 0;
+    color: var(--color-ink-soft);
+  }
+  .shade-legal-min {
+    font-size: var(--text-small);
+    color: var(--color-ink-soft);
+  }
+  .shade-track {
+    position: relative;
+    height: 44px;
+    margin: 10px 22px 0;
+    touch-action: none;
+    cursor: pointer;
+  }
+  .shade-rail,
+  .shade-fill {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 6px;
+    margin-top: -3px;
+    border-radius: 999px;
+  }
+  .shade-rail {
+    background: var(--color-rule);
+  }
+  .shade-fill {
+    background: var(--color-care-blue);
+    transform-origin: 0 50%;
+  }
+  /* The thumb layer moves by translateX(p%); this clip keeps its box from widening the page. */
+  .shade-thumb-clip {
+    position: absolute;
+    top: -8px;
+    bottom: -8px;
+    left: -24px;
+    right: -24px;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .shade-thumb-layer {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 24px;
+    right: 24px;
+    pointer-events: none;
+  }
+  .shade-thumb {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 44px;
+    height: 30px;
+    margin: -15px 0 0 -22px;
+    border-radius: 999px;
+    background: var(--color-paper);
+    box-shadow: 0 0 0 2px var(--color-care-blue);
+    pointer-events: auto;
+    cursor: grab;
+  }
+  .shade-ends {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 6px;
+    font-size: var(--text-small);
+    color: var(--color-ink-soft);
+  }
+  .shade-limit {
+    min-height: 1.6em;
+    margin-top: 14px;
+    font-weight: 600;
+    color: var(--color-ink);
+  }
+  .shade-fine {
+    margin-top: 12px;
+    max-width: 54ch;
+    font-size: var(--text-small);
+    color: var(--color-ink-soft);
+  }
+  .shade-car .z-glass[data-active="true"] {
+    stroke: var(--color-care-blue);
+    stroke-width: 2.5;
+    vector-effect: non-scaling-stroke;
+  }
+  .shade-sun circle {
+    fill: var(--color-sun-warm);
+  }
+  .shade-sun line,
+  .shade-visible line {
+    stroke: var(--color-sun-warm);
+    stroke-width: 2.25;
+    stroke-linecap: round;
+    vector-effect: non-scaling-stroke;
+  }
+  .shade-visible line {
+    transition: opacity 240ms ease;
+  }
+  .shade-uv line {
+    stroke: var(--color-lavender);
+    stroke-width: 2;
+    stroke-dasharray: 7 7;
+    stroke-linecap: round;
+    vector-effect: non-scaling-stroke;
+  }
+  .shade-uv circle {
+    fill: var(--color-lavender);
+  }
+
+  @media (min-width: 1024px) {
+    .shade {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: var(--gap);
+      align-items: start;
+    }
+    .shade-diagram {
+      grid-column: 1 / span 7;
+      position: sticky;
+      top: calc(var(--nav-offset) + 24px);
+    }
+    .shade-controls {
+      grid-column: 8 / span 5;
+    }
+  }
+}

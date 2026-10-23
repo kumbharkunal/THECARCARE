@@ -126,7 +126,7 @@
     pointer-events: none;
     mix-blend-mode: screen;
     background: linear-gradient(
-      100deg,
+      90deg,
       rgb(164 176 218 / 0) 0%,
       rgb(164 176 218 / 0) 16%,
       rgb(196 206 238 / 0.42) 40%,
@@ -143,7 +143,7 @@
     opacity: 0;
     transform: none;
     background: linear-gradient(
-      100deg,
+      90deg,
       rgb(164 176 218 / 0) 0%,
       rgb(164 176 218 / 0) 22%,
       rgb(196 206 238 / 0.22) 42%,
