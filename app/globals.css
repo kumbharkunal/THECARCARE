@@ -1,26 +1,300 @@
 @import "tailwindcss";
+@import "./styles/shell.css";
+@import "./styles/hero.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ------------------------------------------------------------------ tokens */
+@theme {
+  --color-porcelain: #f6f8fc;
+  --color-paper: #fbfcfe;
+  --color-mist: #ebf0fa;
+  --color-ink: #0e1a33;
+  --color-ink-soft: #4a5670;
+  --color-rule: #d9e0ee;
+  --color-care-blue: #4066af;
+  --color-care-blue-deep: #2f4f8f;
+  --color-shield-green: #12964b;
+  --color-shield-green-ink: #0e7a3d;
+  --color-lavender: #a4b0da;
+  --color-sun-warm: #e8a33d;
+  --color-danger: #b42318;
+
+  --text-display: clamp(3rem, 1rem + 4.3vw, 6rem);
+  --text-display--line-height: 0.9;
+  --text-display--letter-spacing: -0.01em;
+  --text-head: clamp(2.25rem, 1.2rem + 3.6vw, 5rem);
+  --text-head--line-height: 0.95;
+  --text-head--letter-spacing: -0.01em;
+  --text-h1lead: clamp(1.375rem, 1rem + 1.2vw, 2rem);
+  --text-h1lead--line-height: 1.1;
+  --text-lead: clamp(1.25rem, 1.1rem + 0.7vw, 1.625rem);
+  --text-lead--line-height: 1.25;
+  --text-body: clamp(1rem, 0.96rem + 0.2vw, 1.125rem);
+  --text-body--line-height: 1.6;
+  --text-small: clamp(0.8125rem, 0.79rem + 0.1vw, 0.875rem);
+  --text-small--line-height: 1.45;
+
+  --radius-card: 6px;
+  --shadow-float: 0 10px 30px -12px rgb(14 26 51 / 0.18), 0 2px 6px -2px rgb(14 26 51 / 0.08);
+  --ease-squeegee: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-move: cubic-bezier(0.77, 0, 0.175, 1);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-deva: var(--font-anek), "Nirmala UI", "Noto Sans Devanagari", sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
+/* -------------------------------------------------------------------- base */
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --gutter: clamp(16px, 4vw, 48px);
+    --gap: clamp(12px, 1.6vw, 24px);
+    --section-y: clamp(4.5rem, 3rem + 6vw, 12.5rem);
+    --nav-offset: 84px;
+    --ease-squeegee: cubic-bezier(0.22, 1, 0.36, 1);
+    color-scheme: light;
+  }
+  @media (min-width: 1024px) {
+    :root {
+      --nav-offset: 100px;
+    }
+  }
+
+  html {
+    background-color: var(--color-porcelain);
+    color: var(--color-ink);
+    scroll-padding-top: var(--nav-offset);
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    scrollbar-gutter: stable;
+    -webkit-tap-highlight-color: transparent;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    html:not(.lenis) {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    line-height: 1.6;
+    background-color: var(--color-porcelain);
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: clip;
+  }
+
+  ::selection {
+    background: var(--color-care-blue);
+    color: var(--color-paper);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-care-blue);
+    outline-offset: 3px;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-kerning: normal;
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  [id] {
+    scroll-margin-top: var(--nav-offset);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* -------------------------------------------------------------- utilities */
+@utility container-x {
+  width: 100%;
+  max-width: 1440px;
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+@utility grid-12 {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gap);
+}
+@utility section-y {
+  padding-block: var(--section-y);
+}
+@utility font-condensed {
+  font-variation-settings: "wdth" 66;
+}
+@utility font-semicondensed {
+  font-variation-settings: "wdth" 82;
+}
+@utility font-normalwidth {
+  font-variation-settings: "wdth" 100;
+}
+@utility tabular {
+  font-variant-numeric: tabular-nums;
+}
+@utility link {
+  color: var(--color-care-blue);
+  text-decoration-line: underline;
+  text-underline-offset: 0.18em;
+  text-decoration-thickness: 0.07em;
+  transition: color 180ms ease;
+  &:hover {
+    color: var(--color-care-blue-deep);
+  }
+}
+
+/* ----------------------------------------------------------------- shared */
+@layer components {
+  .skip-link {
+    position: fixed;
+    left: 12px;
+    top: 12px;
+    z-index: 100;
+    padding: 12px 18px;
+    border-radius: 999px;
+    background: var(--color-ink);
+    color: var(--color-paper);
+    font-weight: 600;
+    transform: translateY(-160%);
+    transition: transform 200ms var(--ease-squeegee);
+  }
+  .skip-link:focus-visible {
+    transform: translateY(0);
+  }
+
+  .display {
+    font-family: var(--font-sans);
+    font-variation-settings: "wdth" 64;
+    font-weight: 800;
+  }
+  .heading {
+    font-family: var(--font-sans);
+    font-variation-settings: "wdth" 66;
+    font-weight: 780;
+  }
+  .subheading {
+    font-variation-settings: "wdth" 80;
+    font-weight: 650;
+  }
+
+  /* Buttons: pill, press to 0.97, hover only on fine pointers */
+  .btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 48px;
+    padding: 0 22px;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: var(--text-body);
+    line-height: 1.1;
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+    transition:
+      transform 140ms var(--ease-squeegee),
+      background-color 180ms ease,
+      color 180ms ease;
+  }
+  .btn:active {
+    transform: scale(0.97);
+  }
+  .btn[aria-disabled="true"],
+  .btn:disabled {
+    opacity: 0.45;
+    pointer-events: none;
+  }
+  .btn-lg {
+    min-height: 52px;
+    padding: 0 26px;
+  }
+  .btn-primary {
+    background: var(--color-care-blue);
+    color: var(--color-paper);
+  }
+  .btn-secondary {
+    background: var(--color-mist);
+    color: var(--color-ink);
+  }
+  .btn-paper {
+    background: var(--color-paper);
+    color: var(--color-ink);
+  }
+  .btn-has-disc {
+    padding-left: 7px;
+  }
+  .btn-disc {
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 999px;
+    background: var(--color-paper);
+    transition: transform 320ms var(--ease-squeegee);
+  }
+  .btn-lg .btn-disc {
+    width: 40px;
+    height: 40px;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .btn-primary:hover {
+      background: var(--color-care-blue-deep);
+    }
+    .btn-secondary:hover {
+      background: color-mix(in oklab, var(--color-mist), var(--color-ink) 7%);
+    }
+    .btn-paper:hover {
+      background: var(--color-mist);
+    }
+    .btn:hover .btn-disc {
+      transform: translateX(2px);
+    }
+  }
+
+  /* Glass: only the nav, the menu sheet's bar and the WhatsApp button */
+  .glass {
+    background: rgb(251 252 254 / 0.65);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+    backdrop-filter: blur(18px) saturate(160%);
+    border: 1px solid rgb(14 26 51 / 0.08);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.7),
+      var(--shadow-float);
+  }
+  @supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+    .glass {
+      background: rgb(251 252 254 / 0.94);
+    }
+  }
+  @media (prefers-reduced-transparency: reduce) {
+    .glass {
+      background: var(--color-paper);
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+  }
+  @media (prefers-contrast: more) {
+    .glass {
+      background: var(--color-paper);
+      border-color: var(--color-ink);
+    }
+  }
+
+  /* Official social marks keep their colours and clear space */
+  .social-mark {
+    display: block;
+    flex: none;
+  }
+
+  .hairline-row > * + * {
+    border-left: 1px solid var(--color-rule);
+  }
 }

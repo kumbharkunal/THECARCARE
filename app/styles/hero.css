@@ -1,0 +1,318 @@
+/* Hero: copy, art-directed stage, the shield roof and the light sweep */
+@layer components {
+  .hero {
+    --hero-h: max(680px, 100svh);
+    /* Desktop copy column width; the roof's left leg stands just past it. */
+    --text-w: clamp(360px, 33vw, 560px);
+    --facts-h: 104px;
+    position: relative;
+    isolation: isolate;
+    background: var(--color-porcelain);
+  }
+  .hero-copy {
+    position: relative;
+    z-index: 2;
+    padding-top: calc(env(safe-area-inset-top) + 112px);
+  }
+  .hero-title {
+    margin: 0;
+    color: var(--color-ink);
+    text-wrap: initial;
+  }
+  .h1-lead {
+    display: block;
+    margin-bottom: 0.35em;
+    font-size: var(--text-h1lead);
+    line-height: 1.1;
+    font-weight: 600;
+    font-variation-settings: "wdth" 82;
+  }
+  .h1-main {
+    display: block;
+    font-size: var(--text-display);
+    line-height: 0.9;
+    letter-spacing: -0.01em;
+  }
+  .mask {
+    display: block;
+    overflow: clip;
+    padding-block: 0.06em 0.1em;
+    margin-block: -0.06em -0.1em;
+  }
+  .rise {
+    display: block;
+  }
+  .hero-sub {
+    margin-top: 22px;
+    max-width: 36ch;
+    font-size: var(--text-lead);
+    line-height: 1.35;
+    color: var(--color-ink);
+  }
+  .hero-ctas {
+    margin-top: 28px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  @media (max-width: 639px) {
+    .hero-ctas > * {
+      flex: 1 1 100%;
+    }
+  }
+  .hero-facts {
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    font-size: var(--text-small);
+    line-height: 1.35;
+    color: var(--color-ink);
+  }
+  .hero-facts li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 14px 12px 14px 0;
+  }
+  .hero-facts li:nth-child(even) {
+    padding-left: 14px;
+    border-left: 1px solid var(--color-rule);
+  }
+  .hero-facts li:nth-child(n + 3) {
+    border-top: 1px solid var(--color-rule);
+  }
+
+  .hero-media {
+    position: relative;
+    z-index: 1;
+    margin: 28px var(--gutter) 0;
+  }
+  .hero-frame {
+    position: relative;
+    aspect-ratio: 3 / 4;
+    overflow: clip;
+    border-radius: var(--radius-card);
+    background: var(--color-mist);
+  }
+  .hero-scale {
+    position: absolute;
+    inset: 0;
+    transform-origin: 50% 100%;
+  }
+  .hero-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .hero-roof {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+  .hero-roof-wide {
+    display: none;
+  }
+  .hero-sweep,
+  .hero-lamp {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 46%;
+    pointer-events: none;
+    mix-blend-mode: screen;
+    background: linear-gradient(
+      100deg,
+      rgb(164 176 218 / 0) 0%,
+      rgb(164 176 218 / 0) 16%,
+      rgb(196 206 238 / 0.42) 40%,
+      rgb(255 255 255 / 0.82) 50%,
+      rgb(196 206 238 / 0.42) 60%,
+      rgb(164 176 218 / 0) 84%,
+      rgb(164 176 218 / 0) 100%
+    );
+    transform: translateX(-110%);
+  }
+  .hero-lamp {
+    display: none;
+    width: 28%;
+    opacity: 0;
+    transform: none;
+    background: linear-gradient(
+      100deg,
+      rgb(164 176 218 / 0) 0%,
+      rgb(164 176 218 / 0) 22%,
+      rgb(196 206 238 / 0.22) 42%,
+      rgb(255 255 255 / 0.42) 50%,
+      rgb(196 206 238 / 0.22) 58%,
+      rgb(164 176 218 / 0) 78%,
+      rgb(164 176 218 / 0) 100%
+    );
+  }
+
+  @media (min-width: 1024px) {
+    .hero {
+      min-height: var(--hero-h);
+    }
+    .hero-copy {
+      display: flex;
+      flex-direction: column;
+      min-height: var(--hero-h);
+      padding-top: 104px;
+    }
+    .hero-text {
+      margin-block: auto;
+      padding-block: 24px;
+    }
+    .hero-text {
+      width: 100%;
+      max-width: var(--text-w);
+    }
+    .hero-sub {
+      max-width: 30ch;
+    }
+    .hero-facts {
+      flex: none;
+      height: var(--facts-h);
+      margin: 0;
+      align-items: center;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      font-size: var(--text-body);
+    }
+    .hero-facts li,
+    .hero-facts li:nth-child(even),
+    .hero-facts li:nth-child(n + 3) {
+      align-items: center;
+      padding: 6px 20px;
+      border-top: 0;
+      border-left: 1px solid rgb(14 26 51 / 0.14);
+    }
+    .hero-facts li:first-child {
+      padding-left: 0;
+      border-left: 0;
+    }
+    .hero-media {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      margin: 0;
+      overflow: clip;
+    }
+    /* The car fills 29 to 96% of its frame and the roof legs stand at 26.2% and 98.8%.
+       The frame covers the hero when it can, but never so wide that a leg leaves the screen. */
+    .hero-frame {
+      --cl: max(var(--gutter), calc((100% - 1440px) / 2 + var(--gutter)));
+      --bumper: calc(var(--cl) + var(--text-w) + 24px);
+      --cover: max(100%, calc(var(--hero-h) * 16 / 9));
+      --fit: calc((100% - var(--bumper) - var(--gutter)) / 0.726);
+      --w: min(var(--cover), var(--fit));
+      position: absolute;
+      bottom: var(--facts-h);
+      left: calc(var(--bumper) - 0.262 * var(--w));
+      width: var(--w);
+      aspect-ratio: 16 / 9;
+      overflow: visible;
+      border-radius: 0;
+      background: transparent;
+    }
+    .hero-img {
+      -webkit-mask-image:
+        linear-gradient(90deg, transparent 0, #000 10%, #000 95%, transparent 100%),
+        linear-gradient(180deg, transparent 0, #000 20%, #000 93%, transparent 100%);
+      -webkit-mask-composite: source-in;
+      mask-image:
+        linear-gradient(90deg, transparent 0, #000 10%, #000 95%, transparent 100%),
+        linear-gradient(180deg, transparent 0, #000 20%, #000 93%, transparent 100%);
+      mask-composite: intersect;
+    }
+    .hero-roof-wide {
+      display: block;
+    }
+    .hero-roof-tall {
+      display: none;
+    }
+    .hero-sweep {
+      width: 40%;
+    }
+    .hero-lamp {
+      display: block;
+    }
+  }
+
+  @keyframes rise {
+    from {
+      transform: translateY(108%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(18px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @keyframes draw {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+  @keyframes sweep {
+    from {
+      transform: translateX(-110%);
+    }
+    to {
+      transform: translateX(260%);
+    }
+  }
+
+  /* Hidden pre-reveal states exist only with JS on and motion allowed. */
+  @media (prefers-reduced-motion: no-preference) {
+    .js .rise {
+      animation: rise 1s var(--ease-squeegee) both;
+      animation-delay: calc(0.1s + var(--i, 0) * 0.09s);
+    }
+    .js .fade-up {
+      animation: fade-up 0.9s var(--ease-squeegee) both;
+      animation-delay: var(--d, 0s);
+    }
+    .js .hero-media .chev {
+      stroke-dasharray: 1 1;
+      stroke-dashoffset: 1;
+    }
+  }
+  @media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+    .js .hero-scale {
+      transform: scale(1.04);
+    }
+    .js .hero-media .chev-outer {
+      animation: draw 1.1s var(--ease-squeegee) 0.35s forwards;
+    }
+    .js .hero-media .chev-inner {
+      animation: draw 1s var(--ease-squeegee) 0.8s forwards;
+    }
+    .js .hero-media .hero-sweep {
+      animation: sweep 0.95s cubic-bezier(0.45, 0, 0.2, 1) 1.5s both;
+    }
+  }
+  @media (max-width: 1023px) and (prefers-reduced-motion: no-preference) {
+    .js .hero-media[data-play] .chev-outer {
+      animation: draw 1.1s var(--ease-squeegee) 0.1s forwards;
+    }
+    .js .hero-media[data-play] .chev-inner {
+      animation: draw 1s var(--ease-squeegee) 0.5s forwards;
+    }
+    .js .hero-media[data-play] .hero-sweep {
+      animation: sweep 1s cubic-bezier(0.45, 0, 0.2, 1) 1.25s both;
+    }
+  }
+}
