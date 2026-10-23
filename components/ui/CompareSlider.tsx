@@ -48,20 +48,26 @@ export function CompareSlider({ slot, alt, sizes, mode, label, beforeLabel, afte
   const handle = useRef<HTMLDivElement>(null);
   const knob = useRef<HTMLButtonElement>(null);
   const pos = useMotionValue(50);
+  // Where the handle is going (keys step from here, not from a spring still in flight).
+  const target = useRef(50);
   const dragging = useRef(false);
-  const played = useRef(false);
+  const touched = useRef(false);
 
   // The handle is a full-width layer, so translateX(p%) is p% of the frame.
   const apply = useCallback((p: number) => {
     if (before.current) before.current.style.clipPath = `inset(0 ${100 - p}% 0 0)`;
     if (handle.current) handle.current.style.transform = `translateX(${p}%)`;
-    if (knob.current) {
-      knob.current.setAttribute("aria-valuenow", String(Math.round(p)));
-      knob.current.setAttribute("aria-valuetext", `${beforeLabel} ${Math.round(p)} percent, ${afterLabel} ${100 - Math.round(p)} percent`);
-    }
-  }, [beforeLabel, afterLabel]);
-
+  }, []);
   useMotionValueEvent(pos, "change", apply);
+
+  // Screen readers hear the value it settles on, once, not every frame of the spring.
+  const setTarget = (p: number) => {
+    const value = Math.round(Math.min(100, Math.max(0, p)));
+    target.current = value;
+    knob.current?.setAttribute("aria-valuenow", String(value));
+    knob.current?.setAttribute("aria-valuetext", `${beforeLabel} ${value} percent, ${afterLabel} ${100 - value} percent`);
+    return value;
+  };
 
   // On first view, ease from 15% to 50% once.
   useEffect(() => {
@@ -72,11 +78,10 @@ export function CompareSlider({ slot, alt, sizes, mode, label, beforeLabel, afte
     pos.set(15);
     const io = new IntersectionObserver(
       ([entry]) => {
-        if (!entry.isIntersecting || played.current) return;
-        played.current = true;
+        if (!entry.isIntersecting) return;
         io.disconnect();
         loadAnimate().then((animate) => {
-          if (!dragging.current) animate(pos, 50, { duration: 1.4, ease: [0.22, 1, 0.36, 1] });
+          if (!touched.current) animate(pos, 50, { duration: 1.4, ease: [0.22, 1, 0.36, 1] });
         });
       },
       { threshold: 0.4 },
@@ -99,16 +104,16 @@ export function CompareSlider({ slot, alt, sizes, mode, label, beforeLabel, afte
 
   const onPointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
     if (event.button !== 0) return;
-    played.current = true;
+    touched.current = true;
     dragging.current = true;
     frame.current?.setPointerCapture(event.pointerId);
-    springTo(toPercent(event.clientX), { ...SPRING, stiffness: 600 });
+    springTo(setTarget(toPercent(event.clientX)), { ...SPRING, stiffness: 600 });
     knob.current?.focus({ preventScroll: true });
   };
   const onPointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
     if (!dragging.current) return;
     pos.stop();
-    pos.set(toPercent(event.clientX));
+    pos.set(setTarget(toPercent(event.clientX)));
   };
   const onPointerUp = (event: React.PointerEvent<HTMLDivElement>) => {
     dragging.current = false;
@@ -117,7 +122,7 @@ export function CompareSlider({ slot, alt, sizes, mode, label, beforeLabel, afte
 
   const onKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
     const step = event.shiftKey ? 10 : 5;
-    const current = pos.get();
+    const current = target.current;
     const targets: Record<string, number> = {
       ArrowLeft: current - step,
       ArrowDown: current - step,
@@ -130,8 +135,8 @@ export function CompareSlider({ slot, alt, sizes, mode, label, beforeLabel, afte
     };
     if (!(event.key in targets)) return;
     event.preventDefault();
-    played.current = true;
-    springTo(Math.min(100, Math.max(0, targets[event.key])), SPRING);
+    touched.current = true;
+    springTo(setTarget(targets[event.key]), SPRING);
   };
 
   if (!img) return <Placeholder slot={slot} className={className} />;

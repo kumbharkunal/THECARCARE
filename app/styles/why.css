@@ -45,6 +45,10 @@
     width: 100%;
     height: auto;
   }
+  /* the beading tile overlaps the frame's lower corner: keep the caption clear of it */
+  .ceramic-media .compare-caption {
+    padding-right: calc(42% + 10px);
+  }
   @media (min-width: 1024px) {
     .ceramic-grid {
       grid-template-columns: repeat(12, minmax(0, 1fr));
@@ -63,6 +67,15 @@
       width: 34%;
       margin-top: -14%;
       margin-right: -2%;
+    }
+    .ceramic-media .compare-caption {
+      padding-right: calc(32% + 10px);
+    }
+  }
+  /* small laptops: a wider copy column keeps the headline to two lines */
+  @media (min-width: 1024px) and (max-width: 1279px) {
+    .ceramic-copy {
+      grid-column: 1 / span 5;
     }
   }
 
