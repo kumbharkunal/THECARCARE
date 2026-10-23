@@ -11,6 +11,8 @@ export const metadata: Metadata = {
 /** An empty bay under the logo's roof: nothing parked here. */
 export default function NotFound() {
   const { notFound } = site;
+  // Set line breaks on phones, so the title wraps the same before and after the web font arrives.
+  const [firstWord, ...rest] = notFound.title.split(" ");
   return (
     <main id="main" className="nf">
       <div className="container-x nf-inner">
@@ -18,7 +20,10 @@ export default function NotFound() {
           <ChevronRoof id="roof-404" cx={500} apexY={24} halfWidth={430} legEnd={400} stroke={9} />
           <line className="nf-floor" x1="40" x2="960" y1="404" y2="404" />
         </svg>
-        <h1 className="display text-display nf-title">{notFound.title}</h1>
+        <h1 className="display text-display nf-title">
+          <span className="nf-line">{firstWord} </span>
+          <span className="nf-line">{rest.join(" ")}</span>
+        </h1>
         <p className="mt-4 text-lead text-ink-soft">{notFound.body}</p>
         <div className="nf-actions">
           <Link href="/" className="btn btn-lg btn-primary">

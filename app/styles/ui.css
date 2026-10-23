@@ -27,7 +27,7 @@
   .compare-haze {
     position: absolute;
     inset: 0;
-    background: rgb(235 240 250 / 0.2);
+    background: color-mix(in srgb, var(--color-mist) 20%, transparent);
   }
   .compare-swirls {
     position: absolute;
@@ -61,7 +61,7 @@
     top: 12px;
     padding: 5px 11px;
     border-radius: 999px;
-    background: rgb(251 252 254 / 0.9);
+    background: color-mix(in srgb, var(--color-paper) 90%, transparent);
     font-size: var(--text-small);
     font-weight: 600;
     line-height: 1.2;
@@ -88,7 +88,7 @@
     width: 2px;
     margin-left: -1px;
     background: var(--color-paper);
-    box-shadow: 0 0 0 1px rgb(14 26 51 / 0.12);
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-ink) 12%, transparent);
   }
   .compare-knob {
     position: absolute;
@@ -102,7 +102,7 @@
     height: 44px;
     margin: -22px 0 0 -32px;
     /* a control on a photograph: a fine ink edge keeps it legible against a bright sky */
-    border: 1px solid rgb(14 26 51 / 0.18);
+    border: 1px solid color-mix(in srgb, var(--color-ink) 18%, transparent);
     border-radius: 999px;
     background: var(--color-paper);
     color: var(--color-ink);

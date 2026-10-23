@@ -35,7 +35,7 @@
     margin: 0;
     padding: 4px 10px;
     border-radius: 999px;
-    background: rgb(251 252 254 / 0.9);
+    background: color-mix(in srgb, var(--color-paper) 90%, transparent);
     color: var(--color-ink);
     pointer-events: none;
   }

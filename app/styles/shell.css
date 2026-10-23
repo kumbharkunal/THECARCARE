@@ -9,7 +9,7 @@
     transform: translateY(calc(-100% - 24px));
   }
   .nav-desktop[data-solid="true"] {
-    background-color: rgb(251 252 254 / 0.82);
+    background-color: color-mix(in srgb, var(--color-paper) 82%, transparent);
   }
   .nav-link {
     color: var(--color-ink);
@@ -94,7 +94,7 @@
     gap: 22px;
     padding: 76px 20px 14px;
     border-radius: 28px;
-    background: rgb(251 252 254 / 0.97);
+    background: color-mix(in srgb, var(--color-paper) 97%, transparent);
     box-shadow: var(--shadow-float);
     touch-action: none;
   }
@@ -149,14 +149,14 @@
     position: fixed;
     inset: 0;
     z-index: 55;
-    background: rgb(14 26 51 / 0.2);
+    background: color-mix(in srgb, var(--color-ink) 20%, transparent);
     -webkit-backdrop-filter: blur(6px);
     backdrop-filter: blur(6px);
     touch-action: none;
   }
   @media (prefers-reduced-transparency: reduce) {
     .mnav-scrim {
-      background: rgb(14 26 51 / 0.45);
+      background: color-mix(in srgb, var(--color-ink) 45%, transparent);
       -webkit-backdrop-filter: none;
       backdrop-filter: none;
     }
@@ -238,8 +238,10 @@
     stroke: var(--color-rule);
     stroke-width: 2;
   }
-  .nf-title {
-    text-wrap: balance;
+  @media (max-width: 639px) {
+    .nf-line {
+      display: block;
+    }
   }
   .nf-actions {
     margin-top: 32px;

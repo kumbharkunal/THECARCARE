@@ -29,8 +29,8 @@ function HeroPicture() {
   });
   // The hero photo is the LCP element: start it from <head>.
   preload(props.src, { as: "image", imageSrcSet: props.srcSet, imageSizes: props.sizes, fetchPriority: "high" });
-  // eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text -- optimised srcset and alt come from getImageProps; preloaded above
-  return <img {...props} className="hero-img" />;
+  // eslint-disable-next-line @next/next/no-img-element -- optimised srcset comes from getImageProps; preloaded above
+  return <img {...props} alt={site.hero.imageAlt} className="hero-img" />;
 }
 
 export function Hero() {

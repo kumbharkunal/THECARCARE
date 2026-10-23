@@ -195,7 +195,7 @@
     stroke-width: 6;
   }
   .map-ring {
-    fill: rgb(64 102 175 / 0.12);
+    fill: color-mix(in srgb, var(--color-care-blue) 12%, transparent);
     stroke: var(--color-care-blue);
     stroke-width: 1.5;
   }
