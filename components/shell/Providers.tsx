@@ -118,6 +118,18 @@ export function Providers({ children }: { children: ReactNode }) {
     [smooth, env.reduced],
   );
 
+  // Keyboard users get every section drawn at its real height from their first Tab, so focus never
+  // lands on a section whose size is still a placeholder (content-visibility).
+  useEffect(() => {
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key !== "Tab") return;
+      document.documentElement.classList.add("cv-off");
+      window.removeEventListener("keydown", onKey);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
   // Delegated in-page anchor links: "#section", and "/#section" while on the homepage.
   useEffect(() => {
     const onClick = (event: MouseEvent) => {

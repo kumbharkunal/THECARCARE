@@ -86,11 +86,8 @@
     scrollbar-gutter: stable;
     -webkit-tap-highlight-color: transparent;
   }
-  @media (prefers-reduced-motion: no-preference) {
-    html:not(.lenis) {
-      scroll-behavior: smooth;
-    }
-  }
+  /* No CSS smooth scrolling: Lenis smooths the wheel and the anchor handler smooths link jumps;
+     a smooth native scroll would be cut short when Lenis starts and would stagger keyboard focus. */
 
   body {
     font-family: var(--font-sans);
@@ -337,8 +334,8 @@ main > section:nth-of-type(n + 3),
 #why { --drawn-h: 1080px; }
 #process { --drawn-h: 690px; }
 #faq { --drawn-h: 1010px; }
-#visit { --drawn-h: 2400px; }
-#site-footer { --drawn-h: 1180px; }
+#visit { --drawn-h: 2480px; }
+#site-footer { --drawn-h: 1250px; }
 @media (min-width: 768px) {
   #services { --drawn-h: 2940px; }
   #sun-film { --drawn-h: 5260px; }
@@ -347,7 +344,7 @@ main > section:nth-of-type(n + 3),
   #why { --drawn-h: 1320px; }
   #process { --drawn-h: 780px; }
   #faq { --drawn-h: 970px; }
-  #visit { --drawn-h: 2510px; }
+  #visit { --drawn-h: 2600px; }
 }
 @media (min-width: 1024px) {
   #services { --drawn-h: 3010px; }
@@ -357,8 +354,8 @@ main > section:nth-of-type(n + 3),
   #why { --drawn-h: 1020px; }
   #process { --drawn-h: 1080px; }
   #faq { --drawn-h: 800px; }
-  #visit { --drawn-h: 1700px; }
-  #site-footer { --drawn-h: 860px; }
+  #visit { --drawn-h: 1740px; }
+  #site-footer { --drawn-h: 910px; }
 }
 html.cv-off main > section,
 html.cv-off #site-footer {
