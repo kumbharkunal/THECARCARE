@@ -1,0 +1,68 @@
+{
+  "hero-car-wide": {
+    "src": "/images/hero-car-wide.webp",
+    "width": 1672,
+    "height": 941,
+    "blurDataURL": "data:image/webp;base64,UklGRpgAAABXRUJQVlA4IIwAAABQBACdASoYAA4APt1ep00opSOiMAgBEBuJYwC7IKnDE4Krs5Ilt5hXKXwIAP7x1WL25RmXnjYs/lBnQ6ebNFHe5f0S7eJ/TbUVysQrIBdECpBvTrbgi3j0OkfHUwNBW4nLzFHiBDS27aX9A/DzVIR2Ab66NHecUv+W+1v/nbt5OhIfrszOK/ybfgAAAA=="
+  },
+  "hero-car-tall": {
+    "src": "/images/hero-car-tall.webp",
+    "width": 1086,
+    "height": 1448,
+    "blurDataURL": "data:image/webp;base64,UklGRqwAAABXRUJQVlA4IKAAAADwBACdASoSABgAPt1aqE8opKOiMBgIARAbiWUAv+wQ78ZLcYs/Y/WxO6dKE69LlhAA/u1WKTobi5dq9bYs8QdIiB45LOAoMrJMYhQxx3UvG1B15A8xdXRxayO/qq7+nkbByV4M0civBOIVMGjI3xAkcRdNSHttb+uEG37WzlbVPD38WMDK5zop8lAcrSKoyiYn9x3RqwCVG3vD4gKnHwAA"
+  },
+  "sunfilm-fitting": {
+    "src": "/images/sunfilm-fitting.webp",
+    "width": 1086,
+    "height": 1448,
+    "blurDataURL": "data:image/webp;base64,UklGRu4AAABXRUJQVlA4IOIAAACwBgCdASoSABgAPt1kqE+opSOiKAqpEBuJQBdioAc/+pQHfVH/4Z3d4XoBdelcXeCFN+lNGNXZZEWQL8V0wAD7jhCU3qSViK2bb7jBFyeOAaUQYlIMw+iQvl+gI0ogE1oVPRS2MCgICKgVF/6VnNwOLDE1XQRnqBnLA39AMtqUVz4CDzlWAgkrwDBJxBryzXPRSRoaxOByB0X3mHZqfLLV84d1zM0smR/NcFJ8wKWnsyce7tIrqtkNxS/B9ALLDPVDjOy6U2N5rN3SDpuTu14eZdY/qggcGGoet8CV7N/0OwAA"
+  },
+  "interior-sunlight": {
+    "src": "/images/interior-sunlight.webp",
+    "width": 1086,
+    "height": 1448,
+    "blurDataURL": "data:image/webp;base64,UklGRgIBAABXRUJQVlA4IPYAAAAQBgCdASoSABgAPt1mq1EopSOiqAgBEBuJZACdMoBnAaTVoEJ/PMZ3k2hQB+/Z8JkcgCDKhSHMOwAA4mRYMwYELmUJm6gG2908yBWwFzf5u1srkHS5F98uq42SHBUPrMSqxXDI3F74xop8mTAqaLLJQOFtghopOz6/rG3NKKAwxUahF9YxomkDHZMx+uEZGAVDxoMW6MMhkP3+PHLyX8y0I2VA6nlE4AXU+5Bk7SnwCuIjTDNx12v2mdCHI7AWPD+etHnm9WPCxKFQSuWvOLLH1Lj5p2AtHwdKFraq3GA6uBRGIE48AWBjg4erFby9yhlT+iPwAAA="
+  },
+  "safety-glass": {
+    "src": "/images/safety-glass.webp",
+    "width": 1086,
+    "height": 1448,
+    "blurDataURL": "data:image/webp;base64,UklGRuwAAABXRUJQVlA4IOAAAACwBQCdASoSABgAPt1mq1EopSOiqAgBEBuJYgCnJf/qWMFadQQT9BDxopyXzyU1QLs3YuCckQAA/tmZyF+nlXBSl4BkYjB/mrKdefUSqjv5ic3FpOLzXSCqHIsVNbd/NevnZbkV3Xs60HtSreY6Ks7cWtlgqE9haLCGOIaU0rnwG9gW2mfJabE8EcdGx1Kw7Bt5Oj5QKqeQCqnYHbQZOxnCSWaIC7BQBdR3iiCj7OfdgxmyZf+R4VA0XzBLafFnvO12oi0A++lsHY+1x5C4G+HWG6dSFe9+46Becy2I7QAAAA=="
+  },
+  "glare-drive": {
+    "src": "/images/glare-drive.webp",
+    "width": 1086,
+    "height": 1448,
+    "blurDataURL": "data:image/webp;base64,UklGRq4AAABXRUJQVlA4IKIAAADwBACdASoSABgAPt1eqE6opKOiMBgIARAbiUAX6xsQMJaYnOISm3rRU7eYU9gjs+gA/dz8RT4UmAhyd/lfrVMaExGWOm6EHxfpXkKN3/W025S+YdWFVSQbt+b8DRA0CxDVvNMRCZ6hQp3GKXMBc/EdfThBsNnY1fzZJNuK3o9wBcMPS3zEBSc2dWibdnPGjt8Xl2pD0f/FFUoEQJ18HQAAAAA="
+  },
+  "ppf-fitting": {
+    "src": "/images/ppf-fitting.webp",
+    "width": 1086,
+    "height": 1448,
+    "blurDataURL": "data:image/webp;base64,UklGRgYBAABXRUJQVlA4IPoAAADwBQCdASoSABgAPt1kqU+opaOiKAqpEBuJQBYj7IzgKm5O6z+PYc9muelcyhehsyk5Qj80F50AAADiBBBBAmSa98Az3EII7FRBUitn9p/nfJOy+ZOxi6oXt8ICYxhUoNhFhbnM0nlxoMOftxcTx+7YZDQB7RDIFKLZDNI5xYPE4OtUpjPyXyFTW6UOGfsoQbrSMOmdF5CtfwyRYMV6l85D7635IGEfzx2R4DFybwEIxPe2gSTwRw7wER/YLaLycN0RoLNOxIaOQpJ5LP7vN5ZCkHgazaWtOCGghezBNZ1mX9lZznXr9/aaVWw02/XdMis8KBhGF4mQ94AA"
+  },
+  "paint-surface": {
+    "src": "/images/paint-surface.webp",
+    "width": 1254,
+    "height": 1254,
+    "blurDataURL": "data:image/webp;base64,UklGRpAAAABXRUJQVlA4IIQAAAAQBQCdASoYABgAPt1UqEyopCQiMBgMARAbiWgAsR8cfAgWYPoCXnZ6Zie61KpOhiAAAP3wWyxOSMqUI+qwUx1DaM5cfHQbWdTeMaNfqHZCV/b3UnQsJRDf42XbHW6FqNx5TQh4SP4AQUksdvQ85mFu7D5m/BIXVGqhplDth/TVbCYpwAA="
+  },
+  "ceramic-gloss": {
+    "src": "/images/ceramic-gloss.webp",
+    "width": 1536,
+    "height": 1024,
+    "blurDataURL": "data:image/webp;base64,UklGRroAAABXRUJQVlA4IK4AAAAwBACdASoYABAAPt1apkyopSOiMAgBEBuJagCdMoMYAEoy++VBDQZC2+QA/uf7U5SDNcr5+G9FVStVnYlkxGfQcsLobbnXoy98XU1NQiEjoeUCWUdZOqVj0082UIsDpar6EN2Xo1ZP3+9MT7PmPqSbgQ1f94h9iIDAR+hijht2BtOfkD+pfiD4Xyh//xNFXt8UWcf7+jwret6QhStVo0lNtOOFJ4+rAYwSvb1gAAA="
+  },
+  "ceramic-beading": {
+    "src": "/images/ceramic-beading.webp",
+    "width": 1254,
+    "height": 1254,
+    "blurDataURL": "data:image/webp;base64,UklGRgwBAABXRUJQVlA4IAABAACQBQCdASoYABgAPt1orFEopaQiqAgBEBuJaACdMuI0b0eY50PUUyY5RCmDAe4U9/2t8c7p4ADN8lxJwADb9BD1a6QWuezTJrBgp5iieoBR2MDiII8dw8n/Oo1u5NgYNmhBc0h1RMInCX36uBEJNXS4B6rWZVMbDDoqYlJqsOw9ctcQD2thG0TByv8oCXe6h1/6f6s2r50JrZGzsxCSqyW5akwDbeQCtGFMnN6TccHtFiyH5L7Dc96ErpVaspN5LVkmm8FMT13iCwDwvzjFWgPHWCBq8j8DqopXshIEmu+vqhsVy0Rw8+04CuIi1eNmzlAPKv8MdFcg3ihRgkCjESAA"
+  },
+  "doorstep-fitting": {
+    "src": "/images/doorstep-fitting.webp",
+    "width": 1536,
+    "height": 1024,
+    "blurDataURL": "data:image/webp;base64,UklGRsAAAABXRUJQVlA4ILQAAACwBACdASoYABAAPt1apkyopSOiMAgBEBuJYwC7AYzah9RWj1f+FsVBAN+7zn0IAP7Ia4zq5gxNXE+L5ZQ+NhbtkMJFc0nOtdAseYZ7xuQJcknG0cVQMRh+vhX7huqr+jvuk/3PD3R6dp/iZT3rnWZNHvw+6Fwgyyp7/F5NhuCFPnxHxF14TVlHaAQdA/rzgDzbwIjLS2uATk2dy/g1glVfhRc/On6fQlkYEApTtDxtX7V2AAA="
+  }
+}
