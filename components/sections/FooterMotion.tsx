@@ -3,15 +3,17 @@
 import { useRef } from "react";
 import { gsap, useGSAP } from "@/lib/gsap";
 import { useMotion } from "@/components/shell/Providers";
+import { useNear } from "@/lib/use-near";
 
 /** The outlined name fills with care-blue as it rises into view. */
 export function FooterMotion() {
   const anchor = useRef<HTMLSpanElement>(null);
   const { plugins, reduced } = useMotion();
+  const near = useNear(anchor);
 
   useGSAP(
     () => {
-      if (!plugins || reduced) return;
+      if (!plugins || !near || reduced) return;
       const footer = anchor.current?.closest("footer");
       const name = footer?.querySelector<HTMLElement>(".footer-name");
       const fill = footer?.querySelector<HTMLElement>(".footer-name-fill");
@@ -27,7 +29,7 @@ export function FooterMotion() {
         },
       );
     },
-    { dependencies: [plugins, reduced], revertOnUpdate: true },
+    { dependencies: [plugins, reduced, near], revertOnUpdate: true },
   );
 
   return <span ref={anchor} hidden />;

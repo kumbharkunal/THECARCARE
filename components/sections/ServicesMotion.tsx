@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { gsap, useGSAP } from "@/lib/gsap";
 import { useMotion } from "@/components/shell/Providers";
+import { useNear } from "@/lib/use-near";
 
 /** Draws a service's layer on a car: rays, outlines, the gloss run, interior lines. */
 function drawZone(svg: SVGSVGElement, zone: string) {
@@ -28,10 +29,11 @@ function drawZone(svg: SVGSVGElement, zone: string) {
 export function ServicesMotion() {
   const anchor = useRef<HTMLSpanElement>(null);
   const { plugins, reduced } = useMotion();
+  const near = useNear(anchor);
 
   useGSAP(
     () => {
-      if (!plugins) return;
+      if (!plugins || !near) return;
       const section = anchor.current?.closest("section");
       if (!section) return;
       const { ScrollTrigger } = plugins;
@@ -85,7 +87,7 @@ export function ServicesMotion() {
 
       return () => mm.revert();
     },
-    { dependencies: [plugins, reduced], revertOnUpdate: true },
+    { dependencies: [plugins, reduced, near], revertOnUpdate: true },
   );
 
   return <span ref={anchor} hidden />;

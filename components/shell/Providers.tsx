@@ -101,6 +101,8 @@ export function Providers({ children }: { children: ReactNode }) {
       const id = decodeURIComponent(hash.replace(/^#/, ""));
       const target = id === "top" ? document.body : document.getElementById(id);
       if (!target) return;
+      // Draw every section at its real height before measuring where the target sits.
+      document.documentElement.classList.add("cv-off");
       const lenis = lenisRef.current;
       const top = id === "top" ? 0 : target.getBoundingClientRect().top + window.scrollY - navOffset();
       if (lenis && smooth) lenis.scrollTo(top, { duration: 1.2 });

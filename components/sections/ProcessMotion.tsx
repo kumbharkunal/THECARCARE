@@ -3,15 +3,17 @@
 import { useRef } from "react";
 import { gsap, useGSAP } from "@/lib/gsap";
 import { useMotion } from "@/components/shell/Providers";
+import { useNear } from "@/lib/use-near";
 
 /** The line draws with the scroll; each chevron marker fills green as the line reaches it. */
 export function ProcessMotion() {
   const anchor = useRef<HTMLSpanElement>(null);
   const { plugins, reduced } = useMotion();
+  const near = useNear(anchor);
 
   useGSAP(
     () => {
-      if (!plugins) return;
+      if (!plugins || !near) return;
       const section = anchor.current?.closest("section");
       const track = section?.querySelector<HTMLElement>(".process-track");
       const line = section?.querySelector<SVGLineElement>(".process-line-draw");
@@ -45,7 +47,7 @@ export function ProcessMotion() {
         });
       });
     },
-    { dependencies: [plugins, reduced], revertOnUpdate: true },
+    { dependencies: [plugins, reduced, near], revertOnUpdate: true },
   );
 
   return <span ref={anchor} hidden />;

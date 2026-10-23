@@ -319,3 +319,47 @@ html.fonts-late :is(.font-mono, .chip-min) {
 html.fonts-late .visit-marathi {
   font-family: var(--font-anek), "Nirmala UI", "Noto Sans Devanagari", sans-serif;
 }
+
+/* Sections well below the fold skip style, layout and paint until they near the screen; the
+   browser remembers each one's real height once drawn. Anchor jumps switch this off first
+   (html.cv-off, Providers) so the target is measured against real heights. */
+main > section:nth-of-type(n + 3),
+#site-footer {
+  content-visibility: auto;
+  /* close to each section's real height, measured per breakpoint, so the page barely moves */
+  contain-intrinsic-size: auto var(--drawn-h, 1600px);
+}
+#services { --drawn-h: 2300px; }
+#sun-film { --drawn-h: 4000px; }
+#ppf { --drawn-h: 1700px; }
+#ceramic { --drawn-h: 1060px; }
+#why { --drawn-h: 1100px; }
+#process { --drawn-h: 750px; }
+#faq { --drawn-h: 1070px; }
+#visit { --drawn-h: 2430px; }
+#site-footer { --drawn-h: 1190px; }
+@media (min-width: 768px) {
+  #services { --drawn-h: 3000px; }
+  #sun-film { --drawn-h: 5300px; }
+  #ppf { --drawn-h: 2430px; }
+  #ceramic { --drawn-h: 1340px; }
+  #why { --drawn-h: 1370px; }
+  #process { --drawn-h: 830px; }
+  #faq { --drawn-h: 1020px; }
+  #visit { --drawn-h: 2590px; }
+}
+@media (min-width: 1024px) {
+  #services { --drawn-h: 2900px; }
+  #sun-film { --drawn-h: 4200px; }
+  #ppf { --drawn-h: 1500px; }
+  #ceramic { --drawn-h: 960px; }
+  #why { --drawn-h: 1060px; }
+  #process { --drawn-h: 1060px; }
+  #faq { --drawn-h: 860px; }
+  #visit { --drawn-h: 1750px; }
+  #site-footer { --drawn-h: 800px; }
+}
+html.cv-off main > section,
+html.cv-off #site-footer {
+  content-visibility: visible;
+}

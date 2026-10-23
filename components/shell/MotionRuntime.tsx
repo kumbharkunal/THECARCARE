@@ -26,6 +26,27 @@ export default function MotionRuntime() {
     };
   }, [setPlugins]);
 
+  // Sections far down are drawn only as they near the screen (content-visibility), so the page
+  // grows as you scroll: re-measure every armed trigger when it does.
+  useEffect(() => {
+    const main = document.getElementById("main");
+    if (!loaded || !main) return;
+    let timer = 0;
+    let last = main.offsetHeight;
+    const ro = new ResizeObserver(([entry]) => {
+      const height = Math.round(entry.contentRect.height);
+      if (height === last) return;
+      last = height;
+      window.clearTimeout(timer);
+      timer = window.setTimeout(() => loaded.ScrollTrigger.refresh(), 160);
+    });
+    ro.observe(main);
+    return () => {
+      ro.disconnect();
+      window.clearTimeout(timer);
+    };
+  }, [loaded]);
+
   useEffect(() => {
     if (!smooth || !loaded) return;
     const { gsap, ScrollTrigger } = loaded;

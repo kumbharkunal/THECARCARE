@@ -3,15 +3,17 @@
 import { useRef } from "react";
 import { gsap, useGSAP } from "@/lib/gsap";
 import { useMotion } from "@/components/shell/Providers";
+import { useNear } from "@/lib/use-near";
 
 /** Desktop: as each benefit card slides over the last, the one beneath settles back a little. */
 export function StackMotion() {
   const anchor = useRef<HTMLSpanElement>(null);
   const { plugins, reduced } = useMotion();
+  const near = useNear(anchor);
 
   useGSAP(
     () => {
-      if (!plugins || reduced) return;
+      if (!plugins || !near || reduced) return;
       const section = anchor.current?.closest("section");
       if (!section) return;
       const cards = Array.from(section.querySelectorAll<HTMLElement>(".benefit"));
@@ -30,7 +32,7 @@ export function StackMotion() {
       });
       return () => mm.revert();
     },
-    { dependencies: [plugins, reduced], revertOnUpdate: true },
+    { dependencies: [plugins, reduced, near], revertOnUpdate: true },
   );
 
   return <span ref={anchor} hidden />;
