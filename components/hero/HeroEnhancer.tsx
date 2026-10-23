@@ -1,37 +1,19 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { gsap, useGSAP } from "@/lib/gsap";
 import { useMotion } from "@/components/shell/Providers";
 
 const LOAD_SEQUENCE_MS = 1900;
 
 /**
- * Hero behaviour on top of the CSS load sequence:
- * - phone: the roof and sweep play once the card is 60% in view;
- * - desktop (fine pointer): the light band becomes an inspection lamp that follows the
- *   pointer slowly and drifts on its own when idle; the car eases from 1.04 to 1 on scroll.
+ * Desktop behaviour on top of the CSS load sequence (which plays on every screen size without
+ * script): with a fine pointer the light band becomes an inspection lamp that follows the pointer
+ * slowly and drifts on its own when idle, and the car eases from 1.04 to 1 on scroll.
  */
 export function HeroEnhancer() {
   const anchor = useRef<HTMLSpanElement>(null);
   const { plugins, reduced, mounted } = useMotion();
-
-  // Phone: play the roof and sweep when the card is mostly visible.
-  useEffect(() => {
-    const media = anchor.current?.closest("section")?.querySelector<HTMLElement>("[data-hero-media]");
-    if (!media || window.matchMedia("(min-width: 1024px)").matches) return;
-    const io = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          media.dataset.play = "true";
-          io.disconnect();
-        }
-      },
-      { threshold: 0.6 },
-    );
-    io.observe(media);
-    return () => io.disconnect();
-  }, []);
 
   // Desktop: inspection lamp.
   useGSAP(

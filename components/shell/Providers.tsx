@@ -79,18 +79,30 @@ export function Providers({ children }: { children: ReactNode }) {
     return () => mq.removeEventListener("change", update);
   }, []);
 
-  // Motion loads after the load event, once the main thread is idle.
+  // Motion loads once the page has loaded and the main thread is idle, or as soon as the visitor
+  // starts to scroll or touch, or after 3 s at most: on a slow phone connection the load event
+  // can come late, and the animations must not wait for it.
   useEffect(() => {
     let handle = 0;
+    let started = false;
     const hasIdle = "requestIdleCallback" in window;
-    const ready = () => {
-      const go = () => setIdle(true);
-      handle = hasIdle ? window.requestIdleCallback(go, { timeout: 1200 }) : window.setTimeout(go, 200);
+    const triggers = ["scroll", "wheel", "touchstart", "pointerdown", "keydown"] as const;
+    const start = () => {
+      if (started) return;
+      started = true;
+      setIdle(true);
     };
+    const ready = () => {
+      handle = hasIdle ? window.requestIdleCallback(start, { timeout: 1200 }) : window.setTimeout(start, 200);
+    };
+    const cap = window.setTimeout(start, 3000);
     if (document.readyState === "complete") ready();
     else window.addEventListener("load", ready, { once: true });
+    triggers.forEach((type) => window.addEventListener(type, start, { once: true, passive: true }));
     return () => {
       window.removeEventListener("load", ready);
+      triggers.forEach((type) => window.removeEventListener(type, start));
+      window.clearTimeout(cap);
       if (hasIdle) window.cancelIdleCallback(handle);
       else window.clearTimeout(handle);
     };
@@ -101,8 +113,6 @@ export function Providers({ children }: { children: ReactNode }) {
       const id = decodeURIComponent(hash.replace(/^#/, ""));
       const target = id === "top" ? document.body : document.getElementById(id);
       if (!target) return;
-      // Draw every section at its real height before measuring where the target sits.
-      document.documentElement.classList.add("cv-off");
       const lenis = lenisRef.current;
       const top = id === "top" ? 0 : target.getBoundingClientRect().top + window.scrollY - navOffset();
       if (lenis && smooth) lenis.scrollTo(top, { duration: 1.2 });
@@ -117,18 +127,6 @@ export function Providers({ children }: { children: ReactNode }) {
     },
     [smooth, env.reduced],
   );
-
-  // Keyboard users get every section drawn at its real height from their first Tab, so focus never
-  // lands on a section whose size is still a placeholder (content-visibility).
-  useEffect(() => {
-    const onKey = (event: KeyboardEvent) => {
-      if (event.key !== "Tab") return;
-      document.documentElement.classList.add("cv-off");
-      window.removeEventListener("keydown", onKey);
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, []);
 
   // Delegated in-page anchor links: "#section", and "/#section" while on the homepage.
   useEffect(() => {
@@ -156,9 +154,15 @@ export function Providers({ children }: { children: ReactNode }) {
     document.documentElement.classList.toggle("scroll-locked", locked);
   }, []);
 
-  // Motion's spring engine for the menu and sliders arrives with the islands.
+  // Motion's spring engine for the menu and sliders arrives with the islands. So do the photos
+  // further down: once the page is up, every remaining lazy image starts loading, so a phone on
+  // a slow connection never scrolls onto an empty frame.
   useEffect(() => {
-    if (idle) void loadAnimate();
+    if (!idle) return;
+    void loadAnimate();
+    document.querySelectorAll<HTMLImageElement>("img[loading='lazy']").forEach((img) => {
+      img.loading = "eager";
+    });
   }, [idle]);
 
   const value = useMemo<MotionState>(

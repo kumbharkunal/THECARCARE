@@ -14,9 +14,6 @@ const FACT_ICONS = { film: FilmStrip, shield: ShieldCheck, house: HouseLine, sun
 // from the left (hero.css), so the car is centred and the roof crops with it.
 const WIDE_ROOF = { cx: 1000, apexY: 72, halfWidth: 581, legEnd: 500, stroke: 11 };
 
-const PLAY_IF_IN_VIEW =
-  "(function(){var m=document.querySelector('[data-hero-media]');if(!m||innerWidth>=1024)return;var r=m.getBoundingClientRect();if(r.top+r.height*.6<=innerHeight)m.setAttribute('data-play','true')})()";
-
 function HeroPicture() {
   const wide = getImage("hero-car-wide");
   if (!wide) return null;
@@ -84,7 +81,7 @@ export function Hero() {
         </ul>
       </div>
 
-      <div className="hero-media" data-hero-media suppressHydrationWarning>
+      <div className="hero-media">
         <div className="hero-frame">
           <div className="hero-scale">
             <HeroPicture />
@@ -96,9 +93,6 @@ export function Hero() {
           </div>
         </div>
       </div>
-      {/* Phones: when the card is already in view as the page first paints, its roof and sweep
-          start then, not when the motion islands arrive (HeroEnhancer covers the rest). */}
-      <script dangerouslySetInnerHTML={{ __html: PLAY_IF_IN_VIEW }} />
       <HeroIsland />
     </section>
   );

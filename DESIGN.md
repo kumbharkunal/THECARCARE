@@ -137,15 +137,15 @@ Controls on photographs (compare handle, caption chips) take a fine ink-18% edge
 **Hero load sequence (CSS, never waits for script)**
 - H1 lines rise in masks from 0.1s, 1s each, 90ms apart; the sub and actions fade up.
 - Desktop: the green chevron draws at 0.35s (1.1s), the blue at 0.8s (1s), then a lavender-white band sweeps the car at 1.5s (0.95s), fading in and out so it never rests in view. The photo settles from 1.04 to 1 as the hero scrolls away.
-- Phone: the roof and sweep play once the card is 60% in view.
+- Phone: the same roof and sweep from first paint (0.3s, 0.55s, 1.2s), with no script.
 - After 2.4s on desktop with a fine pointer, the band becomes an inspection lamp that follows the pointer slowly and drifts when idle.
 
 **Architecture**
-- First load ships React, Next and the page's own components only. GSAP (ScrollTrigger, SplitText, DrawSVG) and Lenis load as idle-time islands (`components/shell/islands.tsx`) after the load event and `requestIdleCallback`. Section motion arms only when its section nears the screen (`lib/use-near.ts`).
+- First load ships React, Next and the page's own components only. GSAP (ScrollTrigger, SplitText, DrawSVG) and Lenis load as islands (`components/shell/islands.tsx`) once the page is loaded and idle, at the first scroll or touch, or after 3 s, whichever comes first. Section motion arms only when its section nears the screen (`lib/use-near.ts`).
 - One clock: the GSAP ticker drives Lenis (wheel smoothing only; native touch), ScrollTrigger and both canvas loops.
 - Motion (`framer-motion` 14, imported directly so it tree-shakes) handles UI state through `LazyMotion` with `domMax` loaded asynchronously; its `animate` loads on idle or on first press.
-- Reveals run from one IntersectionObserver (`RevealRuntime`): headings rise by SplitText lines in masks (80ms apart), images open from a 12% clip-path inset and drift from -4% to 4% inside their frame while they cross the screen. Elements already on screen, or in sections skipped by `content-visibility`, are never hidden.
-- Sections from the third onward use `content-visibility: auto` with measured placeholder heights; anchor jumps and the first Tab switch it off so focus and jumps land exactly.
+- Reveals run from one IntersectionObserver (`RevealRuntime`): headings rise by SplitText lines in masks (80ms apart), images open from a 12% clip-path inset and drift from -4% to 4% inside their frame while they cross the screen. Only elements wholly below the screen hide; a scroll check reveals anything the observer misses.
+- No `content-visibility`: it delayed lazy images on phones until a section was almost on screen. Native lazy loading starts every picture well ahead of the scroll.
 
 **Signature moments**
 - Hero: the shield goes on and light passes over the paint.

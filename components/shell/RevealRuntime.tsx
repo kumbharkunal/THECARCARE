@@ -8,9 +8,9 @@ import { useMotion } from "@/components/shell/Providers";
  *   data-reveal="lines"  headings rise line by line inside masks (SplitText)
  *   data-reveal="rise"   text and groups rise 24px with opacity
  *   data-reveal="image"  pictures open from a clip-path inset with a little inner parallax
- * One IntersectionObserver does everything without reading layout: its first report on each
- * element hides only what is still below the fold (nothing on screen ever waits for script),
- * and later reports play each reveal as it arrives. Headings split into lines only then and are
+ * One IntersectionObserver does the work: its first report on each element hides only what is
+ * wholly below the screen (nothing on screen ever waits for script), and later reports play each
+ * reveal as it arrives; a scroll check catches anything it misses. Headings split into lines only then and are
  * restored when they finish. Hidden means opacity only, so headings and text stay in the
  * accessibility tree, and focusing into a waiting element plays its reveal at once.
  */
@@ -59,7 +59,6 @@ export function RevealRuntime() {
         }
       });
 
-      const fold = window.innerHeight * 0.92;
       const seen = new Set<Element>();
       const waiting = new Set<Element>();
       const reveal = (el: Element) => {
@@ -73,11 +72,9 @@ export function RevealRuntime() {
             const el = entry.target as HTMLElement;
             if (!seen.has(el)) {
               seen.add(el);
-              // Already on screen or scrolled past: leave it exactly as it is. A zero box means
-              // its section has not been drawn yet (content-visibility), so it is off screen.
-              const box = entry.boundingClientRect;
-              const drawn = box.width > 0 || box.height > 0;
-              if (drawn && box.top < fold) {
+              // Anything that has reached the screen, even its last few pixels, or that is
+              // scrolled past stays exactly as it is: only what is wholly below hides.
+              if (entry.boundingClientRect.top < window.innerHeight) {
                 io.unobserve(el);
                 continue;
               }
@@ -92,6 +89,20 @@ export function RevealRuntime() {
       );
       elements.forEach((el) => io.observe(el));
 
+      // Belt and braces for phones: if the observer ever misses a fast flick, the next scroll
+      // frame reveals anything waiting that has already reached the screen.
+      let frame = 0;
+      const sweep = () => {
+        frame = 0;
+        const limit = window.innerHeight * 0.95;
+        for (const el of waiting) if (el.getBoundingClientRect().top < limit) reveal(el);
+        if (seen.size === elements.length && !waiting.size) window.removeEventListener("scroll", onScroll);
+      };
+      const onScroll = () => {
+        if (!frame) frame = requestAnimationFrame(sweep);
+      };
+      window.addEventListener("scroll", onScroll, { passive: true });
+
       const onFocus = (event: FocusEvent) => {
         const el = (event.target as Element | null)?.closest?.("[data-reveal]");
         if (el) reveal(el);
@@ -100,6 +111,8 @@ export function RevealRuntime() {
 
       return () => {
         io.disconnect();
+        window.removeEventListener("scroll", onScroll);
+        cancelAnimationFrame(frame);
         document.removeEventListener("focusin", onFocus);
       };
     },
