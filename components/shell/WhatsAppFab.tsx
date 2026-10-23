@@ -1,10 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { site } from "@/content/site";
+import { useEffect, useState, useSyncExternalStore } from "react";
+import { a11y, messages } from "@/content/site";
 import { waLink } from "@/lib/wa";
 import { useMenuOpen } from "@/lib/ui-store";
 import { SocialMark } from "@/components/ui/Social";
+
+const subscribeNever = () => () => {};
+const heroOnPage = () => document.getElementById("top") !== null;
 
 /**
  * Floating WhatsApp button: appears after the hero, steps aside for the menu, #visit and the
@@ -13,9 +16,12 @@ import { SocialMark } from "@/components/ui/Social";
 export function WhatsAppFab() {
   const menuOpen = useMenuOpen();
   const [show, setShow] = useState(false);
+  // Only the home page has a hero to appear after; elsewhere (the 404) the page has its own button.
+  const hasHero = useSyncExternalStore(subscribeNever, heroOnPage, () => true);
 
   useEffect(() => {
     const hero = document.getElementById("top");
+    if (!hero) return;
     const ends = ["visit", "site-footer"].map((id) => document.getElementById(id)).filter((el): el is HTMLElement => !!el);
     const ctas = document.querySelectorAll<HTMLElement>("#main a[href^='https://wa.me/']");
     let pastHero = false;
@@ -40,7 +46,7 @@ export function WhatsAppFab() {
       },
       { threshold: 0.5 },
     );
-    if (hero) io.observe(hero);
+    io.observe(hero);
     ends.forEach((el) => io.observe(el));
     ctas.forEach((el) => ctaIo.observe(el));
     return () => {
@@ -49,14 +55,15 @@ export function WhatsAppFab() {
     };
   }, []);
 
+  if (!hasHero) return null;
   const visible = show && !menuOpen;
   return (
     <div className="fab" data-visible={visible} inert={!visible}>
       <a
-        href={waLink(site.messages.fab)}
+        href={waLink(messages.fab)}
         target="_blank"
         rel="noopener noreferrer"
-        aria-label={site.a11y.fab}
+        aria-label={a11y.fab}
         className="fab-link"
       >
         <span className="fab-ring">

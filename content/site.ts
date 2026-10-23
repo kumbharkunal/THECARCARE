@@ -8,9 +8,157 @@ export type GlassZone = "windscreen" | "front" | "rear" | "back";
 const PRIMARY_PHONE = "+91 95112 02540";
 const PRIMARY_PHONE_E164 = "919511202540";
 
+// Sections used by client components are separate exports: a client bundle then carries only
+// the sections it imports, never the whole site.
+
+export const WORDMARK = "THE CAR CARE";
+
+export const contact = {
+  phones: [
+    { label: PRIMARY_PHONE, href: "tel:+919511202540" },
+    { label: "+91 75586 58837", href: "tel:+917558658837" },
+  ],
+  whatsappNumber: PRIMARY_PHONE_E164,
+  email: "thecarcare.in@gmail.com",
+  address: {
+    lines: [
+      "Wing-C, Nataraj Residency, Hatti Chowk",
+      "near Bank of Maharashtra, Raut Bag Society",
+      "Pratibha Nagar, Dhankawadi",
+      "Pune, Maharashtra 411043",
+    ],
+    street:
+      "Wing-C, Nataraj Residency, Hatti Chowk, near Bank of Maharashtra, Raut Bag Society, Pratibha Nagar, Dhankawadi",
+    locality: "Pune",
+    region: "Maharashtra",
+    postalCode: "411043",
+    country: "IN",
+    short: "Dhankawadi, Pune 411043",
+  },
+  hoursConfirmed: false,
+  bookNote: "Message us to book a slot.",
+  hoursShort: "Usually 9 am to 6 pm",
+  instagram: { handle: "@thecarcare.in", href: "https://www.instagram.com/thecarcare.in/" },
+  facebook: { handle: "thecarcare.in", href: "https://www.facebook.com/thecarcare.in" },
+};
+
+export const messages = {
+  general: "Hi The Car Care, I found your website and I'd like to protect my car.",
+  fab: "Hi The Car Care, I'd like to ask about protecting my car.",
+  offer: "Hi The Car Care, I saw the 20% off and free installation offer on sun control films. Is it still on?",
+};
+
+export const nav = {
+  links: [
+    { href: "#services", label: "Services" },
+    { href: "#sun-film", label: "Sun film" },
+    { href: "#ppf", label: "PPF" },
+    { href: "#ceramic", label: "Ceramic" },
+    { href: "#visit", label: "Visit" },
+  ],
+  cta: "Book on WhatsApp",
+  menuLabel: "Menu",
+  call: "Call",
+  whatsapp: "WhatsApp",
+};
+
+export const ticker = {
+  label: "Film brands and products we fit",
+  items: ["Garware Hi-Tech Films", "Fronty", "International SRC", "IceCool Shield", "Safety Glazing", "GSWF Defender PPF"],
+  pause: "Pause the moving list",
+  play: "Play the moving list",
+};
+
+// The shade guide's controls (client) and the words around them (server-rendered, passed in).
+const shadeText = {
+  title: "Road-legal shades, no challan worries.",
+  intro: "Pick a window and slide to the shade you like. The guide stops at the darkest shade the law allows.",
+  vltExplainer: "VLT is the share of visible light the glass lets through. Higher means lighter.",
+  legal:
+    "In India, film on car glass is legal only as certified safety glazing that meets IS 2553 (Part 2):2019. It must let through at least 70% of visible light on the windscreen and the rear window, and at least 50% on the side windows (Central Motor Vehicles Rules, Rule 100, as amended from 1 April 2021).",
+  disclaimer: "General information, not legal advice.",
+};
+
+export const shade = {
+  zonesLabel: "Window",
+  zones: [
+    { id: "windscreen", label: "Windscreen", min: 70 },
+    { id: "front", label: "Front side windows", min: 50 },
+    { id: "rear", label: "Rear side windows", min: 50 },
+    { id: "back", label: "Rear window", min: 70 },
+  ] satisfies { id: GlassZone; label: string; min: number }[],
+  max: 90,
+  sliderLabel: "Visible light through the glass",
+  darker: "Darker",
+  lighter: "Clearer",
+  limit: "Darker than this isn't road-legal in India.",
+  cta: "Ask which film suits your car",
+  diagramLabel: "Diagram of a car's glass with sunlight and UV rays",
+};
+
+export const scratchPanel = {
+  canvasLabel: "Draw on the paint",
+  canvasHintTouch: "Draw on the paint with your finger, then let go.",
+  canvasHintPointer: "Draw on the paint, then let go.",
+  canvasAria: "Paint panel. Draw on it to scratch it, then let go to watch it heal.",
+  scratch: "Scratch it",
+  heal: "Heal it",
+  reset: "Reset",
+  healed: "Healed.",
+};
+
+const ppf = {
+  title: "Scratch it. Watch it heal.",
+  intro: "Paint protection film is a clear layer over your paint, and its self-healing top coat can heal light swirls. Try it on the panel.",
+  productTitle: "GSWF Defender PPF",
+  properties: ["Hydrophobic", "Self-healing", "Non-yellowing", "High stretchability", "Impact resistant"],
+  coverageTitle: "Coverage",
+  coverage: "Cover the high-impact areas (bonnet, bumper, mirrors and door edges) or the whole car.",
+  imageAlt: "Gloved hands laying clear paint protection film over a deep blue bonnet with a squeegee",
+  cta: "Ask about PPF",
+  message: "Hi The Car Care, I'd like to know about paint protection film (PPF) for my car.",
+};
+
+export const enquiry = {
+  title: "Get a quote on WhatsApp",
+  intro: "Fill this in and we'll open WhatsApp with your message ready to send.",
+  car: { label: "Car make and model", placeholder: "e.g. Hyundai Creta", error: "Add your car's make and model." },
+  services: {
+    label: "What would you like?",
+    options: ["Sun control film", "PPF", "Ceramic coating", "Detailing"],
+    error: "Pick at least one service.",
+  },
+  where: { label: "Where", studio: "At the studio", doorstep: "At my doorstep" },
+  area: { label: "Your area", placeholder: "e.g. Kothrud", error: "Add your area so we can plan the visit." },
+  notes: { label: "Anything else? (optional)", placeholder: "Shade, colour, timing, questions" },
+  preview: "Your message",
+  submit: "Send on WhatsApp",
+  sent: "WhatsApp is opening with your message.",
+  retry: "Not opened? Send it on WhatsApp",
+  noScript: "Message us on WhatsApp",
+};
+
+export const map = {
+  title: "The Car Care",
+  area: "Hatti Chowk, Dhankawadi, Pune",
+  load: "Show the map",
+  open: "Open in Google Maps",
+  iframeTitle: "Map showing The Car Care in Dhankawadi, Pune",
+};
+
+export const a11y = {
+  skip: "Skip to content",
+  fab: "Chat with The Car Care on WhatsApp",
+  openMenu: "Open menu",
+  closeMenu: "Close menu",
+  menu: "Site menu",
+  home: "The Car Care, home",
+  newTab: "(opens WhatsApp)",
+};
+
 export const site = {
   name: "The Car Care",
-  wordmark: "THE CAR CARE",
+  wordmark: WORDMARK,
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://thecarcare.vercel.app",
   meta: {
     title: "The Car Care | PPF, Sun Film & Ceramic Coating in Pune",
@@ -20,54 +168,11 @@ export const site = {
     ogLine: "Sun control film, PPF and ceramic coating in Pune",
   },
 
-  contact: {
-    phones: [
-      { label: PRIMARY_PHONE, href: "tel:+919511202540" },
-      { label: "+91 75586 58837", href: "tel:+917558658837" },
-    ],
-    whatsappNumber: PRIMARY_PHONE_E164,
-    email: "thecarcare.in@gmail.com",
-    address: {
-      lines: [
-        "Wing-C, Nataraj Residency, Hatti Chowk",
-        "near Bank of Maharashtra, Raut Bag Society",
-        "Pratibha Nagar, Dhankawadi",
-        "Pune, Maharashtra 411043",
-      ],
-      street:
-        "Wing-C, Nataraj Residency, Hatti Chowk, near Bank of Maharashtra, Raut Bag Society, Pratibha Nagar, Dhankawadi",
-      locality: "Pune",
-      region: "Maharashtra",
-      postalCode: "411043",
-      country: "IN",
-      short: "Dhankawadi, Pune 411043",
-    },
-    hoursConfirmed: false,
-    bookNote: "Message us to book a slot.",
-    hoursShort: "Usually 9 am to 6 pm",
-    instagram: { handle: "@thecarcare.in", href: "https://www.instagram.com/thecarcare.in/" },
-    facebook: { handle: "thecarcare.in", href: "https://www.facebook.com/thecarcare.in" },
-  },
+  contact,
 
-  messages: {
-    general: "Hi The Car Care, I found your website and I'd like to protect my car.",
-    fab: "Hi The Car Care, I'd like to ask about protecting my car.",
-    offer: "Hi The Car Care, I saw the 20% off and free installation offer on sun control films. Is it still on?",
-  },
+  messages,
 
-  nav: {
-    links: [
-      { href: "#services", label: "Services" },
-      { href: "#sun-film", label: "Sun film" },
-      { href: "#ppf", label: "PPF" },
-      { href: "#ceramic", label: "Ceramic" },
-      { href: "#visit", label: "Visit" },
-    ],
-    cta: "Book on WhatsApp",
-    menuLabel: "Menu",
-    call: "Call",
-    whatsapp: "WhatsApp",
-  },
+  nav,
 
   hero: {
     lead: "We don't just detail cars.",
@@ -85,12 +190,7 @@ export const site = {
       "A deep blue SUV coupe in a bright white car protection studio, lit by long overhead light panels",
   },
 
-  ticker: {
-    label: "Film brands and products we fit",
-    items: ["Garware Hi-Tech Films", "Fronty", "International SRC", "IceCool Shield", "Safety Glazing", "GSWF Defender PPF"],
-    pause: "Pause the moving list",
-    play: "Play the moving list",
-  },
+  ticker,
 
   services: {
     title: "One car. Four layers of care.",
@@ -195,49 +295,10 @@ export const site = {
       detail: "Selected products, for a limited time. Ask us for details.",
       cta: "Ask about the offer",
     },
-    shade: {
-      title: "Road-legal shades, no challan worries.",
-      intro: "Pick a window and slide to the shade you like. The guide stops at the darkest shade the law allows.",
-      vltExplainer: "VLT is the share of visible light the glass lets through. Higher means lighter.",
-      zonesLabel: "Window",
-      zones: [
-        { id: "windscreen", label: "Windscreen", min: 70 },
-        { id: "front", label: "Front side windows", min: 50 },
-        { id: "rear", label: "Rear side windows", min: 50 },
-        { id: "back", label: "Rear window", min: 70 },
-      ] satisfies { id: GlassZone; label: string; min: number }[],
-      max: 90,
-      sliderLabel: "Visible light through the glass",
-      darker: "Darker",
-      lighter: "Clearer",
-      limit: "Darker than this isn't road-legal in India.",
-      legal:
-        "In India, film on car glass is legal only as certified safety glazing that meets IS 2553 (Part 2):2019. It must let through at least 70% of visible light on the windscreen and the rear window, and at least 50% on the side windows (Central Motor Vehicles Rules, Rule 100, as amended from 1 April 2021).",
-      disclaimer: "General information, not legal advice.",
-      cta: "Ask which film suits your car",
-      diagramLabel: "Diagram of a car's glass with sunlight and UV rays",
-    },
+    shade: { ...shadeText, ...shade },
   },
 
-  ppf: {
-    title: "Scratch it. Watch it heal.",
-    intro: "Paint protection film is a clear layer over your paint, and its self-healing top coat can heal light swirls. Try it on the panel.",
-    canvasLabel: "Draw on the paint",
-    canvasHintTouch: "Draw on the paint with your finger, then let go.",
-    canvasHintPointer: "Draw on the paint, then let go.",
-    canvasAria: "Paint panel. Draw on it to scratch it, then let go to watch it heal.",
-    scratch: "Scratch it",
-    heal: "Heal it",
-    reset: "Reset",
-    healed: "Healed.",
-    productTitle: "GSWF Defender PPF",
-    properties: ["Hydrophobic", "Self-healing", "Non-yellowing", "High stretchability", "Impact resistant"],
-    coverageTitle: "Coverage",
-    coverage: "Cover the high-impact areas (bonnet, bumper, mirrors and door edges) or the whole car.",
-    imageAlt: "Gloved hands laying clear paint protection film over a deep blue bonnet with a squeegee",
-    cta: "Ask about PPF",
-    message: "Hi The Car Care, I'd like to know about paint protection film (PPF) for my car.",
-  },
+  ppf,
 
   ceramic: {
     title: "A deeper gloss. An easier wash.",
@@ -319,31 +380,8 @@ export const site = {
     addressTitle: "Studio",
     contactTitle: "Call or write",
     socialTitle: "Follow",
-    map: {
-      title: "The Car Care",
-      area: "Hatti Chowk, Dhankawadi, Pune",
-      load: "Show the map",
-      open: "Open in Google Maps",
-      iframeTitle: "Map showing The Car Care in Dhankawadi, Pune",
-    },
-    enquiry: {
-      title: "Get a quote on WhatsApp",
-      intro: "Fill this in and we'll open WhatsApp with your message ready to send.",
-      car: { label: "Car make and model", placeholder: "e.g. Hyundai Creta", error: "Add your car's make and model." },
-      services: {
-        label: "What would you like?",
-        options: ["Sun control film", "PPF", "Ceramic coating", "Detailing"],
-        error: "Pick at least one service.",
-      },
-      where: { label: "Where", studio: "At the studio", doorstep: "At my doorstep" },
-      area: { label: "Your area", placeholder: "e.g. Kothrud", error: "Add your area so we can plan the visit." },
-      notes: { label: "Anything else? (optional)", placeholder: "Shade, colour, timing, questions" },
-      preview: "Your message",
-      submit: "Send on WhatsApp",
-      sent: "WhatsApp is opening with your message.",
-      retry: "Not opened? Send it on WhatsApp",
-      noScript: "Message us on WhatsApp",
-    },
+    map,
+    enquiry,
   },
 
   footer: {
@@ -351,6 +389,9 @@ export const site = {
     explore: "Explore",
     contact: "Contact",
     visit: "Visit",
+    // The full address lives in the Visit section just above; the footer keeps a short form.
+    address: "Hatti Chowk, Dhankawadi, Pune 411043",
+    directions: "Get directions",
     links: [
       { href: "#services", label: "Services" },
       { href: "#sun-film", label: "Sun film" },
@@ -370,15 +411,7 @@ export const site = {
     cta: "Back to the homepage",
   },
 
-  a11y: {
-    skip: "Skip to content",
-    fab: "Chat with The Car Care on WhatsApp",
-    openMenu: "Open menu",
-    closeMenu: "Close menu",
-    menu: "Site menu",
-    home: "The Car Care, home",
-    newTab: "(opens WhatsApp)",
-  },
+  a11y,
 } as const;
 
 export const WA_PHONE = PRIMARY_PHONE_E164;

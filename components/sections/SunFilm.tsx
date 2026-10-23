@@ -73,7 +73,22 @@ export function SunFilm() {
           })}
         </ol>
 
-        <ShadeGuide />
+        <ShadeGuide
+          intro={
+            <>
+              <h3 className="heading shade-title">{sunFilm.shade.title}</h3>
+              <p className="mt-4 max-w-[46ch]">{sunFilm.shade.intro}</p>
+            </>
+          }
+          fine={
+            <>
+              <p className="shade-fine">{sunFilm.shade.vltExplainer}</p>
+              <p className="shade-fine">
+                {sunFilm.shade.legal} <span className="text-ink">{sunFilm.shade.disclaimer}</span>
+              </p>
+            </>
+          }
+        />
       </div>
       <StackIsland />
     </section>

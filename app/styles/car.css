@@ -151,7 +151,7 @@
       column-gap: var(--gap);
     }
     /* A stage most of a screen tall, centred in the space under the nav: the layer index on top,
-       the car in the middle, the lit service's name at the foot. */
+       the car under the logo's roof below it. */
     .services-car {
       --stage-h: min(60svh, 560px);
       display: flex;
@@ -203,17 +203,12 @@
     .services-car[data-zone="detailing"] [data-layer="detailing"]::before {
       background: var(--color-care-blue);
     }
-    .services-caption {
-      font-size: var(--text-lead);
-      line-height: 1.1;
-      color: var(--color-ink);
-    }
     .services-list {
       grid-column: 9 / span 4;
       gap: 0;
     }
     .service {
-      min-height: 74svh;
+      min-height: 60svh;
       display: flex;
       flex-direction: column;
       justify-content: center;

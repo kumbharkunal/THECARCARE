@@ -2,16 +2,12 @@
 
 import { useState } from "react";
 import { ArrowUpRight, MapPin } from "@phosphor-icons/react/dist/ssr";
-import { site } from "@/content/site";
-
-const query = encodeURIComponent(`The Car Care, ${site.contact.address.street}, ${site.contact.address.locality} ${site.contact.address.postalCode}`);
-export const MAPS_OPEN = `https://www.google.com/maps/search/?api=1&query=${query}`;
-const MAPS_EMBED = `https://www.google.com/maps?q=${query}&output=embed`;
+import { map } from "@/content/site";
+import { MAPS_EMBED, MAPS_OPEN } from "@/lib/maps";
 
 /** A drawn map card; the Google Maps embed loads only when asked for. */
 export function MapFacade() {
   const [loaded, setLoaded] = useState(false);
-  const { map } = site.visit;
   return (
     <div className="map">
       <div className="map-frame">

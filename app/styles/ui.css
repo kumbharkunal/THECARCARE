@@ -109,7 +109,11 @@
     pointer-events: auto;
     cursor: grab;
     touch-action: none;
-    transition: transform 160ms var(--ease-squeegee);
+    transition:
+      transform 160ms var(--ease-squeegee),
+      background-color 200ms ease,
+      border-color 200ms ease,
+      color 200ms ease;
   }
   .compare-knob > svg {
     transition: transform 200ms var(--ease-squeegee);
@@ -117,7 +121,10 @@
   /* Hover: the handle grows a touch and its arrows part, pointing both ways it can go */
   @media (hover: hover) and (pointer: fine) {
     .compare-knob:hover {
-      transform: scale(1.06);
+      transform: scale(1.08);
+      background: var(--color-care-blue);
+      border-color: var(--color-care-blue);
+      color: var(--color-paper);
     }
     .compare-knob:hover > svg:first-child {
       transform: translateX(-2px);

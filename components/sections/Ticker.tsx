@@ -2,13 +2,12 @@
 
 import { useRef, useState } from "react";
 import { Pause, Play } from "@phosphor-icons/react/dist/ssr";
-import { site } from "@/content/site";
+import { ticker } from "@/content/site";
 import { TickerIsland } from "@/components/shell/islands";
 import { ChevronMark } from "@/components/art/Chevrons";
 
 /** Brand and product names drifting by (TickerMotion); a pause button stops it on request. */
 export function Ticker() {
-  const { ticker } = site;
   const root = useRef<HTMLElement>(null);
   const [paused, setPaused] = useState(false);
 

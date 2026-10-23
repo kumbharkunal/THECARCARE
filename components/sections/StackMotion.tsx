@@ -5,7 +5,10 @@ import { gsap, useGSAP } from "@/lib/gsap";
 import { useMotion } from "@/components/shell/Providers";
 import { useNear } from "@/lib/use-near";
 
-/** Desktop: as each benefit card slides over the last, the one beneath settles back a little. */
+/**
+ * Desktop: as each benefit card slides over the last, the one beneath settles back a little and
+ * its words fade, so the incoming edge never cuts through readable text.
+ */
 export function StackMotion() {
   const anchor = useRef<HTMLSpanElement>(null);
   const { plugins, reduced } = useMotion();
@@ -28,6 +31,14 @@ export function StackMotion() {
             ease: "none",
             scrollTrigger: { trigger: next, start: "top bottom", end: "top 20%", scrub: 0.6 },
           });
+          const copy = card.querySelector(".benefit-copy");
+          if (copy) {
+            gsap.to(copy, {
+              opacity: 0.25,
+              ease: "none",
+              scrollTrigger: { trigger: next, start: "top 95%", end: "top 55%", scrub: 0.6 },
+            });
+          }
         });
       });
       return () => mm.revert();

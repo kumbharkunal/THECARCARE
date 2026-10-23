@@ -1,14 +1,13 @@
 import type { Metadata, Viewport } from "next";
 import { Anek_Devanagari, Geist_Mono } from "next/font/google";
 import localFont from "next/font/local";
-import { Analytics } from "@vercel/analytics/next";
-import { SpeedInsights } from "@vercel/speed-insights/next";
 import "lenis/dist/lenis.css";
 import "./globals.css";
 import { site } from "@/content/site";
 import { Providers } from "@/components/shell/Providers";
 import { Nav } from "@/components/shell/Nav";
 import { WhatsAppFab } from "@/components/shell/WhatsAppFab";
+import { InsightsIsland } from "@/components/shell/Insights";
 
 // Archivo cut to the axis ranges and characters the site uses (scripts/build-fonts.mjs).
 const archivo = localFont({
@@ -82,13 +81,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <Nav />
           {children}
           <WhatsAppFab />
+          {process.env.VERCEL ? <InsightsIsland /> : null}
         </Providers>
-        {process.env.VERCEL ? (
-          <>
-            <Analytics />
-            <SpeedInsights />
-          </>
-        ) : null}
       </body>
     </html>
   );

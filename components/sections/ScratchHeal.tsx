@@ -2,13 +2,12 @@
 
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { site } from "@/content/site";
+import { scratchPanel as ppf } from "@/content/site";
 import { getImage } from "@/lib/images";
 import type { MotionPlugins } from "@/lib/gsap";
 import { useMotion } from "@/components/shell/Providers";
 import { Placeholder } from "@/components/ui/Img";
 
-const { ppf } = site;
 type Point = [number, number];
 type Stroke = { points: Point[]; seed: number };
 

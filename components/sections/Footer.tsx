@@ -2,6 +2,7 @@ import Image from "next/image";
 import { cacheLife } from "next/cache";
 import { site } from "@/content/site";
 import { waLink } from "@/lib/wa";
+import { MAPS_OPEN } from "@/lib/maps";
 import { SocialLinks } from "@/components/ui/Social";
 import { FooterIsland } from "@/components/shell/islands";
 
@@ -57,13 +58,11 @@ export function Footer() {
         </div>
         <div className="footer-col footer-visit">
           <h2 className="footer-h">{footer.visit}</h2>
-          <address className="not-italic">
-            {contact.address.lines.map((line) => (
-              <span key={line} className="block text-balance">
-                {line}
-              </span>
-            ))}
-          </address>
+          <address className="not-italic">{footer.address}</address>
+          <a href={MAPS_OPEN} target="_blank" rel="noopener noreferrer" className="footer-link">
+            {footer.directions}
+            <span className="sr-only"> (opens Google Maps)</span>
+          </a>
           <SocialLinks className="mt-5" size={30} />
         </div>
       </div>

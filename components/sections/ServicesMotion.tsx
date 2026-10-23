@@ -48,7 +48,6 @@ export function ServicesMotion() {
       const blocks = Array.from(section.querySelectorAll<HTMLElement>(".service"));
       const car = section.querySelector<SVGSVGElement>("#services-car");
       const stage = section.querySelector<HTMLElement>(".services-car");
-      const name = section.querySelector<HTMLElement>("[data-caption-name]");
       const mm = gsap.matchMedia();
 
       // Desktop: one sticky car; each block lights its zone as it reaches the middle.
@@ -63,7 +62,6 @@ export function ServicesMotion() {
           if (stage) stage.dataset.zone = zone;
           car.setAttribute("aria-label", block.dataset.label ?? "");
           blocks.forEach((b) => (b.dataset.active = b === block ? "true" : "false"));
-          if (name) name.textContent = block.querySelector(".service-name")?.textContent ?? "";
           running?.kill();
           if (!reduced) running = drawZone(car, zone);
         };
@@ -75,6 +73,18 @@ export function ServicesMotion() {
             onToggle: (self) => self.isActive && activate(block),
           }),
         );
+        // The roof draws itself over the car the first time the stage comes into view. A stage
+        // already on screen when motion loads keeps its roof drawn.
+        const roof = stage?.querySelectorAll<SVGPolylineElement>(".services-roof .chev");
+        if (stage && roof?.length && !reduced && stage.getBoundingClientRect().top > window.innerHeight) {
+          gsap.set(roof, { strokeDasharray: 1, strokeDashoffset: 1 });
+          ScrollTrigger.create({
+            trigger: stage,
+            start: "top 80%",
+            once: true,
+            onEnter: () => gsap.to(roof, { strokeDashoffset: 0, duration: 1.1, stagger: 0.35, ease: "squeegee" }),
+          });
+        }
         return () => running?.kill();
       });
 

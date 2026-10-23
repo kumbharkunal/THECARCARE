@@ -1,4 +1,4 @@
-import { site } from "@/content/site";
+import { a11y, contact } from "@/content/site";
 import { waLink } from "@/lib/wa";
 
 const MARKS = {
@@ -38,7 +38,7 @@ export function SocialMark({
 
 /** Instagram and Facebook links with their official marks. */
 export function SocialLinks({ className, size = 28 }: { className?: string; size?: number }) {
-  const { instagram, facebook } = site.contact;
+  const { instagram, facebook } = contact;
   return (
     <ul className={`flex items-center ${className ?? ""}`}>
       <li>
@@ -92,7 +92,7 @@ export function WhatsAppButton({
         <SocialMark network="whatsapp" size={size === "lg" ? 24 : 22} />
       </span>
       <span>{children}</span>
-      <span className="sr-only"> {site.a11y.newTab}</span>
+      <span className="sr-only"> {a11y.newTab}</span>
     </a>
   );
 }

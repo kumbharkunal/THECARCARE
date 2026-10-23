@@ -196,9 +196,11 @@
     font-weight: 650;
   }
 
-  /* Buttons: pill, press to 0.97, hover only on fine pointers */
+  /* Buttons: pill, press to 0.97, hover only on fine pointers. Hover is a squeegee pass: a fill
+     wipes across the pill from the left (clip-path), behind the label. */
   .btn {
     position: relative;
+    isolation: isolate;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -214,8 +216,17 @@
     user-select: none;
     transition:
       transform 140ms var(--ease-squeegee),
-      background-color 180ms ease,
-      color 180ms ease;
+      color 200ms ease 60ms;
+  }
+  .btn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    background: var(--btn-flood, var(--color-ink));
+    clip-path: inset(0 100% 0 0 round 999px);
+    transition: clip-path 340ms var(--ease-squeegee);
   }
   .btn:active {
     transform: scale(0.97);
@@ -230,14 +241,17 @@
     padding: 0 26px;
   }
   .btn-primary {
+    --btn-flood: var(--color-ink);
     background: var(--color-care-blue);
     color: var(--color-paper);
   }
   .btn-secondary {
+    --btn-flood: var(--color-care-blue);
     background: var(--color-mist);
     color: var(--color-ink);
   }
   .btn-paper {
+    --btn-flood: var(--color-care-blue);
     background: var(--color-paper);
     color: var(--color-ink);
   }
@@ -258,23 +272,20 @@
     height: 40px;
   }
   @media (hover: hover) and (pointer: fine) {
-    .btn:hover {
-      transform: translateY(-1px);
+    .btn:hover::before {
+      clip-path: inset(0 0 0 0 round 999px);
     }
-    .btn:hover:active {
-      transform: scale(0.97);
-    }
-    .btn-primary:hover {
-      background: var(--color-care-blue-deep);
-    }
-    .btn-secondary:hover {
-      background: color-mix(in oklab, var(--color-mist), var(--color-ink) 7%);
-    }
+    .btn-secondary:hover,
     .btn-paper:hover {
-      background: var(--color-mist);
+      color: var(--color-paper);
     }
     .btn:hover .btn-disc {
       transform: translateX(2px);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .btn::before {
+      transition-duration: 1ms;
     }
   }
 

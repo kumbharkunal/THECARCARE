@@ -1,12 +1,11 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, type ReactNode } from "react";
 import { m } from "framer-motion";
-import { site, type GlassZone } from "@/content/site";
+import { shade, type GlassZone } from "@/content/site";
 import { CarElevation } from "@/components/art/CarElevation";
 import { WhatsAppButton } from "@/components/ui/Social";
 
-const { shade } = site.sunFilm;
 const SPRING = { type: "spring", stiffness: 420, damping: 38, mass: 0.9 } as const;
 
 // Where light meets each pane, in the car's 1200 x 460 coordinates.
@@ -77,7 +76,8 @@ function Rays({ zone, vlt }: { zone: GlassZone; vlt: number }) {
   );
 }
 
-export function ShadeGuide() {
+/** The road-legal shade guide. Its heading and fine print are rendered on the server and passed in. */
+export function ShadeGuide({ intro, fine }: { intro: ReactNode; fine: ReactNode }) {
   const [zone, setZone] = useState<GlassZone>("windscreen");
   const [vlt, setVlt] = useState<Record<GlassZone, number>>({ windscreen: 90, front: 90, rear: 90, back: 90 });
   const [dragging, setDragging] = useState(false);
@@ -143,8 +143,7 @@ export function ShadeGuide() {
       </div>
 
       <div className="shade-controls">
-        <h3 className="heading shade-title">{shade.title}</h3>
-        <p className="mt-4 max-w-[46ch]">{shade.intro}</p>
+        {intro}
 
         <div role="radiogroup" aria-label={shade.zonesLabel} className="chips mt-7">
           {shade.zones.map((z, index) => (
@@ -229,10 +228,7 @@ export function ShadeGuide() {
           {atLimit ? shade.limit : ""}
         </p>
 
-        <p className="shade-fine">{shade.vltExplainer}</p>
-        <p className="shade-fine">
-          {shade.legal} <span className="text-ink">{shade.disclaimer}</span>
-        </p>
+        {fine}
         <WhatsAppButton message={message} className="mt-7">
           {shade.cta}
         </WhatsAppButton>

@@ -1,6 +1,7 @@
 import { Check } from "@phosphor-icons/react/dist/ssr";
 import { site } from "@/content/site";
 import { CarElevation } from "@/components/art/CarElevation";
+import { ChevronRoof } from "@/components/art/Chevrons";
 import { WhatsAppButton } from "@/components/ui/Social";
 import { ServicesIsland } from "@/components/shell/islands";
 
@@ -20,7 +21,8 @@ export function Services() {
         </div>
 
         <div className="services-stage" data-services>
-          {/* data-zone follows the block in view (ServicesMotion); the index lights that layer */}
+          {/* data-zone follows the block in view (ServicesMotion); the index lights that layer.
+              The logo's roof stands over the car, as it does over the hero photo. */}
           <div className="services-car" data-zone={first.id}>
             <ol className="services-layers" aria-hidden>
               {services.items.map((service) => (
@@ -34,10 +36,10 @@ export function Services() {
               zone={first.id}
               label={`${services.carLabel}: ${first.zoneLabel}`}
               className="services-car-svg"
-            />
-            <p className="services-caption subheading" aria-hidden data-caption-name>
-              {first.name}
-            </p>
+              viewBox="0 -150 1200 610"
+            >
+              <ChevronRoof id="services-roof" className="services-roof" cx={600} apexY={-128} halfWidth={540} legEnd={300} stroke={10} />
+            </CarElevation>
           </div>
 
           <ol className="services-list">

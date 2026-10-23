@@ -38,6 +38,22 @@
       transform: none;
     }
   }
+  /* Logo: on hover the shield rises a little and the wordmark deepens */
+  .brand-mark {
+    transition: transform 260ms var(--ease-squeegee);
+  }
+  .brand-word {
+    color: var(--color-care-blue);
+    transition: color 200ms ease;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .brand:hover .brand-mark {
+      transform: translateY(-2px) scale(1.06);
+    }
+    .brand:hover .brand-word {
+      color: var(--color-care-blue-deep);
+    }
+  }
   .nav-cta {
     min-height: 48px;
     padding-right: 18px;
@@ -171,6 +187,16 @@
     -webkit-backdrop-filter: blur(6px);
     backdrop-filter: blur(6px);
     touch-action: none;
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 240ms ease-out,
+      visibility 0s linear 240ms;
+  }
+  .mnav-scrim[data-open="true"] {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 240ms ease-out;
   }
   @media (prefers-reduced-transparency: reduce) {
     .mnav-scrim {

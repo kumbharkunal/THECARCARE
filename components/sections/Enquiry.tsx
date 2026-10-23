@@ -2,11 +2,10 @@
 
 import { useId, useRef, useState } from "react";
 import { Check } from "@phosphor-icons/react/dist/ssr";
-import { site } from "@/content/site";
+import { a11y, enquiry } from "@/content/site";
 import { waLink } from "@/lib/wa";
 import { SocialMark } from "@/components/ui/Social";
 
-const { enquiry } = site.visit;
 type Where = "studio" | "doorstep";
 type Field = "car" | "services" | "area";
 
@@ -190,7 +189,7 @@ export function Enquiry() {
             <SocialMark network="whatsapp" size={24} />
           </span>
           <span>{enquiry.submit}</span>
-          <span className="sr-only"> {site.a11y.newTab}</span>
+          <span className="sr-only"> {a11y.newTab}</span>
         </button>
         {/* Confirms the hand-off, with a plain link in case the browser held the new window back */}
         <p role="status" className="enquiry-status">
@@ -199,7 +198,7 @@ export function Enquiry() {
               {enquiry.sent}{" "}
               <a href={waLink(message)} target="_blank" rel="noopener noreferrer" className="link">
                 {enquiry.retry}
-                <span className="sr-only"> {site.a11y.newTab}</span>
+                <span className="sr-only"> {a11y.newTab}</span>
               </a>
             </>
           ) : null}

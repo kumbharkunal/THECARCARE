@@ -2,7 +2,8 @@ import { ArrowUpRight, EnvelopeSimple, Phone } from "@phosphor-icons/react/dist/
 import { site } from "@/content/site";
 import { waLink } from "@/lib/wa";
 import { SocialLinks, SocialMark } from "@/components/ui/Social";
-import { MapFacade, MAPS_OPEN } from "@/components/sections/MapFacade";
+import { MapFacade } from "@/components/sections/MapFacade";
+import { MAPS_OPEN } from "@/lib/maps";
 import { Enquiry } from "@/components/sections/Enquiry";
 
 export function Visit() {

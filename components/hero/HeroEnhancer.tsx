@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import { gsap, useGSAP } from "@/lib/gsap";
 import { useMotion } from "@/components/shell/Providers";
 
-const LOAD_SEQUENCE_MS = 2400;
+const LOAD_SEQUENCE_MS = 1900;
 
 /**
  * Hero behaviour on top of the CSS load sequence:
@@ -54,7 +54,7 @@ export function HeroEnhancer() {
         gsap.set(lamp, { x: base, opacity: 0 });
         const xTo = gsap.quickTo(lamp, "x", { duration: 1.6, ease: "power3.out" });
 
-        const intro = gsap.to(lamp, { opacity: 1, duration: 1.2, delay: LOAD_SEQUENCE_MS / 1000, ease: "power2.out" });
+        const intro = gsap.to(lamp, { opacity: 1, duration: 0.8, delay: LOAD_SEQUENCE_MS / 1000, ease: "power2.out" });
 
         const onMove = (event: PointerEvent) => {
           const rect = frame.getBoundingClientRect();

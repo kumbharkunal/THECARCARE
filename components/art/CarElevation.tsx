@@ -126,6 +126,7 @@ export function CarElevation({
   glassTint,
   activeGlass,
   showRays = true,
+  viewBox = "0 0 1200 460",
   children,
 }: {
   /** Which service layer is lit. */
@@ -138,12 +139,14 @@ export function CarElevation({
   /** Shade guide: the glass zone being edited. */
   activeGlass?: GlassZone;
   showRays?: boolean;
-  /** Extra layers drawn in the same coordinates (the shade guide's sun and rays). */
+  /** Room around the car for extra layers (the services stage adds sky for the roof). */
+  viewBox?: string;
+  /** Extra layers drawn in the same coordinates (the shade guide's sun and rays, the services roof). */
   children?: React.ReactNode;
 }) {
   return (
     <svg
-      viewBox="0 0 1200 460"
+      viewBox={viewBox}
       className={`car ${className ?? ""}`}
       data-zone={zone}
       role="img"

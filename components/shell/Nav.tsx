@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import {
-  AnimatePresence,
   m,
   useMotionTemplate,
   useMotionValue,
@@ -12,7 +11,7 @@ import {
   type PanInfo,
 } from "framer-motion";
 import { Phone } from "@phosphor-icons/react/dist/ssr";
-import { site } from "@/content/site";
+import { WORDMARK, a11y, contact, messages, nav } from "@/content/site";
 import { SocialLinks, WhatsAppButton } from "@/components/ui/Social";
 import { useMotion } from "@/components/shell/Providers";
 import { uiStore } from "@/lib/ui-store";
@@ -56,10 +55,11 @@ function useScrollChrome() {
 
 function Brand({ href, onClick }: { href: string; onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void }) {
   return (
-    <a href={href} onClick={onClick} aria-label={site.a11y.home} className="brand flex min-h-11 items-center gap-2 rounded-full pr-1">
-      <Image src="/brand/logo-mark.png" alt="" width={30} height={30} className="h-[30px] w-[30px]" />
-      <span className="display text-[19px] leading-none tracking-[0.01em] text-care-blue" aria-hidden>
-        {site.wordmark}
+    <a href={href} onClick={onClick} aria-label={a11y.home} className="brand flex min-h-11 items-center gap-2 rounded-full pr-1">
+      {/* above the fold on every page: load with the page, not on scroll */}
+      <Image src="/brand/logo-mark.png" alt="" width={30} height={30} loading="eager" className="brand-mark h-[30px] w-[30px]" />
+      <span className="brand-word display text-[19px] leading-none tracking-[0.01em]" aria-hidden>
+        {WORDMARK}
       </span>
     </a>
   );
@@ -172,7 +172,7 @@ export function Nav() {
         >
           <Brand href={to("#top")} />
           <ul className="mx-auto flex items-center">
-            {site.nav.links.map((link) => {
+            {nav.links.map((link) => {
               const isActive = active === link.href.slice(1);
               return (
                 <li key={link.href}>
@@ -190,28 +190,16 @@ export function Nav() {
               );
             })}
           </ul>
-          <WhatsAppButton message={site.messages.general} size="md" className="nav-cta">
-            {site.nav.cta}
+          <WhatsAppButton message={messages.general} size="md" className="nav-cta">
+            {nav.cta}
           </WhatsAppButton>
         </nav>
       </header>
 
       {/* Mobile: pill bar that opens into a sheet */}
       <div className="lg:hidden">
-        <AnimatePresence>
-          {open ? (
-            <m.div
-              key="scrim"
-              className="mnav-scrim"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.24, ease: "easeOut" }}
-              onClick={() => close(true)}
-              aria-hidden
-            />
-          ) : null}
-        </AnimatePresence>
+        {/* fades with CSS (shell.css); hidden and out of the way while the menu is closed */}
+        <div className="mnav-scrim" data-open={open} onClick={() => close(true)} aria-hidden />
 
         <div
           ref={dialogRef}
@@ -219,7 +207,7 @@ export function Nav() {
           data-open={open}
           role={open ? "dialog" : undefined}
           aria-modal={open ? true : undefined}
-          aria-label={open ? site.a11y.menu : undefined}
+          aria-label={open ? a11y.menu : undefined}
         >
           <m.div
             ref={sheetRef}
@@ -235,7 +223,7 @@ export function Nav() {
           >
             <nav aria-label="Mobile">
               <ul className="mnav-links">
-                {site.nav.links.map((link, index) => {
+                {nav.links.map((link, index) => {
                   const isActive = active === link.href.slice(1);
                   return (
                     <m.li
@@ -259,12 +247,12 @@ export function Nav() {
             </nav>
             <div className="mnav-actions">
               <div className="grid grid-cols-2 gap-2.5">
-                <WhatsAppButton message={site.messages.general} className="w-full">
-                  {site.nav.whatsapp}
+                <WhatsAppButton message={messages.general} className="w-full">
+                  {nav.whatsapp}
                 </WhatsAppButton>
-                <a href={site.contact.phones[0].href} className="btn btn-lg btn-secondary w-full">
+                <a href={contact.phones[0].href} className="btn btn-lg btn-secondary w-full">
                   <Phone size={20} weight="regular" aria-hidden />
-                  {site.nav.call}
+                  {nav.call}
                 </a>
               </div>
               <div className="mt-4 flex items-center">
@@ -287,7 +275,7 @@ export function Nav() {
               className="mnav-button"
               aria-expanded={open}
               aria-controls="site-menu"
-              aria-label={open ? site.a11y.closeMenu : site.a11y.openMenu}
+              aria-label={open ? a11y.closeMenu : a11y.openMenu}
               onPointerDown={() => void loadAnimate()}
               onClick={() => (open ? close(true) : openMenu())}
             >
