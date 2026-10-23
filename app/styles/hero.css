@@ -235,16 +235,20 @@
       overflow: clip;
     }
     /* The car fills 29 to 96% of its frame and the roof legs stand at 26.2% and 98.8%.
-       The frame covers the hero when it can, but never so wide that a leg leaves the screen. */
+       The frame covers the hero when it can, but never so wide that a leg leaves the screen,
+       and never so tall that the roof meets the nav on a short screen (80px clear at the top).
+       When the height decides, the picture sits centred in the room right of the copy. */
     .hero-frame {
       --cl: max(var(--gutter), calc((100% - 1440px) / 2 + var(--gutter)));
       --bumper: calc(var(--cl) + var(--text-w) + 24px);
       --cover: max(100%, calc(var(--hero-h) * 16 / 9));
       --fit: calc((100% - var(--bumper) - var(--gutter)) / 0.726);
-      --w: min(var(--cover), var(--fit));
+      --fit-h: calc((var(--hero-h) - var(--facts-h) - 80px) * 16 / 9);
+      --w: min(var(--cover), var(--fit), var(--fit-h));
+      --spare: calc(100% - var(--bumper) - var(--gutter) - 0.726 * var(--w));
       position: absolute;
       bottom: var(--facts-h);
-      left: calc(var(--bumper) - 0.262 * var(--w));
+      left: calc(var(--bumper) + var(--spare) / 2 - 0.262 * var(--w));
       width: var(--w);
       aspect-ratio: 16 / 9;
       overflow: visible;
