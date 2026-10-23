@@ -260,7 +260,7 @@ export const site = {
       alt: "An installer fitting film to a white SUV in a housing society parking bay",
     },
     brand: { title: "Your brand, your shade", body: "Garware or GSWF, in road-legal shades." },
-    warranty: { years: "3 and 5", title: "year warranty", body: "On selected products. Ask us for the terms." },
+    warranty: { years: ["3", "5"], joiner: "and", title: "year warranty", body: "On selected products. Ask us for the terms." },
     craft: { title: "Premium products. Expert workmanship.", body: "Every car gets attention to every detail." },
     whatsapp: { title: "Message us anytime.", cta: "Chat on WhatsApp" },
   },
@@ -313,7 +313,8 @@ export const site = {
     contactTitle: "Call or write",
     socialTitle: "Follow",
     map: {
-      title: "Dhankawadi, Pune",
+      title: "The Car Care",
+      area: "Hatti Chowk, Dhankawadi, Pune",
       load: "Show the map",
       open: "Open in Google Maps",
       iframeTitle: "Map showing The Car Care in Dhankawadi, Pune",

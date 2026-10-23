@@ -1,3 +1,107 @@
-/* footer */
+/* Footer and the giant outlined name */
 @layer components {
+  .footer {
+    padding-top: clamp(72px, 8vw, 140px);
+    background: var(--color-porcelain);
+    overflow: clip;
+    container-type: inline-size;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 40px 24px;
+  }
+  .footer-tagline {
+    max-width: 22ch;
+    text-wrap: balance;
+  }
+  .footer-lockup {
+    width: 190px;
+    height: auto;
+  }
+  .footer-h {
+    margin-bottom: 14px;
+    font-size: var(--text-small);
+    font-weight: 650;
+    color: var(--color-ink-soft);
+  }
+  .footer-col ul {
+    display: grid;
+    gap: 6px;
+  }
+  /* phones: the eight section links sit in two short columns */
+  .footer-explore ul {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 24px;
+  }
+  .footer-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 32px;
+    color: var(--color-ink);
+    transition: color 180ms ease;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .footer-link:hover {
+      color: var(--color-care-blue);
+    }
+  }
+  @media (min-width: 640px) {
+    .footer-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .footer-brand,
+    .footer-visit {
+      grid-column: 1 / -1;
+    }
+    .footer-explore ul {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+  @media (min-width: 1024px) {
+    .footer-grid {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: var(--gap);
+    }
+    .footer-brand {
+      grid-column: 1 / span 3;
+    }
+    .footer-explore {
+      grid-column: 4 / span 2;
+    }
+    .footer-contact {
+      grid-column: 6 / span 3;
+    }
+    .footer-visit {
+      grid-column: 9 / span 4;
+    }
+  }
+
+  /* The wordmark set edge to edge: its advance is 1/0.1933 of the font size, so this fills the width between the gutters */
+  .footer-name {
+    position: relative;
+    margin-top: clamp(56px, 7vw, 120px);
+    padding-inline: var(--gutter);
+    font-size: calc((100vw - 2 * var(--gutter)) * 0.19);
+    font-size: calc((100cqi - 2 * var(--gutter)) * 0.192);
+    line-height: 0.86;
+    white-space: nowrap;
+    letter-spacing: -0.005em;
+  }
+  .footer-name-outline {
+    display: block;
+    color: transparent;
+    -webkit-text-stroke: 1.5px var(--color-care-blue);
+  }
+  .footer-name-fill {
+    position: absolute;
+    inset: 0;
+    padding-inline: var(--gutter);
+    color: var(--color-care-blue);
+  }
+  .footer-legal {
+    padding-block: 28px 36px;
+    font-size: var(--text-small);
+    color: var(--color-ink-soft);
+  }
 }

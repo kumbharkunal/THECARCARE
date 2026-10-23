@@ -1,3 +1,92 @@
-/* faq */
+/* FAQ accordion */
 @layer components {
+  .faq {
+    background: var(--color-porcelain);
+  }
+  .faq-grid {
+    display: grid;
+    gap: 40px;
+  }
+  .faq-list {
+    border-top: 1px solid var(--color-rule);
+  }
+  .faq-item {
+    border-bottom: 1px solid var(--color-rule);
+  }
+  .faq-q {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    width: 100%;
+    min-height: 64px;
+    padding: 18px 0;
+    text-align: left;
+    font-size: var(--text-lead);
+    font-weight: 650;
+    font-variation-settings: "wdth" 84;
+    line-height: 1.25;
+    color: var(--color-ink);
+    cursor: pointer;
+  }
+  .faq-icon {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    background: var(--color-mist);
+    transition:
+      transform 300ms var(--ease-squeegee),
+      background-color 180ms ease;
+  }
+  .faq-item[data-open="true"] .faq-icon {
+    transform: rotate(45deg);
+    background: var(--color-care-blue);
+    color: var(--color-paper);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .faq-q:hover {
+      color: var(--color-care-blue);
+    }
+  }
+  .faq-panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 300ms var(--ease-squeegee);
+  }
+  .faq-item[data-open="true"] .faq-panel,
+  html:not(.js) .faq-panel {
+    grid-template-rows: 1fr;
+  }
+  .faq-panel-inner {
+    overflow: hidden;
+  }
+  .faq-panel-inner p {
+    max-width: 62ch;
+    padding: 0 56px 22px 0;
+    color: var(--color-ink);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .faq-panel,
+    .faq-icon {
+      transition: none;
+    }
+  }
+  @media (min-width: 1024px) {
+    .faq-grid {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: var(--gap);
+      align-items: start;
+    }
+    .faq-head {
+      grid-column: 1 / span 4;
+      position: sticky;
+      top: calc(var(--nav-offset) + 40px);
+    }
+    .faq-list {
+      grid-column: 6 / span 7;
+    }
+  }
 }

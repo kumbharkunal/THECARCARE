@@ -19,15 +19,15 @@ function HeroPicture() {
   if (!wide && !tall) return null;
   const common = { alt: site.hero.imageAlt, quality: 75, loading: "eager" as const, fetchPriority: "high" as const };
   const desktop = wide
-    ? getImageProps({ ...common, src: wide.src, width: wide.width, height: wide.height, sizes: "(min-width: 1024px) 116vw, 100vw" }).props
+    ? getImageProps({ ...common, src: wide.src, width: wide.width, height: wide.height, sizes: "(min-width: 1024px) 116vw, 92vw" }).props
     : null;
   const mobile = tall
-    ? getImageProps({ ...common, src: tall.src, width: tall.width, height: tall.height, sizes: "(min-width: 1024px) 116vw, calc(100vw - 32px)" }).props
+    ? getImageProps({ ...common, src: tall.src, width: tall.width, height: tall.height, sizes: "calc(100vw - 32px)" }).props
     : null;
   const fallback = mobile ?? desktop!;
   return (
     <picture>
-      {desktop ? <source media="(min-width: 1024px)" srcSet={desktop.srcSet} sizes={desktop.sizes} /> : null}
+      {desktop ? <source media="(min-width: 640px)" srcSet={desktop.srcSet} sizes={desktop.sizes} /> : null}
       {/* eslint-disable-next-line jsx-a11y/alt-text -- alt comes from the art-directed next/image props */}
       <img {...fallback} className="hero-img" />
     </picture>
@@ -85,7 +85,7 @@ export function Hero() {
         <div className="hero-frame">
           <div className="hero-scale">
             <HeroPicture />
-            <svg className="hero-roof hero-roof-wide" viewBox="0 0 1600 900" aria-hidden>
+            <svg className="hero-roof hero-roof-wide" viewBox="0 0 1600 900" preserveAspectRatio="xMaxYMid slice" aria-hidden>
               <ChevronRoof id="roof-wide" {...WIDE_ROOF} />
             </svg>
             <svg className="hero-roof hero-roof-tall" viewBox="0 0 900 1200" aria-hidden>
