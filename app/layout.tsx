@@ -60,7 +60,7 @@ export const viewport: Viewport = {
 };
 
 // Runs before first paint: hidden pre-reveal states only apply once the js class is set.
-// After the load event, fonts-late attaches the below-the-fold faces (globals.css).
+// After the load event, fonts-late attaches the below-the-fold faces (end of globals.css).
 const JS_FLAG =
   "var d=document.documentElement;d.classList.add('js');addEventListener('load',function(){d.classList.add('fonts-late')})";
 

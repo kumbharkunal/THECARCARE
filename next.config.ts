@@ -29,8 +29,6 @@ const securityHeaders = [
 const nextConfig: NextConfig = {
   cacheComponents: true,
   partialPrefetching: true,
-  // One page, Tailwind CSS: inlining the stylesheet removes the render-blocking request.
-  experimental: { inlineCss: true },
   images: {
     formats: ["image/avif", "image/webp"],
     qualities: [75, 82],

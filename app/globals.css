@@ -51,10 +51,10 @@
 
 @theme inline {
   --font-sans: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
-  /* Mono numerals and the Marathi line sit far below the fold: their faces attach after the
-     load event (html.fonts-late, set in layout.tsx) so they never compete with the hero. */
-  --font-mono: var(--late-mono, ui-monospace), ui-monospace, SFMono-Regular, Menlo, monospace;
-  --font-deva: var(--late-deva, "Nirmala UI"), "Nirmala UI", "Noto Sans Devanagari", sans-serif;
+  /* Mono numerals and the Marathi line sit far below the fold: their web faces attach after the
+     load event (html.fonts-late, end of this file) so they never compete with the hero. */
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-deva: "Nirmala UI", "Noto Sans Devanagari", sans-serif;
 }
 
 /* -------------------------------------------------------------------- base */
@@ -311,7 +311,11 @@
   }
 }
 
-html.fonts-late {
-  --late-mono: var(--font-geist-mono);
-  --late-deva: var(--font-anek);
+/* Set by the head script in layout.tsx after the load event. Descendant selectors, not root
+   custom properties, so only these few elements restyle when the class lands. */
+html.fonts-late :is(.font-mono, .chip-min) {
+  font-family: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+html.fonts-late .visit-marathi {
+  font-family: var(--font-anek), "Nirmala UI", "Noto Sans Devanagari", sans-serif;
 }

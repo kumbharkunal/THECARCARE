@@ -42,6 +42,59 @@ const UV_RAYS = [
   [905, 151],
 ].map(([x, y]) => ({ x2: x, y2: y, x1: x - 92, y1: y - 150 }));
 
+// Everything but the glass is the same in every car and never changes after render, so it is
+// written once as markup. React then hydrates a handful of elements per car instead of about
+// eighty: the page draws six of them. The drawing is built from the constants above, never from
+// user input.
+const xy = (n: number) => n.toFixed(1);
+const STATIC_LAYERS = [
+  // interior, seen through the glass (detailing)
+  '<g class="z-interior">',
+  '<path d="M512 236 C546 224 586 218 626 218 L636 236"/>',
+  '<ellipse cx="628" cy="198" rx="8" ry="22" transform="rotate(-16 628 198)"/>',
+  '<path d="M704 230 C698 200 698 172 708 154 C712 146 722 144 726 152 C730 172 728 200 722 230"/>',
+  '<path d="M709 148 C709 136 726 136 726 148"/>',
+  '<path d="M872 226 C868 198 870 176 882 162 C888 156 896 158 898 166 C900 186 898 206 894 226"/>',
+  '<path d="M880 160 C881 148 897 149 897 161"/>',
+  "</g>",
+  // body
+  '<g class="car-lines">',
+  `<path d="${BODY}" class="car-body"/>`,
+  `<path d="${GLASS.front}"/>`,
+  `<path d="${GLASS.rear}"/>`,
+  '<path d="M734 124 L750 124 L746 228 L730 229 Z"/>',
+  `<path d="${FRONT_DOOR}"/>`,
+  '<path d="M739 229 L741 372"/>',
+  `<path d="${REAR_DOOR}"/>`,
+  '<path d="M644 258 L680 256 M866 250 L900 248"/>',
+  `<path d="${MIRROR}"/>`,
+  '<path d="M116 296 C146 290 180 286 214 286" class="car-lamp"/>',
+  '<path d="M1062 222 L1096 230" class="car-lamp"/>',
+  '<path d="M106 344 L158 346"/>',
+  '<path d="M356 354 L794 354" class="car-crease"/>',
+  '<path d="M168 312 A100 100 0 0 1 356 312 M794 312 A100 100 0 0 1 982 312"/>',
+  ...WHEELS.map(
+    (cx) =>
+      `<g><circle cx="${cx}" cy="${WHEEL_Y}" r="74"/><circle cx="${cx}" cy="${WHEEL_Y}" r="52"/><circle cx="${cx}" cy="${WHEEL_Y}" r="10"/>` +
+      SPOKES.map(
+        (a) =>
+          `<line x1="${xy(cx + Math.cos(a) * 15)}" y1="${xy(WHEEL_Y + Math.sin(a) * 15)}" x2="${xy(cx + Math.cos(a) * 50)}" y2="${xy(WHEEL_Y + Math.sin(a) * 50)}"/>`,
+      ).join("") +
+      "</g>",
+  ),
+  "</g>",
+  // PPF: high-impact zones
+  `<g class="z-ppf">${PPF_PATHS.map((d) => `<path d="${d}"/>`).join("")}</g>`,
+  // ceramic: gloss along the whole body line
+  `<g class="z-gloss"><path d="${BODY}" class="z-gloss-line"/></g>`,
+].join("");
+
+// sun film: UV rays stopping at the film
+const UV_LAYER = UV_RAYS.map(
+  (ray) =>
+    `<g><line x1="${ray.x1}" y1="${ray.y1}" x2="${ray.x2}" y2="${ray.y2}" class="z-uv-ray"/><circle cx="${ray.x2}" cy="${ray.y2}" r="3.5" class="z-uv-stop"/></g>`,
+).join("");
+
 export function CarElevation({
   zone,
   id,
@@ -77,7 +130,7 @@ export function CarElevation({
       {/* ground */}
       <line x1="140" y1="420" x2="1070" y2="420" className="car-ground" />
 
-      {/* glass panels (tint lives here) */}
+      {/* glass panels (tint lives here, per zone in the shade guide) */}
       <g className="z-glass-group">
         {(Object.keys(GLASS) as GlassZone[]).map((key) => (
           <path
@@ -91,73 +144,8 @@ export function CarElevation({
         ))}
       </g>
 
-      {/* interior, seen through the glass (detailing) */}
-      <g className="z-interior">
-        <path d="M512 236 C546 224 586 218 626 218 L636 236" />
-        <ellipse cx="628" cy="198" rx="8" ry="22" transform="rotate(-16 628 198)" />
-        <path d="M704 230 C698 200 698 172 708 154 C712 146 722 144 726 152 C730 172 728 200 722 230" />
-        <path d="M709 148 C709 136 726 136 726 148" />
-        <path d="M872 226 C868 198 870 176 882 162 C888 156 896 158 898 166 C900 186 898 206 894 226" />
-        <path d="M880 160 C881 148 897 149 897 161" />
-      </g>
-
-      {/* body */}
-      <g className="car-lines">
-        <path d={BODY} className="car-body" />
-        <path d={GLASS.front} />
-        <path d={GLASS.rear} />
-        <path d="M734 124 L750 124 L746 228 L730 229 Z" />
-        <path d={FRONT_DOOR} />
-        <path d="M739 229 L741 372" />
-        <path d={REAR_DOOR} />
-        <path d="M644 258 L680 256 M866 250 L900 248" />
-        <path d={MIRROR} />
-        <path d="M116 296 C146 290 180 286 214 286" className="car-lamp" />
-        <path d="M1062 222 L1096 230" className="car-lamp" />
-        <path d="M106 344 L158 346" />
-        <path d="M356 354 L794 354" className="car-crease" />
-        <path d="M168 312 A100 100 0 0 1 356 312 M794 312 A100 100 0 0 1 982 312" />
-        {WHEELS.map((cx) => (
-          <g key={cx}>
-            <circle cx={cx} cy={WHEEL_Y} r="74" />
-            <circle cx={cx} cy={WHEEL_Y} r="52" />
-            <circle cx={cx} cy={WHEEL_Y} r="10" />
-            {SPOKES.map((angle) => (
-              <line
-                key={angle}
-                x1={(cx + Math.cos(angle) * 15).toFixed(1)}
-                y1={(WHEEL_Y + Math.sin(angle) * 15).toFixed(1)}
-                x2={(cx + Math.cos(angle) * 50).toFixed(1)}
-                y2={(WHEEL_Y + Math.sin(angle) * 50).toFixed(1)}
-              />
-            ))}
-          </g>
-        ))}
-      </g>
-
-      {/* PPF: high-impact zones */}
-      <g className="z-ppf">
-        {PPF_PATHS.map((d) => (
-          <path key={d} d={d} />
-        ))}
-      </g>
-
-      {/* ceramic: gloss along the whole body line */}
-      <g className="z-gloss">
-        <path d={BODY} className="z-gloss-line" />
-      </g>
-
-      {/* sun film: UV rays stopping at the film */}
-      {showRays ? (
-        <g className="z-uv">
-          {UV_RAYS.map((ray) => (
-            <g key={`${ray.x2}`}>
-              <line x1={ray.x1} y1={ray.y1} x2={ray.x2} y2={ray.y2} className="z-uv-ray" />
-              <circle cx={ray.x2} cy={ray.y2} r="3.5" className="z-uv-stop" />
-            </g>
-          ))}
-        </g>
-      ) : null}
+      <g dangerouslySetInnerHTML={{ __html: STATIC_LAYERS }} />
+      {showRays ? <g className="z-uv" dangerouslySetInnerHTML={{ __html: UV_LAYER }} /> : null}
       {children}
     </svg>
   );

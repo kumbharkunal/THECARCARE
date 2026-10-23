@@ -154,11 +154,13 @@ export function CompareSlider({ slot, alt, sizes, mode, label, beforeLabel, afte
           {mode === "ceramic" ? (
             <>
               <div className="compare-haze" />
-              <svg className="compare-swirls" viewBox={`0 0 1000 ${Math.round(1000 * (img.height / img.width))}`} preserveAspectRatio="none">
-                {arcs.map((arc, i) => (
-                  <path key={i} d={arc.d} style={{ opacity: arc.o }} />
-                ))}
-              </svg>
+              {/* 46 fixed arcs: written as markup so hydration skips them */}
+              <svg
+                className="compare-swirls"
+                viewBox={`0 0 1000 ${Math.round(1000 * (img.height / img.width))}`}
+                preserveAspectRatio="none"
+                dangerouslySetInnerHTML={{ __html: arcs.map((arc) => `<path d="${arc.d}" opacity="${arc.o.toFixed(3)}"/>`).join("") }}
+              />
             </>
           ) : (
             <div className="compare-bloom" style={{ "--sx": `${focus.x}%`, "--sy": `${focus.y}%` } as React.CSSProperties} />
