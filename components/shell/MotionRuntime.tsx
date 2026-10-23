@@ -26,8 +26,8 @@ export default function MotionRuntime() {
     };
   }, [setPlugins]);
 
-  // Sections far down are drawn only as they near the screen (content-visibility), so the page
-  // grows as you scroll: re-measure every armed trigger when it does.
+  // The page changes height after load (photos, web fonts, FAQ answers opening): re-measure every
+  // armed trigger when it does.
   useEffect(() => {
     const main = document.getElementById("main");
     if (!loaded || !main) return;
