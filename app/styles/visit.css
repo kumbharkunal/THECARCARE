@@ -104,7 +104,7 @@
   .visit-row-icon {
     flex: none;
     color: var(--color-care-blue);
-    transition: transform 300ms var(--ease-squeegee);
+    transition: transform 200ms var(--ease-squeegee);
   }
   @media (hover: hover) and (pointer: fine) {
     a.visit-row:hover .visit-row-text {
@@ -206,7 +206,7 @@
     top: 57.5%;
     color: var(--color-care-blue);
     transform: translate(-50%, -96%);
-    transition: transform 300ms var(--ease-squeegee);
+    transition: transform 200ms var(--ease-squeegee);
   }
   @media (min-width: 640px) {
     .map-pin {
@@ -339,7 +339,7 @@
     width: calc(50% - 6px);
     border-radius: 999px;
     background: var(--color-paper);
-    transition: transform 360ms var(--ease-squeegee);
+    transition: transform 240ms var(--ease-squeegee);
   }
   .segmented[data-where="doorstep"] .segment-pill {
     transform: translateX(calc(100% + 4px));

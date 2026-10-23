@@ -242,7 +242,7 @@ export function Nav() {
                       key={link.href}
                       initial={reduced ? false : { opacity: 0, transform: "translateY(16px)" }}
                       animate={open ? { opacity: 1, transform: "translateY(0px)" } : { opacity: 0, transform: "translateY(8px)" }}
-                      transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1], delay: open ? 0.08 + index * 0.05 : 0 }}
+                      transition={open ? { duration: 0.42, ease: [0.22, 1, 0.36, 1], delay: 0.08 + index * 0.05 } : { duration: 0.16, ease: [0.22, 1, 0.36, 1] }}
                     >
                       <a
                         href={to(link.href)}

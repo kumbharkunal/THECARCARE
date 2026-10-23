@@ -2,7 +2,7 @@
 @layer components {
   .nav-desktop {
     transition:
-      transform 380ms var(--ease-squeegee),
+      transform 240ms var(--ease-squeegee),
       background-color 300ms ease;
   }
   .nav-desktop[data-hidden="true"] {
@@ -41,7 +41,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 0 6px 0 12px;
-    transition: transform 380ms var(--ease-squeegee);
+    transition: transform 240ms var(--ease-squeegee);
   }
   .mnav-bar[data-hidden="true"] {
     transform: translateY(calc(-100% - 24px - env(safe-area-inset-top)));
@@ -186,7 +186,7 @@
     pointer-events: none;
     transition:
       opacity 240ms ease,
-      transform 360ms var(--ease-squeegee);
+      transform 280ms var(--ease-squeegee);
   }
   .fab[data-visible="true"] {
     opacity: 1;
