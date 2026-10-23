@@ -178,7 +178,7 @@ export function Nav() {
                 <li key={link.href}>
                   <a
                     href={to(link.href)}
-                    className="nav-link relative flex h-10 items-center rounded-full px-3.5 text-[15px] font-medium"
+                    className="nav-link relative flex h-10 items-center rounded-full px-3.5 text-small font-medium"
                     aria-current={isActive ? "true" : undefined}
                   >
                     {isActive ? (

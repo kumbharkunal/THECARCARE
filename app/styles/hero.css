@@ -16,13 +16,15 @@
   }
   .hero-title {
     margin: 0;
+    font-size: var(--text-display);
+    line-height: 0.9;
     color: var(--color-ink);
     text-wrap: initial;
   }
   .h1-lead {
     display: block;
     margin-bottom: 0.35em;
-    font-size: var(--text-h1lead);
+    font-size: var(--text-lead);
     line-height: 1.1;
     font-weight: 600;
     font-variation-settings: "wdth" 82;
@@ -89,7 +91,7 @@
   }
   .hero-frame {
     position: relative;
-    aspect-ratio: 3 / 4;
+    aspect-ratio: 4 / 3;
     overflow: clip;
     border-radius: var(--radius-card);
     background: var(--color-mist);
@@ -113,9 +115,7 @@
     height: 100%;
     overflow: visible;
   }
-  .hero-roof-wide {
-    display: none;
-  }
+
   .hero-sweep,
   .hero-lamp {
     position: absolute;
@@ -154,19 +154,30 @@
     );
   }
 
-  /* Tablets: the wide photo in a 4:3 card, cropped from the left so the car sits centred */
-  @media (min-width: 640px) and (max-width: 1023px) {
-    .hero-frame {
-      aspect-ratio: 4 / 3;
+  /* Phones and tablets: headline and actions, then the car in a 4:3 card cropped from the left
+     so it sits centred, then the facts. The copy wrapper steps aside so the three can reorder. */
+  @media (max-width: 1023px) {
+    .hero {
+      display: flex;
+      flex-direction: column;
+    }
+    .hero-copy {
+      display: contents;
+    }
+    .hero-text {
+      order: 1;
+      padding: calc(env(safe-area-inset-top) + 112px) var(--gutter) 0;
+    }
+    .hero-media {
+      order: 2;
+    }
+    .hero-facts {
+      order: 3;
+      margin-top: 18px;
+      padding-inline: var(--gutter);
     }
     .hero-img {
       object-position: 100% 50%;
-    }
-    .hero-roof-wide {
-      display: block;
-    }
-    .hero-roof-tall {
-      display: none;
     }
   }
 
@@ -244,12 +255,6 @@
         linear-gradient(90deg, transparent 0, #000 10%, #000 95%, transparent 100%),
         linear-gradient(180deg, transparent 0, #000 20%, #000 93%, transparent 100%);
       mask-composite: intersect;
-    }
-    .hero-roof-wide {
-      display: block;
-    }
-    .hero-roof-tall {
-      display: none;
     }
     .hero-sweep {
       width: 40%;

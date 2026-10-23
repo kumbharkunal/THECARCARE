@@ -262,7 +262,7 @@ export const site = {
     },
     brand: { title: "Your brand, your shade", body: "Garware or GSWF, in road-legal shades." },
     warranty: { years: ["3", "5"], joiner: "and", title: "year warranty", body: "On selected products. Ask us for the terms." },
-    craft: { title: "Premium products. Expert workmanship.", body: "Every car gets attention to every detail." },
+    craft: { title: "Expert workmanship.", body: "Premium products, and every car gets attention to every detail." },
     whatsapp: { title: "Message us anytime.", cta: "Chat on WhatsApp" },
   },
 

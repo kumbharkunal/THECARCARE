@@ -34,8 +34,12 @@
   --text-head: clamp(2.25rem, 1.2rem + 3.6vw, 5rem);
   --text-head--line-height: 0.95;
   --text-head--letter-spacing: -0.01em;
-  --text-h1lead: clamp(1.375rem, 1rem + 1.2vw, 2rem);
-  --text-h1lead--line-height: 1.1;
+  /* tile and offer titles */
+  --text-sub: clamp(1.5rem, 1rem + 1.3vw, 2.25rem);
+  --text-sub--line-height: 1;
+  /* card, step, form and ticker titles */
+  --text-h3: clamp(1.75rem, 1rem + 2.2vw, 3rem);
+  --text-h3--line-height: 1;
   --text-lead: clamp(1.25rem, 1.1rem + 0.7vw, 1.625rem);
   --text-lead--line-height: 1.25;
   --text-body: clamp(1rem, 0.96rem + 0.2vw, 1.125rem);
@@ -62,7 +66,7 @@
   :root {
     --gutter: clamp(16px, 4vw, 48px);
     --gap: clamp(12px, 1.6vw, 24px);
-    --section-y: clamp(4.5rem, 3rem + 6vw, 12.5rem);
+    --section-y: clamp(3rem, 2rem + 4.6vw, 7rem);
     --nav-offset: 84px;
     --ease-squeegee: cubic-bezier(0.22, 1, 0.36, 1);
     color-scheme: light;
@@ -329,35 +333,35 @@ main > section:nth-of-type(n + 3),
   /* close to each section's real height, measured per breakpoint, so the page barely moves */
   contain-intrinsic-size: auto var(--drawn-h, 1600px);
 }
-#services { --drawn-h: 2300px; }
-#sun-film { --drawn-h: 4000px; }
-#ppf { --drawn-h: 1700px; }
-#ceramic { --drawn-h: 1060px; }
-#why { --drawn-h: 1100px; }
-#process { --drawn-h: 750px; }
-#faq { --drawn-h: 1070px; }
-#visit { --drawn-h: 2430px; }
-#site-footer { --drawn-h: 1190px; }
+#services { --drawn-h: 2230px; }
+#sun-film { --drawn-h: 3950px; }
+#ppf { --drawn-h: 1680px; }
+#ceramic { --drawn-h: 1040px; }
+#why { --drawn-h: 1080px; }
+#process { --drawn-h: 690px; }
+#faq { --drawn-h: 1010px; }
+#visit { --drawn-h: 2400px; }
+#site-footer { --drawn-h: 1180px; }
 @media (min-width: 768px) {
-  #services { --drawn-h: 3000px; }
-  #sun-film { --drawn-h: 5300px; }
-  #ppf { --drawn-h: 2430px; }
-  #ceramic { --drawn-h: 1340px; }
-  #why { --drawn-h: 1370px; }
-  #process { --drawn-h: 830px; }
-  #faq { --drawn-h: 1020px; }
-  #visit { --drawn-h: 2590px; }
+  #services { --drawn-h: 2940px; }
+  #sun-film { --drawn-h: 5260px; }
+  #ppf { --drawn-h: 2380px; }
+  #ceramic { --drawn-h: 1290px; }
+  #why { --drawn-h: 1320px; }
+  #process { --drawn-h: 780px; }
+  #faq { --drawn-h: 970px; }
+  #visit { --drawn-h: 2510px; }
 }
 @media (min-width: 1024px) {
-  #services { --drawn-h: 2900px; }
-  #sun-film { --drawn-h: 4200px; }
-  #ppf { --drawn-h: 1500px; }
-  #ceramic { --drawn-h: 960px; }
-  #why { --drawn-h: 1060px; }
-  #process { --drawn-h: 1060px; }
-  #faq { --drawn-h: 860px; }
-  #visit { --drawn-h: 1750px; }
-  #site-footer { --drawn-h: 800px; }
+  #services { --drawn-h: 3010px; }
+  #sun-film { --drawn-h: 4360px; }
+  #ppf { --drawn-h: 1630px; }
+  #ceramic { --drawn-h: 890px; }
+  #why { --drawn-h: 1020px; }
+  #process { --drawn-h: 1080px; }
+  #faq { --drawn-h: 800px; }
+  #visit { --drawn-h: 1700px; }
+  #site-footer { --drawn-h: 860px; }
 }
 html.cv-off main > section,
 html.cv-off #site-footer {

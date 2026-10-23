@@ -24,7 +24,7 @@
   }
   .ticker-item {
     padding-inline: clamp(18px, 2.2vw, 34px);
-    font-size: clamp(1.75rem, 1rem + 2.6vw, 3.5rem);
+    font-size: var(--text-h3);
     line-height: 1.05;
     white-space: nowrap;
     color: var(--color-ink);
@@ -96,7 +96,7 @@
     color: var(--color-ink);
   }
   .visit-row-text {
-    font-size: clamp(2.125rem, 0.9rem + 5.2vw, 5.75rem);
+    font-size: var(--text-head);
     line-height: 1;
     letter-spacing: -0.01em;
     transition: color 180ms ease;
@@ -229,7 +229,7 @@
     background: var(--color-paper);
   }
   .map-title {
-    font-size: 1.5rem;
+    font-size: var(--text-lead);
     line-height: 1;
   }
   .map-address {
@@ -257,7 +257,7 @@
     background: var(--color-porcelain);
   }
   .enquiry-title {
-    font-size: clamp(1.875rem, 1rem + 2.2vw, 2.875rem);
+    font-size: var(--text-h3);
     line-height: 1;
   }
   .enquiry-form {

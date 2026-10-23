@@ -69,10 +69,16 @@
       top: calc(var(--nav-offset) + var(--i) * 14px);
       padding-bottom: 5svh;
     }
+    /* one row exactly the card's height: a loaded 3:4 photo must not stretch it past the clip */
     .benefit-card {
       grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+      grid-template-rows: minmax(0, 1fr);
       height: min(74svh, 660px);
       transform-origin: 50% 0%;
+    }
+    .benefit-media {
+      min-height: 0;
+      overflow: hidden;
     }
     .benefit-media,
     .benefit-media .compare,
@@ -91,11 +97,15 @@
       flex-direction: column;
       padding: clamp(32px, 4vw, 72px);
     }
+    /* the next card slides up from below, so the words sit at the top and stay readable longest;
+       the numeral is the folio at the foot */
     .benefit-n {
+      order: 3;
+      margin-top: auto;
       font-size: clamp(5rem, 2rem + 6vw, 9rem);
     }
     .benefit-title {
-      margin-top: auto;
+      margin-top: 0;
       font-size: var(--text-head);
     }
     .benefit-line {
@@ -116,7 +126,7 @@
     background: var(--color-paper);
   }
   .shade-title {
-    font-size: clamp(1.875rem, 1rem + 2.4vw, 3rem);
+    font-size: var(--text-h3);
     line-height: 0.98;
   }
   .shade-readout {
@@ -130,7 +140,7 @@
     display: flex;
     align-items: baseline;
     gap: 10px;
-    font-size: clamp(3rem, 1.8rem + 3vw, 4.75rem);
+    font-size: var(--text-head);
     font-weight: 500;
     line-height: 1;
     letter-spacing: -0.04em;
@@ -196,8 +206,8 @@
     height: 30px;
     margin: -15px 0 0 -22px;
     border-radius: 999px;
+    border: 2px solid var(--color-care-blue);
     background: var(--color-paper);
-    box-shadow: 0 0 0 2px var(--color-care-blue);
     pointer-events: auto;
     cursor: grab;
   }

@@ -175,6 +175,8 @@
     width: 68px;
     height: 68px;
     border-radius: 999px;
+    background: var(--color-paper);
+    box-shadow: var(--shadow-float);
     transition: transform 140ms var(--ease-squeegee);
   }
   .fab:active .fab-ring {

@@ -9,37 +9,28 @@ import { HeroIsland } from "@/components/shell/islands";
 
 const FACT_ICONS = { film: FilmStrip, shield: ShieldCheck, house: HouseLine, sun: Sun } as const;
 
-// Roof geometry in each image's own coordinates. The wide image is a 1600x900 viewBox
-// (car spans 29 to 96% across, 24 to 86% down); the tall one 900x1200 (3 to 96%, 37 to 75%).
+// Roof geometry in the wide image's own coordinates: a 1600x900 viewBox, the car spanning
+// 29 to 96% across and 24 to 86% down. Below 1024px the same picture sits in a 4:3 card cropped
+// from the left (hero.css), so the car is centred and the roof crops with it.
 const WIDE_ROOF = { cx: 1000, apexY: 72, halfWidth: 581, legEnd: 500, stroke: 11 };
-const TALL_ROOF = { cx: 452, apexY: 214, halfWidth: 408, legEnd: 548, stroke: 10 };
 
 function HeroPicture() {
   const wide = getImage("hero-car-wide");
-  const tall = getImage("hero-car-tall");
-  if (!wide && !tall) return null;
-  const common = { alt: site.hero.imageAlt, quality: 75, loading: "eager" as const, fetchPriority: "high" as const };
-  const desktop = wide
-    ? getImageProps({ ...common, src: wide.src, width: wide.width, height: wide.height, sizes: "(min-width: 1024px) 116vw, 92vw" }).props
-    : null;
-  const mobile = tall
-    ? getImageProps({ ...common, src: tall.src, width: tall.width, height: tall.height, sizes: "calc(100vw - 32px)" }).props
-    : null;
-  // The hero photo is the LCP element: preload whichever crop this screen will use from <head>.
-  if (mobile) {
-    preload(mobile.src, { as: "image", imageSrcSet: mobile.srcSet, imageSizes: mobile.sizes, fetchPriority: "high", media: "(max-width: 639px)" });
-  }
-  if (desktop) {
-    preload(desktop.src, { as: "image", imageSrcSet: desktop.srcSet, imageSizes: desktop.sizes, fetchPriority: "high", media: "(min-width: 640px)" });
-  }
-  const fallback = mobile ?? desktop!;
-  return (
-    <picture>
-      {desktop ? <source media="(min-width: 640px)" srcSet={desktop.srcSet} sizes={desktop.sizes} /> : null}
-      {/* eslint-disable-next-line jsx-a11y/alt-text -- alt comes from the art-directed next/image props */}
-      <img {...fallback} className="hero-img" />
-    </picture>
-  );
+  if (!wide) return null;
+  const { props } = getImageProps({
+    alt: site.hero.imageAlt,
+    src: wide.src,
+    width: wide.width,
+    height: wide.height,
+    sizes: "(min-width: 1024px) 116vw, 92vw",
+    quality: 75,
+    loading: "eager",
+    fetchPriority: "high",
+  });
+  // The hero photo is the LCP element: start it from <head>.
+  preload(props.src, { as: "image", imageSrcSet: props.srcSet, imageSizes: props.sizes, fetchPriority: "high" });
+  // eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text -- optimised srcset and alt come from getImageProps; preloaded above
+  return <img {...props} className="hero-img" />;
 }
 
 export function Hero() {
@@ -95,9 +86,6 @@ export function Hero() {
             <HeroPicture />
             <svg className="hero-roof hero-roof-wide" viewBox="0 0 1600 900" preserveAspectRatio="xMaxYMid slice" aria-hidden>
               <ChevronRoof id="roof-wide" {...WIDE_ROOF} />
-            </svg>
-            <svg className="hero-roof hero-roof-tall" viewBox="0 0 900 1200" aria-hidden>
-              <ChevronRoof id="roof-tall" {...TALL_ROOF} />
             </svg>
             <div className="hero-sweep" aria-hidden />
             <div className="hero-lamp" aria-hidden />

@@ -40,7 +40,7 @@ export function WhatsAppFab() {
       data-visible={visible}
       inert={!visible}
     >
-      <span className="fab-ring glass">
+      <span className="fab-ring">
         <SocialMark network="whatsapp" size={56} />
       </span>
     </a>
