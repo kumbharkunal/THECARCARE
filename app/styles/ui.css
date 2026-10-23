@@ -161,7 +161,11 @@
   .chip-min {
     font-family: var(--font-mono);
     font-size: 0.8125rem;
-    opacity: 0.8;
+    color: var(--color-ink-soft);
+  }
+  .chip[aria-checked="true"] .chip-min,
+  .chip[aria-pressed="true"] .chip-min {
+    color: inherit;
   }
 
   .offer {

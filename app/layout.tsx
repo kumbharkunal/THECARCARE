@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
-import { Anek_Devanagari, Archivo, Geist_Mono } from "next/font/google";
+import { Anek_Devanagari, Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "lenis/dist/lenis.css";
@@ -9,7 +10,14 @@ import { Providers } from "@/components/shell/Providers";
 import { Nav } from "@/components/shell/Nav";
 import { WhatsAppFab } from "@/components/shell/WhatsAppFab";
 
-const archivo = Archivo({ subsets: ["latin"], axes: ["wdth"], variable: "--font-archivo", display: "swap" });
+// Archivo cut to the axis ranges and characters the site uses (scripts/build-fonts.mjs).
+const archivo = localFont({
+  src: "../assets/fonts/Archivo-Latin-VF.woff2",
+  weight: "400 800",
+  variable: "--font-archivo",
+  display: "swap",
+  adjustFontFallback: "Arial",
+});
 const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono", display: "swap", preload: false });
 const anek = Anek_Devanagari({
   subsets: ["devanagari"],

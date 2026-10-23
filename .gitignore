@@ -57,3 +57,6 @@ next-env.d.ts
 /.lighthouse/
 /test-results/
 /playwright-report/
+
+# downloaded font sources (scripts/build-fonts.mjs)
+/.cache/
