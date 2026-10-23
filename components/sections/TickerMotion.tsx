@@ -44,6 +44,9 @@ export function TickerMotion({ root, paused }: { root: RefObject<HTMLElement | n
       };
       el.addEventListener("pointerenter", enter);
       el.addEventListener("pointerleave", leave);
+      // Moving content stops while keyboard focus is inside it (the pause button).
+      el.addEventListener("focusin", enter);
+      el.addEventListener("focusout", leave);
 
       // Scroll speed nudges the drift, then it settles back.
       const st = plugins?.ScrollTrigger.create({
@@ -61,6 +64,8 @@ export function TickerMotion({ root, paused }: { root: RefObject<HTMLElement | n
         io.disconnect();
         el.removeEventListener("pointerenter", enter);
         el.removeEventListener("pointerleave", leave);
+        el.removeEventListener("focusin", enter);
+        el.removeEventListener("focusout", leave);
         st?.kill();
         tween.current = null;
         el.removeAttribute("data-moving");

@@ -128,7 +128,7 @@
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    min-height: 40px;
+    min-height: 44px;
     color: var(--color-ink);
     transition: color 180ms ease;
   }

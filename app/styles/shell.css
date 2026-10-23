@@ -121,6 +121,23 @@
     border-radius: 999px;
     background: var(--color-shield-green);
   }
+  /* A phone on its side: links in three columns so the whole sheet, actions included, fits without
+     scrolling (the sheet clips, since it drags to close) */
+  @media (max-height: 540px) {
+    .mnav-sheet {
+      gap: 12px;
+      padding-top: 64px;
+    }
+    .mnav-links {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      column-gap: 16px;
+    }
+    .mnav-link {
+      min-height: 44px;
+      font-size: 1.625rem;
+    }
+  }
   .mnav-grabber {
     align-self: center;
     width: 40px;
@@ -151,6 +168,13 @@
     overflow: hidden;
   }
 
+  /* Official social marks keep their size; the link around each is a full 44px target */
+  .social-link {
+    display: grid;
+    place-items: center;
+    min-width: 44px;
+    min-height: 44px;
+  }
   .fab {
     position: fixed;
     z-index: 40;

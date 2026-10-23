@@ -56,7 +56,7 @@ function useScrollChrome() {
 
 function Brand({ href, onClick }: { href: string; onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void }) {
   return (
-    <a href={href} onClick={onClick} aria-label={site.a11y.home} className="brand flex items-center gap-2 rounded-full pr-1">
+    <a href={href} onClick={onClick} aria-label={site.a11y.home} className="brand flex min-h-11 items-center gap-2 rounded-full pr-1">
       <Image src="/brand/logo-mark.png" alt="" width={30} height={30} className="h-[30px] w-[30px]" />
       <span className="display text-[19px] leading-none tracking-[0.01em] text-care-blue" aria-hidden>
         {site.wordmark}

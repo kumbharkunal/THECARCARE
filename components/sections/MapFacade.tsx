@@ -46,7 +46,7 @@ export function MapFacade() {
           </button>
         )}
       </div>
-      <a href={MAPS_OPEN} target="_blank" rel="noopener noreferrer" className="link mt-3 inline-flex items-center gap-1.5 font-semibold">
+      <a href={MAPS_OPEN} target="_blank" rel="noopener noreferrer" className="link mt-2 inline-flex min-h-11 items-center gap-1.5 font-semibold">
         {map.open}
         <ArrowUpRight size={16} weight="bold" aria-hidden />
         <span className="sr-only"> (opens in a new tab)</span>

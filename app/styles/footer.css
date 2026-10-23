@@ -27,7 +27,6 @@
   }
   .footer-col ul {
     display: grid;
-    gap: 6px;
   }
   /* phones: the eight section links sit in two short columns */
   .footer-explore ul {
@@ -37,7 +36,8 @@
   .footer-link {
     display: inline-flex;
     align-items: center;
-    min-height: 32px;
+    min-height: 44px;
+    min-width: 44px;
     color: var(--color-ink);
     transition: color 180ms ease;
   }

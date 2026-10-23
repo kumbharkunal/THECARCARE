@@ -40,7 +40,7 @@ export function SocialMark({
 export function SocialLinks({ className, size = 28 }: { className?: string; size?: number }) {
   const { instagram, facebook } = site.contact;
   return (
-    <ul className={`flex items-center gap-2 ${className ?? ""}`}>
+    <ul className={`flex items-center ${className ?? ""}`}>
       <li>
         <a
           href={instagram.href}
