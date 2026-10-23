@@ -1,7 +1,6 @@
 "use client";
 
 import { useId, useRef, useState } from "react";
-import { m } from "framer-motion";
 import { Check } from "@phosphor-icons/react/dist/ssr";
 import { site } from "@/content/site";
 import { waLink } from "@/lib/wa";
@@ -114,7 +113,10 @@ export function Enquiry() {
 
         <fieldset className="field">
           <legend>{enquiry.where.label}</legend>
-          <div className="segmented" role="radiogroup" aria-label={enquiry.where.label}>
+          <div className="segmented" role="radiogroup" aria-label={enquiry.where.label} data-where={where}>
+            {/* One pill slides under the chosen option (CSS transform). A Motion layoutId here would
+                measure the form when the motion features load, far below the fold. */}
+            <span className="segment-pill" aria-hidden />
             {(["studio", "doorstep"] as const).map((value) => (
               <button
                 key={value}
@@ -134,7 +136,6 @@ export function Enquiry() {
                 }}
                 data-value={value}
               >
-                {where === value ? <m.span layoutId={`${id}-seg`} className="segment-pill" transition={{ type: "spring", stiffness: 420, damping: 38, mass: 0.9 }} /> : null}
                 <span className="relative">{enquiry.where[value]}</span>
               </button>
             ))}

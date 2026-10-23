@@ -311,7 +311,9 @@
     color: var(--color-danger);
   }
   .segmented {
-    display: inline-flex;
+    position: relative;
+    display: inline-grid;
+    grid-template-columns: 1fr 1fr;
     gap: 4px;
     padding: 4px;
     border-radius: 999px;
@@ -328,11 +330,24 @@
     color: var(--color-ink);
     cursor: pointer;
   }
+  /* equal columns, so the pill is half the track less the gap and slides by its own width */
   .segment-pill {
     position: absolute;
-    inset: 0;
+    top: 4px;
+    bottom: 4px;
+    left: 4px;
+    width: calc(50% - 6px);
     border-radius: 999px;
     background: var(--color-paper);
+    transition: transform 360ms var(--ease-squeegee);
+  }
+  .segmented[data-where="doorstep"] .segment-pill {
+    transform: translateX(calc(100% + 4px));
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .segment-pill {
+      transition: none;
+    }
   }
   .wa-preview {
     padding: 16px;
