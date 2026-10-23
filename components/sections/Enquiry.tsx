@@ -31,6 +31,7 @@ export function Enquiry() {
   const [area, setArea] = useState("");
   const [notes, setNotes] = useState("");
   const [touched, setTouched] = useState<Record<Field, boolean>>({ car: false, services: false, area: false });
+  const [sent, setSent] = useState(false);
   const carRef = useRef<HTMLInputElement>(null);
   const servicesRef = useRef<HTMLButtonElement>(null);
   const areaRef = useRef<HTMLInputElement>(null);
@@ -55,6 +56,7 @@ export function Enquiry() {
     if (errors.services) return servicesRef.current?.focus();
     if (errors.area) return areaRef.current?.focus();
     window.open(waLink(message), "_blank", "noopener,noreferrer");
+    setSent(true);
   };
 
   return (
@@ -190,6 +192,18 @@ export function Enquiry() {
           <span>{enquiry.submit}</span>
           <span className="sr-only"> {site.a11y.newTab}</span>
         </button>
+        {/* Confirms the hand-off, with a plain link in case the browser held the new window back */}
+        <p role="status" className="enquiry-status">
+          {sent ? (
+            <>
+              {enquiry.sent}{" "}
+              <a href={waLink(message)} target="_blank" rel="noopener noreferrer" className="link">
+                {enquiry.retry}
+                <span className="sr-only"> {site.a11y.newTab}</span>
+              </a>
+            </>
+          ) : null}
+        </p>
       </form>
     </div>
   );

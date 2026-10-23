@@ -310,9 +310,6 @@
     flex: none;
   }
 
-  .hairline-row > * + * {
-    border-left: 1px solid var(--color-rule);
-  }
 }
 
 /* Set by the head script in layout.tsx after the load event. Descendant selectors, not root

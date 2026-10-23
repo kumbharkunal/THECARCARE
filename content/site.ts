@@ -334,6 +334,8 @@ export const site = {
       notes: { label: "Anything else? (optional)", placeholder: "Shade, colour, timing, questions" },
       preview: "Your message",
       submit: "Send on WhatsApp",
+      sent: "WhatsApp is opening with your message.",
+      retry: "Not opened? Send it on WhatsApp",
       noScript: "Message us on WhatsApp",
     },
   },

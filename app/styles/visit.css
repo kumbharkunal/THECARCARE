@@ -349,6 +349,11 @@
       transition: none;
     }
   }
+  .enquiry-status {
+    min-height: 1.45em;
+    font-size: var(--text-small);
+    color: var(--color-ink-soft);
+  }
   .wa-preview {
     padding: 16px;
     border-radius: var(--radius-card);
