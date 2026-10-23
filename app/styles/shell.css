@@ -186,3 +186,50 @@
     }
   }
 }
+
+/* 404: the logo's roof over an empty bay */
+@layer components {
+  .nf {
+    display: grid;
+    min-height: 100svh;
+    padding-block: calc(var(--nav-offset) + 24px) 64px;
+    background: var(--color-porcelain);
+    text-align: center;
+  }
+  .nf-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .nf-bay {
+    width: min(100%, 560px);
+    height: auto;
+    margin-bottom: clamp(28px, 4vw, 48px);
+    overflow: visible;
+  }
+  .nf-floor {
+    stroke: var(--color-rule);
+    stroke-width: 2;
+  }
+  .nf-title {
+    text-wrap: balance;
+  }
+  .nf-actions {
+    margin-top: 32px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .js .nf-bay .chev {
+      stroke-dasharray: 1;
+      stroke-dashoffset: 1;
+      animation: draw 1.4s var(--ease-squeegee) 0.15s forwards;
+    }
+    .js .nf-bay .chev-inner {
+      animation-delay: 0.5s;
+    }
+  }
+}

@@ -1,3 +1,6 @@
-/* motion */
+/* Script-off states: controls that need script step aside, every piece of content stays */
 @layer components {
+  html:not(.js) :is(.mnav-button, .ticker-toggle, .scratch-controls, .scratch-hint, .scratch-label, .compare-knob, .faq-icon, .map-load) {
+    display: none;
+  }
 }

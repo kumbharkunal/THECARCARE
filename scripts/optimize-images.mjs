@@ -183,8 +183,55 @@ async function logosAndIcons() {
   console.log("  icons: app/icon.png, app/apple-icon.png, app/favicon.ico");
 }
 
+// Social preview base (assets/og-base.jpg, read by app/opengraph-image.tsx): the hero photo,
+// 1000px wide at (200, 67) on a 1200x630 porcelain canvas, feathered on the left and top
+// edges so the headline column sits on clean ground. The route draws the roof and type on top.
+const OG = { width: 1200, height: 630, photoWidth: 1000, left: 200, top: 67 };
+
+async function socialBase() {
+  const raw = path.join(RAW, "hero-car-wide.png");
+  const src = existsSync(raw) ? raw : path.join(OUT, "hero-car-wide.webp");
+  if (!existsSync(src)) {
+    console.log("  hero-car-wide missing, keeping existing assets/og-base.jpg");
+    return;
+  }
+  const photo = await sharp(src).resize(OG.photoWidth).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
+  const { width, height } = photo.info;
+  const feather = Buffer.from(
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">
+      <defs>
+        <linearGradient id="h" x1="0" x2="1" y1="0" y2="0">
+          <stop offset="0" stop-color="#fff" stop-opacity="0"/>
+          <stop offset="0.14" stop-color="#fff"/>
+          <stop offset="1" stop-color="#fff"/>
+        </linearGradient>
+        <linearGradient id="v" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0" stop-color="#000"/>
+          <stop offset="0.2" stop-color="#fff"/>
+          <stop offset="0.93" stop-color="#fff"/>
+          <stop offset="1" stop-color="#000"/>
+        </linearGradient>
+        <mask id="m"><rect width="100%" height="100%" fill="url(#v)"/></mask>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#h)" mask="url(#m)"/>
+    </svg>`,
+  );
+  const feathered = await sharp(photo.data, { raw: photo.info })
+    .composite([{ input: feather, blend: "dest-in" }])
+    .png()
+    .toBuffer();
+  const out = path.join(root, "assets", "og-base.jpg");
+  const info = await sharp({ create: { width: OG.width, height: OG.height, channels: 3, background: PORCELAIN } })
+    .composite([{ input: feathered, left: OG.left, top: OG.top }])
+    .jpeg({ quality: 84, mozjpeg: true })
+    .toFile(out);
+  console.log(`  assets/og-base.jpg: ${info.width}x${info.height}, ${(info.size / 1024).toFixed(0)} KB`);
+}
+
 console.log("Images");
 await optimiseImages();
 console.log("Logos and icons");
 await logosAndIcons();
+console.log("Social preview");
+await socialBase();
 console.log("Done.");

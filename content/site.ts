@@ -17,6 +17,7 @@ export const site = {
     description:
       "Sun control films, paint protection film and ceramic coating, fitted by hand at our Dhankawadi studio or at your doorstep in Pune.",
     ogAlt: "The Car Care. We protect what you drive.",
+    ogLine: "Sun control film, PPF and ceramic coating in Pune",
   },
 
   contact: {

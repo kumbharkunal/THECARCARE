@@ -54,9 +54,9 @@ function useScrollChrome() {
   return { hidden, setHidden, solid };
 }
 
-function Brand({ onClick }: { onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void }) {
+function Brand({ href, onClick }: { href: string; onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void }) {
   return (
-    <a href="#top" onClick={onClick} aria-label={site.a11y.home} className="brand flex items-center gap-2 rounded-full pr-1">
+    <a href={href} onClick={onClick} aria-label={site.a11y.home} className="brand flex items-center gap-2 rounded-full pr-1">
       <Image src="/brand/logo-mark.png" alt="" width={30} height={30} className="h-[30px] w-[30px]" />
       <span className="display text-[19px] leading-none tracking-[0.01em] text-care-blue" aria-hidden>
         {site.wordmark}
@@ -66,6 +66,9 @@ function Brand({ onClick }: { onClick?: (event: React.MouseEvent<HTMLAnchorEleme
 }
 
 export function Nav() {
+  // "/#section" works from any page; on the homepage the click is caught and scrolled smoothly.
+  const to = (hash: string) => `/${hash}`;
+  const onHome = () => window.location.pathname === "/";
   const active = useActiveSection();
   const { hidden, setHidden, solid } = useScrollChrome();
   const { reduced, scrollToHash, setScrollLocked } = useMotion();
@@ -160,14 +163,14 @@ export function Nav() {
           onFocusCapture={() => setHidden(false)}
           className="nav-desktop glass pointer-events-auto mx-auto mt-4 flex h-[60px] w-[min(820px,calc(100%-48px))] items-center gap-2 rounded-full pl-3.5 pr-1.5"
         >
-          <Brand />
+          <Brand href={to("#top")} />
           <ul className="mx-auto flex items-center">
             {site.nav.links.map((link) => {
               const isActive = active === link.href.slice(1);
               return (
                 <li key={link.href}>
                   <a
-                    href={link.href}
+                    href={to(link.href)}
                     className="nav-link relative flex h-10 items-center rounded-full px-3.5 text-[15px] font-medium"
                     aria-current={isActive ? "true" : undefined}
                   >
@@ -235,8 +238,8 @@ export function Nav() {
                       transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1], delay: open ? 0.08 + index * 0.05 : 0 }}
                     >
                       <a
-                        href={link.href}
-                        onClick={(event) => goTo(event, link.href)}
+                        href={to(link.href)}
+                        onClick={(event) => (onHome() ? goTo(event, link.href) : close(false))}
                         aria-current={isActive ? "true" : undefined}
                         className="mnav-link heading"
                       >
@@ -267,8 +270,9 @@ export function Nav() {
 
           <div className="mnav-bar glass" data-hidden={hidden && !open}>
             <Brand
+              href={to("#top")}
               onClick={(event) => {
-                if (open) goTo(event, "#top");
+                if (open && onHome()) goTo(event, "#top");
               }}
             />
             <button

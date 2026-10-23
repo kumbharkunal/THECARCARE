@@ -108,13 +108,15 @@ export function Providers({ children }: { children: ReactNode }) {
     [smooth, env.reduced],
   );
 
-  // Delegated in-page anchor links.
+  // Delegated in-page anchor links: "#section", and "/#section" while on the homepage.
   useEffect(() => {
     const onClick = (event: MouseEvent) => {
       if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-      const anchor = (event.target as Element | null)?.closest?.("a[href^='#']");
+      const anchor = (event.target as Element | null)?.closest?.("a[href^='#'], a[href^='/#']");
       if (!anchor) return;
-      const hash = anchor.getAttribute("href") ?? "";
+      const href = anchor.getAttribute("href") ?? "";
+      if (href.startsWith("/") && window.location.pathname !== "/") return;
+      const hash = href.slice(href.indexOf("#"));
       if (hash.length < 2) return;
       const id = decodeURIComponent(hash.slice(1));
       if (id !== "top" && !document.getElementById(id)) return;
