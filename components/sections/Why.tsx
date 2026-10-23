@@ -35,7 +35,7 @@ export function Why() {
               <span className="sr-only">{why.warranty.years.join(` ${why.warranty.joiner} `)} </span>
               {why.warranty.title}
             </h3>
-            <p className="mt-2 text-small text-ink-soft">{why.warranty.body}</p>
+            <p className="tile-note">{why.warranty.body}</p>
           </article>
           <article className="tile tile-craft">
             <h3 className="heading tile-title">{why.craft.title}</h3>

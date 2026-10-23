@@ -46,13 +46,43 @@
     border-radius: 999px;
     background: var(--color-paper);
     color: var(--color-ink);
-    transition: transform 140ms var(--ease-squeegee);
+    transition:
+      transform 140ms var(--ease-squeegee),
+      background-color 180ms ease,
+      color 180ms ease;
   }
   .ticker-toggle:active {
     transform: scale(0.94);
   }
+  @media (hover: hover) and (pointer: fine) {
+    .ticker-toggle:hover {
+      background: var(--color-ink);
+      color: var(--color-paper);
+      transform: scale(1.06);
+    }
+    .ticker-toggle:hover:active {
+      transform: scale(0.94);
+    }
+  }
   .ticker:not([data-moving]) .ticker-toggle {
     display: none;
+  }
+  /* While it moves, names fade in at the left edge and out before the pause button */
+  .ticker[data-moving] .ticker-viewport {
+    -webkit-mask-image: linear-gradient(
+      90deg,
+      transparent 0,
+      #000 var(--gutter),
+      #000 calc(100% - var(--gutter) - 112px),
+      transparent calc(100% - var(--gutter) - 52px)
+    );
+    mask-image: linear-gradient(
+      90deg,
+      transparent 0,
+      #000 var(--gutter),
+      #000 calc(100% - var(--gutter) - 112px),
+      transparent calc(100% - var(--gutter) - 52px)
+    );
   }
   @media (prefers-reduced-motion: reduce) {
     .ticker-track {

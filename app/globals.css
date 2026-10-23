@@ -258,6 +258,12 @@
     height: 40px;
   }
   @media (hover: hover) and (pointer: fine) {
+    .btn:hover {
+      transform: translateY(-1px);
+    }
+    .btn:hover:active {
+      transform: scale(0.97);
+    }
     .btn-primary:hover {
       background: var(--color-care-blue-deep);
     }

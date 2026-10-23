@@ -161,15 +161,12 @@
   .tile-brand {
     grid-column: 1 / -1;
   }
-  .tile-warranty {
-    justify-content: flex-end;
-  }
+  /* The years and "year warranty" read as one line of thought; the terms sit at the foot */
   .tile-years {
     display: flex;
     align-items: baseline;
     gap: 0.14em;
-    margin-bottom: auto;
-    padding-bottom: 20px;
+    padding-bottom: 10px;
     font-size: var(--text-display);
     font-weight: 500;
     line-height: 0.9;
@@ -182,6 +179,21 @@
     font-weight: 600;
     letter-spacing: 0;
     color: var(--color-ink-soft);
+  }
+  .tile-note {
+    margin-top: auto;
+    padding-top: 14px;
+    font-size: var(--text-small);
+    color: var(--color-ink-soft);
+  }
+  /* Phones: one tile per row, each only as tall as its words */
+  @media (max-width: 639px) {
+    .bento {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .tile {
+      min-height: 0;
+    }
   }
   .tile-whatsapp {
     grid-column: 1 / -1;

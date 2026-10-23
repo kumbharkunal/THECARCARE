@@ -64,7 +64,6 @@ export function Footer() {
               </span>
             ))}
           </address>
-          <p className="mt-3 text-small text-ink-soft">{contact.hoursNote}</p>
           <SocialLinks className="mt-5" size={30} />
         </div>
       </div>

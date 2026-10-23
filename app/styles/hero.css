@@ -135,6 +135,8 @@
       transparent 84%,
       transparent 100%
     );
+    /* parked out of sight before and after its pass (the desktop frame does not clip it) */
+    opacity: 0;
     transform: translateX(-110%);
   }
   .hero-lamp {
@@ -288,11 +290,17 @@
     }
   }
   @keyframes sweep {
-    from {
+    0% {
       transform: translateX(-110%);
+      opacity: 0;
     }
-    to {
+    12%,
+    88% {
+      opacity: 1;
+    }
+    100% {
       transform: translateX(260%);
+      opacity: 0;
     }
   }
 

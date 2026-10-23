@@ -34,6 +34,25 @@ const PPF_PATHS = [
   REAR_DOOR,
 ];
 
+// Ceramic: two long reflections down the doors, and water beading on the bonnet, roof and boot,
+// each bead sitting just on the body line ([cx, cy, r]).
+const SHINES = ["M392 304 C520 298 650 293 780 288", "M452 326 C540 324 620 322 700 321"];
+const BEADS = [
+  [176, 270, 8],
+  [222, 266, 6],
+  [270, 255, 10],
+  [318, 250.5, 7],
+  [367, 240.5, 9],
+  [416.5, 235.5, 5.5],
+  [637.5, 110, 7],
+  [676, 100.5, 9.5],
+  [713.5, 100.5, 6],
+  [815, 102.5, 8.5],
+  [871, 112.5, 7],
+  [976.3, 149.3, 6],
+  [1008.1, 164.5, 7.5],
+];
+
 // UV rays arrive from the upper left and stop at the glass.
 const UV_RAYS = [
   [546, 204],
@@ -85,8 +104,12 @@ const STATIC_LAYERS = [
   "</g>",
   // PPF: high-impact zones
   `<g class="z-ppf">${PPF_PATHS.map((d) => `<path d="${d}"/>`).join("")}</g>`,
-  // ceramic: gloss along the whole body line
-  `<g class="z-gloss"><path d="${BODY}" class="z-gloss-line"/></g>`,
+  // ceramic: gloss along the whole body line, reflections and beading
+  '<g class="z-gloss">',
+  `<path d="${BODY}" class="z-gloss-line"/>`,
+  ...SHINES.map((d) => `<path d="${d}" class="z-gloss-shine"/>`),
+  ...BEADS.map(([cx, cy, r]) => `<circle cx="${cx}" cy="${cy}" r="${r}" class="z-bead"/>`),
+  "</g>",
 ].join("");
 
 // sun film: UV rays stopping at the film

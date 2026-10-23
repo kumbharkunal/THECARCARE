@@ -267,8 +267,7 @@ export function Nav() {
                   {site.nav.call}
                 </a>
               </div>
-              <div className="mt-4 flex items-center justify-between gap-3">
-                <p className="text-small text-ink-soft">{site.contact.hoursNote}</p>
+              <div className="mt-4 flex items-center">
                 <SocialLinks size={26} />
               </div>
             </div>

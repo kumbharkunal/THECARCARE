@@ -45,7 +45,7 @@ export function Visit() {
                     </span>
                   ))}
                 </address>
-                <p className="mt-3 text-small text-ink-soft">{contact.hoursNote}</p>
+                <p className="mt-3 text-small text-ink-soft">{contact.bookNote}</p>
               </div>
               <div>
                 <h3 className="subheading text-lead">{visit.contactTitle}</h3>

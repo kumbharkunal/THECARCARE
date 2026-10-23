@@ -43,7 +43,7 @@ export const site = {
       short: "Dhankawadi, Pune 411043",
     },
     hoursConfirmed: false,
-    hoursNote: "Usually 9 am to 6 pm. Message us to book a slot.",
+    bookNote: "Message us to book a slot.",
     hoursShort: "Usually 9 am to 6 pm",
     instagram: { handle: "@thecarcare.in", href: "https://www.instagram.com/thecarcare.in/" },
     facebook: { handle: "thecarcare.in", href: "https://www.facebook.com/thecarcare.in" },
@@ -100,8 +100,9 @@ export const site = {
       {
         id: "sun-film",
         name: "Sun control films",
+        layer: "Sun film",
         body: "Garware Hi-Tech films on your windows that block up to 99% of UV rays and cut the glare. You pick the product and a road-legal shade; we fit it at the studio or at your doorstep.",
-        facts: ["Up to 99% UV rejection", "Road-legal shades", "3 and 5 year warranty on selected products"],
+        facts: ["Up to 99% UV rejection", "Less glare", "Road-legal shades"],
         zoneLabel: "the windows, tinted with sun control film and stopping UV rays",
         cta: "Ask about sun film",
         message: "Hi The Car Care, I'd like to know about sun control film for my car.",
@@ -109,6 +110,7 @@ export const site = {
       {
         id: "ppf",
         name: "Paint protection film",
+        layer: "PPF",
         body: "A clear GSWF Defender film laid over your paint. It takes stone chips and scratches, and its self-healing top coat can heal light swirls.",
         facts: ["Self-healing", "Hydrophobic", "Non-yellowing"],
         zoneLabel: "the bonnet, bumper, mirrors and door edges, covered with paint protection film",
@@ -118,15 +120,17 @@ export const site = {
       {
         id: "ceramic",
         name: "Ceramic coating",
+        layer: "Ceramic",
         body: "A thin, hard layer over the paint that adds a deep gloss. Water beads and rolls off, so washing gets easier.",
         facts: ["Deep gloss", "Water beads and rolls off", "Easier washing"],
-        zoneLabel: "the full body line, with a gloss highlight from ceramic coating",
+        zoneLabel: "the paint, with a gloss highlight and water beading on top from ceramic coating",
         cta: "Ask about ceramic coating",
         message: "Hi The Car Care, I'd like to know about ceramic coating for my car.",
       },
       {
         id: "detailing",
         name: "Detailing",
+        layer: "Detailing",
         body: "Every car that comes to us gets professional care and attention to every detail. Tell us what yours needs and we'll plan the work around it.",
         facts: ["Professional care", "Attention to every detail", "Planned around your car"],
         zoneLabel: "the interior, with seats and dashboard outlined for detailing",
@@ -136,6 +140,8 @@ export const site = {
     ] satisfies {
       id: ServiceId;
       name: string;
+      /** Short name for the layer index beside the car. */
+      layer: string;
       body: string;
       facts: string[];
       zoneLabel: string;
@@ -165,7 +171,7 @@ export const site = {
       {
         n: "3",
         title: "Holds shattered glass together",
-        line: "Safety films can help hold shattered glass in place.",
+        line: "Enhanced safety and security: if a window cracks, the film can help hold it in its frame.",
         image: "safety-glass",
         alt: "A cracked rear side window held in its frame by a clear safety film",
       },
@@ -370,7 +376,7 @@ export const site = {
     openMenu: "Open menu",
     closeMenu: "Close menu",
     menu: "Site menu",
-    home: "The Car Care, back to top",
+    home: "The Car Care, home",
     newTab: "(opens WhatsApp)",
   },
 } as const;

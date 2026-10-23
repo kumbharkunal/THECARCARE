@@ -79,6 +79,20 @@
     vector-effect: non-scaling-stroke;
     opacity: 0.6;
   }
+  .z-gloss-shine {
+    fill: none;
+    stroke: var(--color-lavender);
+    stroke-width: 4.5;
+    stroke-linecap: round;
+    vector-effect: non-scaling-stroke;
+    opacity: 0.75;
+  }
+  .z-bead {
+    fill: color-mix(in srgb, var(--color-lavender) 45%, var(--color-paper));
+    stroke: var(--color-care-blue);
+    stroke-width: 1.25;
+    vector-effect: non-scaling-stroke;
+  }
   .z-interior path,
   .z-interior ellipse {
     fill: none;
@@ -136,26 +150,62 @@
       grid-template-columns: repeat(12, minmax(0, 1fr));
       column-gap: var(--gap);
     }
+    /* A stage most of a screen tall, centred in the space under the nav: the layer index on top,
+       the car in the middle, the lit service's name at the foot. */
     .services-car {
-      display: block;
+      --stage-h: min(60svh, 560px);
+      display: flex;
+      flex-direction: column;
       grid-column: 1 / span 7;
       position: sticky;
-      top: calc(50svh - 15vw);
+      top: calc(50svh - var(--stage-h) / 2 + var(--nav-offset) / 4);
       align-self: start;
-      padding: 7% 5% 3%;
+      min-height: var(--stage-h);
+      padding: 28px 5% 28px;
       border-radius: var(--radius-card);
       background: var(--color-paper);
     }
-    .services-caption {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      margin-top: 4%;
+    .services-car-svg {
+      margin-block: auto;
+      padding-block: 4% 2%;
+    }
+    .services-layers {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
       font-size: var(--text-small);
+      font-weight: 600;
+      line-height: 1.2;
       color: var(--color-ink-soft);
     }
-    .services-caption-name {
+    .services-layers li {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: color 300ms ease;
+    }
+    .services-layers li::before {
+      content: "";
+      height: 3px;
+      border-radius: 3px;
+      background: var(--color-rule);
+      transition: background-color 300ms ease;
+    }
+    .services-car[data-zone="sun-film"] [data-layer="sun-film"],
+    .services-car[data-zone="ppf"] [data-layer="ppf"],
+    .services-car[data-zone="ceramic"] [data-layer="ceramic"],
+    .services-car[data-zone="detailing"] [data-layer="detailing"] {
+      color: var(--color-ink);
+    }
+    .services-car[data-zone="sun-film"] [data-layer="sun-film"]::before,
+    .services-car[data-zone="ppf"] [data-layer="ppf"]::before,
+    .services-car[data-zone="ceramic"] [data-layer="ceramic"]::before,
+    .services-car[data-zone="detailing"] [data-layer="detailing"]::before {
+      background: var(--color-care-blue);
+    }
+    .services-caption {
       font-size: var(--text-lead);
+      line-height: 1.1;
       color: var(--color-ink);
     }
     .services-list {

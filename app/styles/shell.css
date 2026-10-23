@@ -5,8 +5,9 @@
       transform 240ms var(--ease-squeegee),
       background-color 300ms ease;
   }
+  /* Hidden: lifted past its top margin and the float shadow's reach, so no edge is left showing */
   .nav-desktop[data-hidden="true"] {
-    transform: translateY(calc(-100% - 24px));
+    transform: translateY(calc(-100% - 56px));
   }
   .nav-desktop[data-solid="true"] {
     background-color: color-mix(in srgb, var(--color-paper) 82%, transparent);
@@ -15,9 +16,26 @@
     color: var(--color-ink);
     transition: color 180ms ease;
   }
+  /* Hover: a paler cousin of the current-section pill */
+  .nav-link::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--color-mist) 70%, transparent);
+    opacity: 0;
+    transform: scale(0.88);
+    transition:
+      opacity 180ms ease,
+      transform 220ms var(--ease-squeegee);
+  }
   @media (hover: hover) and (pointer: fine) {
     .nav-link:hover {
       color: var(--color-care-blue);
+    }
+    .nav-link:hover::before {
+      opacity: 1;
+      transform: none;
     }
   }
   .nav-cta {
@@ -44,7 +62,7 @@
     transition: transform 240ms var(--ease-squeegee);
   }
   .mnav-bar[data-hidden="true"] {
-    transform: translateY(calc(-100% - 24px - env(safe-area-inset-top)));
+    transform: translateY(calc(-100% - 56px - env(safe-area-inset-top)));
   }
   .mnav[data-open="true"] .mnav-bar {
     background: transparent;
@@ -174,12 +192,25 @@
     place-items: center;
     min-width: 44px;
     min-height: 44px;
+    transition: transform 200ms var(--ease-squeegee);
   }
+  .social-link:active {
+    transform: scale(0.94);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .social-link:hover {
+      transform: translateY(-2px);
+    }
+    .social-link:hover:active {
+      transform: scale(0.94);
+    }
+  }
+  /* The wrapper fades and is inert while hidden; the link inside never sits at opacity 0 */
   .fab {
     position: fixed;
     z-index: 40;
-    right: calc(16px + env(safe-area-inset-right));
-    bottom: calc(16px + env(safe-area-inset-bottom));
+    right: calc(14px + env(safe-area-inset-right));
+    bottom: calc(14px + env(safe-area-inset-bottom));
     border-radius: 999px;
     opacity: 0;
     transform: translateY(16px) scale(0.96);
@@ -193,22 +224,29 @@
     transform: none;
     pointer-events: auto;
   }
+  .fab-link {
+    display: block;
+    border-radius: 999px;
+  }
   .fab-ring {
     display: grid;
     place-items: center;
-    width: 68px;
-    height: 68px;
+    width: 56px;
+    height: 56px;
     border-radius: 999px;
     background: var(--color-paper);
     box-shadow: var(--shadow-float);
     transition: transform 140ms var(--ease-squeegee);
   }
-  .fab:active .fab-ring {
+  .fab-link:active .fab-ring {
     transform: scale(0.95);
   }
   @media (hover: hover) and (pointer: fine) {
-    .fab:hover .fab-ring {
+    .fab-link:hover .fab-ring {
       transform: translateY(-2px);
+    }
+    .fab-link:hover:active .fab-ring {
+      transform: scale(0.95);
     }
   }
 }
@@ -249,6 +287,13 @@
     flex-wrap: wrap;
     justify-content: center;
     gap: 12px;
+  }
+  /* Phones: both actions full width, one above the other */
+  @media (max-width: 639px) {
+    .nf-actions {
+      flex-direction: column;
+      align-self: stretch;
+    }
   }
   @media (prefers-reduced-motion: no-preference) {
     .js .nf-bay .chev {

@@ -20,20 +20,23 @@ export function Services() {
         </div>
 
         <div className="services-stage" data-services>
-          <div className="services-car" aria-hidden="false">
+          {/* data-zone follows the block in view (ServicesMotion); the index lights that layer */}
+          <div className="services-car" data-zone={first.id}>
+            <ol className="services-layers" aria-hidden>
+              {services.items.map((service) => (
+                <li key={service.id} data-layer={service.id}>
+                  {service.layer}
+                </li>
+              ))}
+            </ol>
             <CarElevation
               id="services-car"
               zone={first.id}
               label={`${services.carLabel}: ${first.zoneLabel}`}
               className="services-car-svg"
             />
-            <p className="services-caption" aria-hidden>
-              <span className="services-caption-name subheading" data-caption-name>
-                {first.name}
-              </span>
-              <span className="services-caption-count" data-caption-count>
-                1 of {services.items.length}
-              </span>
+            <p className="services-caption subheading" aria-hidden data-caption-name>
+              {first.name}
             </p>
           </div>
 
@@ -44,7 +47,6 @@ export function Services() {
                 className="service"
                 data-service={service.id}
                 data-label={`${services.carLabel}: ${service.zoneLabel}`}
-                data-index={index + 1}
                 data-active={index === 0 ? "true" : "false"}
               >
                 <CarElevation

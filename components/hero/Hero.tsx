@@ -22,7 +22,8 @@ function HeroPicture() {
     src: wide.src,
     width: wide.width,
     height: wide.height,
-    sizes: "(min-width: 1024px) 116vw, 92vw",
+    // Desktop: the frame is at most about 82% of the window wide (hero.css --fit).
+    sizes: "(min-width: 1024px) 82vw, 92vw",
     quality: 75,
     loading: "eager",
     fetchPriority: "high",

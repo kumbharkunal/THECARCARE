@@ -39,16 +39,26 @@
     background: var(--color-mist);
     transition:
       transform 300ms var(--ease-squeegee),
-      background-color 180ms ease;
+      background-color 180ms ease,
+      color 180ms ease;
   }
   .faq-item[data-open="true"] .faq-icon {
     transform: rotate(45deg);
     background: var(--color-care-blue);
     color: var(--color-paper);
   }
+  /* Hover: the plus fills and turns a quarter, the cue that the row opens */
   @media (hover: hover) and (pointer: fine) {
     .faq-q:hover {
       color: var(--color-care-blue);
+    }
+    .faq-item:not([data-open="true"]) .faq-q:hover .faq-icon {
+      transform: rotate(90deg);
+      background: var(--color-care-blue);
+      color: var(--color-paper);
+    }
+    .faq-item[data-open="true"] .faq-q:hover .faq-icon {
+      background: var(--color-care-blue-deep);
     }
   }
   .faq-panel {

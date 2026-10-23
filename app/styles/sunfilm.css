@@ -211,6 +211,17 @@
     background: var(--color-paper);
     pointer-events: auto;
     cursor: grab;
+    transition: transform 200ms var(--ease-squeegee);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .shade-thumb:hover {
+      transform: scale(1.08);
+    }
+  }
+  .shade-thumb:active,
+  .shade-thumb:hover:active {
+    cursor: grabbing;
+    transform: scale(0.96);
   }
   .shade-ends {
     display: flex;

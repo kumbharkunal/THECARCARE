@@ -20,6 +20,14 @@ function drawZone(svg: SVGSVGElement, zone: string) {
       tl.fromTo(line, { drawSVG: "0% 8%", opacity: 1 }, { drawSVG: "92% 100%", duration: 1.5, ease: "power1.inOut" });
       tl.to(line, { drawSVG: "0% 100%", opacity: 0.55, duration: 0.7 });
     }
+    // Reflections wipe along the doors; then water beads up on the bonnet, roof and boot.
+    tl.fromTo(svg.querySelectorAll(".z-gloss-shine"), { drawSVG: "0%" }, { drawSVG: "100%", duration: 0.9, stagger: 0.15 }, 0.4);
+    tl.fromTo(
+      svg.querySelectorAll(".z-bead"),
+      { scale: 0, transformOrigin: "50% 100%" },
+      { scale: 1, duration: 0.45, stagger: 0.05, ease: "back.out(2.2)" },
+      0.8,
+    );
   } else if (zone === "detailing") {
     tl.fromTo(svg.querySelectorAll(".z-interior path, .z-interior ellipse"), { drawSVG: "0%" }, { drawSVG: "100%", duration: 0.8, stagger: 0.07 });
   }
@@ -39,8 +47,8 @@ export function ServicesMotion() {
       const { ScrollTrigger } = plugins;
       const blocks = Array.from(section.querySelectorAll<HTMLElement>(".service"));
       const car = section.querySelector<SVGSVGElement>("#services-car");
+      const stage = section.querySelector<HTMLElement>(".services-car");
       const name = section.querySelector<HTMLElement>("[data-caption-name]");
-      const count = section.querySelector<HTMLElement>("[data-caption-count]");
       const mm = gsap.matchMedia();
 
       // Desktop: one sticky car; each block lights its zone as it reaches the middle.
@@ -52,10 +60,10 @@ export function ServicesMotion() {
           if (!car || zone === current) return;
           current = zone;
           car.dataset.zone = zone;
+          if (stage) stage.dataset.zone = zone;
           car.setAttribute("aria-label", block.dataset.label ?? "");
           blocks.forEach((b) => (b.dataset.active = b === block ? "true" : "false"));
           if (name) name.textContent = block.querySelector(".service-name")?.textContent ?? "";
-          if (count) count.textContent = `${block.dataset.index} of ${blocks.length}`;
           running?.kill();
           if (!reduced) running = drawZone(car, zone);
         };
