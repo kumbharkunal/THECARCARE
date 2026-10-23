@@ -1,10 +1,11 @@
 import { getImageProps } from "next/image";
+import { preload } from "react-dom";
 import { FilmStrip, HouseLine, ShieldCheck, Sun } from "@phosphor-icons/react/dist/ssr";
 import { site } from "@/content/site";
 import { getImage } from "@/lib/images";
 import { ChevronRoof } from "@/components/art/Chevrons";
 import { WhatsAppButton } from "@/components/ui/Social";
-import { HeroEnhancer } from "@/components/hero/HeroEnhancer";
+import { HeroIsland } from "@/components/shell/islands";
 
 const FACT_ICONS = { film: FilmStrip, shield: ShieldCheck, house: HouseLine, sun: Sun } as const;
 
@@ -24,6 +25,13 @@ function HeroPicture() {
   const mobile = tall
     ? getImageProps({ ...common, src: tall.src, width: tall.width, height: tall.height, sizes: "calc(100vw - 32px)" }).props
     : null;
+  // The hero photo is the LCP element: preload whichever crop this screen will use from <head>.
+  if (mobile) {
+    preload(mobile.src, { as: "image", imageSrcSet: mobile.srcSet, imageSizes: mobile.sizes, fetchPriority: "high", media: "(max-width: 639px)" });
+  }
+  if (desktop) {
+    preload(desktop.src, { as: "image", imageSrcSet: desktop.srcSet, imageSizes: desktop.sizes, fetchPriority: "high", media: "(min-width: 640px)" });
+  }
   const fallback = mobile ?? desktop!;
   return (
     <picture>
@@ -96,7 +104,7 @@ export function Hero() {
           </div>
         </div>
       </div>
-      <HeroEnhancer />
+      <HeroIsland />
     </section>
   );
 }

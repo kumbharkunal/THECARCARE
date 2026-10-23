@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { m } from "motion/react";
+import { m } from "framer-motion";
 import { site, type GlassZone } from "@/content/site";
 import { CarElevation } from "@/components/art/CarElevation";
 import { WhatsAppButton } from "@/components/ui/Social";

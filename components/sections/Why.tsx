@@ -48,7 +48,7 @@ export function Why() {
             rel="noopener noreferrer"
           >
             <SocialMark network="whatsapp" size={44} />
-            <span className="heading tile-title">{why.whatsapp.title}</span>
+            <span className="heading tile-title">{why.whatsapp.title}</span>{" "}
             <span className="tile-cta">
               {why.whatsapp.cta}
               <ArrowUpRight size={18} weight="bold" aria-hidden />

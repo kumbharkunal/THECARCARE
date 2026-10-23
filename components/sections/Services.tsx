@@ -2,7 +2,7 @@ import { Check } from "@phosphor-icons/react/dist/ssr";
 import { site } from "@/content/site";
 import { CarElevation } from "@/components/art/CarElevation";
 import { WhatsAppButton } from "@/components/ui/Social";
-import { ServicesMotion } from "@/components/sections/ServicesMotion";
+import { ServicesIsland } from "@/components/shell/islands";
 
 export function Services() {
   const { services } = site;
@@ -71,7 +71,7 @@ export function Services() {
           </ol>
         </div>
       </div>
-      <ServicesMotion />
+      <ServicesIsland />
     </section>
   );
 }

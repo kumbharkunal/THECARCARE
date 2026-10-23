@@ -1,11 +1,14 @@
 import Image from "next/image";
+import { cacheLife } from "next/cache";
 import { site } from "@/content/site";
 import { waLink } from "@/lib/wa";
 import { SocialLinks } from "@/components/ui/Social";
-import { FooterMotion } from "@/components/sections/FooterMotion";
+import { FooterIsland } from "@/components/shell/islands";
 
+// The year only turns over once a year; a daily refresh is plenty.
 async function Year() {
   "use cache";
+  cacheLife("days");
   return <>{new Date().getFullYear()}</>;
 }
 
@@ -76,7 +79,7 @@ export function Footer() {
           © <Year /> {footer.rights}
         </p>
       </div>
-      <FooterMotion />
+      <FooterIsland />
     </footer>
   );
 }

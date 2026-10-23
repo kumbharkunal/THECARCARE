@@ -1,6 +1,6 @@
 import { site } from "@/content/site";
 import { ChevronMark } from "@/components/art/Chevrons";
-import { ProcessMotion } from "@/components/sections/ProcessMotion";
+import { ProcessIsland } from "@/components/shell/islands";
 
 export function Process() {
   const { process } = site;
@@ -30,7 +30,7 @@ export function Process() {
           </ol>
         </div>
       </div>
-      <ProcessMotion />
+      <ProcessIsland />
     </section>
   );
 }

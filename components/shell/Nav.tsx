@@ -4,20 +4,20 @@ import Image from "next/image";
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import {
   AnimatePresence,
-  animate,
   m,
   useMotionTemplate,
   useMotionValue,
   useMotionValueEvent,
   useScroll,
   type PanInfo,
-} from "motion/react";
+} from "framer-motion";
 import { Phone } from "@phosphor-icons/react/dist/ssr";
 import { site } from "@/content/site";
 import { SocialLinks, WhatsAppButton } from "@/components/ui/Social";
 import { useMotion } from "@/components/shell/Providers";
 import { uiStore } from "@/lib/ui-store";
 import { useFocusTrap } from "@/lib/use-focus-trap";
+import { loadAnimate, readyAnimate } from "@/lib/animate";
 
 const SPRING = { type: "spring", stiffness: 420, damping: 38, mass: 0.9 } as const;
 const BAR = 56;
@@ -106,6 +106,13 @@ export function Nav() {
     const collapsed = Math.max(0, sheet.offsetHeight - BAR);
     if (reduced) {
       inset.set(0);
+      return;
+    }
+    const animate = readyAnimate();
+    if (!animate) {
+      // Tapped before the spring has loaded: show or hide the sheet at once.
+      inset.set(open ? 0 : collapsed);
+      if (!open) Promise.resolve().then(() => setSheetShown(false));
       return;
     }
     if (open) {
@@ -282,6 +289,7 @@ export function Nav() {
               aria-expanded={open}
               aria-controls="site-menu"
               aria-label={open ? site.a11y.closeMenu : site.a11y.openMenu}
+              onPointerDown={() => void loadAnimate()}
               onClick={() => (open ? close(true) : openMenu())}
             >
               <span className="mnav-icon" aria-hidden>

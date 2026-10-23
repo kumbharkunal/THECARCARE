@@ -10,7 +10,7 @@ import { Process } from "@/components/sections/Process";
 import { Faq } from "@/components/sections/Faq";
 import { Visit } from "@/components/sections/Visit";
 import { Footer } from "@/components/sections/Footer";
-import { RevealRuntime } from "@/components/shell/RevealRuntime";
+import { RevealIsland } from "@/components/shell/islands";
 
 // Confirmed facts only. Opening hours are added once the client confirms them.
 const business = {
@@ -51,7 +51,7 @@ export default function Home() {
         <Visit />
       </main>
       <Footer />
-      <RevealRuntime />
+      <RevealIsland />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(business).replace(/</g, "\\u003c") }}

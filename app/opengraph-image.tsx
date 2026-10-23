@@ -1,5 +1,6 @@
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
+import { cacheLife } from "next/cache";
 import { ImageResponse } from "next/og";
 import sharp from "sharp";
 import { site } from "@/content/site";
@@ -21,6 +22,13 @@ const ROOF = { cx: 825, apexY: 112, halfWidth: 363, legEnd: 380, stroke: 7 };
 
 /** Link preview (WhatsApp, Instagram, search): the hero in one frame. */
 export default async function OpengraphImage() {
+  return new Response(await renderPreview(), { headers: { "Content-Type": contentType } });
+}
+
+// Cached so the image is rendered once at build, not on every request.
+async function renderPreview() {
+  "use cache";
+  cacheLife("max");
   const [font, base, mark] = await Promise.all([
     readFile(join(process.cwd(), "assets/fonts/Archivo-ExtraCondensed-ExtraBold.ttf")),
     readFile(join(process.cwd(), "assets/og-base.jpg")),
@@ -68,5 +76,5 @@ export default async function OpengraphImage() {
     { ...size, fonts: [{ name: "Archivo", data: font, weight: 800, style: "normal" }] },
   ).arrayBuffer();
   const jpeg = await sharp(Buffer.from(png)).jpeg({ quality: 84, mozjpeg: true }).toBuffer();
-  return new Response(new Uint8Array(jpeg), { headers: { "Content-Type": contentType } });
+  return new Uint8Array(jpeg);
 }

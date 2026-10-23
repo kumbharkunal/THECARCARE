@@ -4,7 +4,8 @@ import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { site } from "@/content/site";
 import { getImage } from "@/lib/images";
-import { gsap } from "@/lib/gsap";
+import type { MotionPlugins } from "@/lib/gsap";
+import { useMotion } from "@/components/shell/Providers";
 import { Placeholder } from "@/components/ui/Img";
 
 const { ppf } = site;
@@ -75,11 +76,17 @@ export function ScratchHeal() {
   const strokes = useRef<Stroke[]>([]);
   const drawing = useRef<Stroke | null>(null);
   const size = useRef({ w: 0, h: 0, dpr: 1 });
-  const heal = useRef({ active: false, x: -1, tween: null as gsap.core.Tween | null });
+  const heal = useRef({ active: false, x: -1, tween: null as ReturnType<MotionPlugins["gsap"]["to"]> | null });
   const dirty = useRef(true);
   const idleTimer = useRef<number | undefined>(undefined);
   const [status, setStatus] = useState("");
   const [hint, setHint] = useState(true);
+  // GSAP arrives with the motion islands once the page is idle; until then a plain rAF loop draws.
+  const gsap = useMotion().plugins?.gsap ?? null;
+  const gsapRef = useRef(gsap);
+  useEffect(() => {
+    gsapRef.current = gsap;
+  }, [gsap]);
 
   const render = useCallback(() => {
     const ctx = canvas.current?.getContext("2d");
@@ -113,9 +120,18 @@ export function ScratchHeal() {
       dirty.current = false;
       render();
     };
-    gsap.ticker.add(tick);
-    return () => gsap.ticker.remove(tick);
-  }, [render]);
+    if (gsap) {
+      gsap.ticker.add(tick);
+      return () => gsap.ticker.remove(tick);
+    }
+    let frame = 0;
+    const loop = () => {
+      tick();
+      frame = requestAnimationFrame(loop);
+    };
+    frame = requestAnimationFrame(loop);
+    return () => cancelAnimationFrame(frame);
+  }, [render, gsap]);
 
   // DPR-aware canvas that follows its box.
   useEffect(() => {
@@ -139,7 +155,14 @@ export function ScratchHeal() {
     if (heal.current.active || strokes.current.length === 0) return;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const cv = canvas.current;
+    const gsap = gsapRef.current;
     if (!cv) return;
+    if (!gsap) {
+      strokes.current = [];
+      dirty.current = true;
+      setStatus(ppf.healed);
+      return;
+    }
     if (reduced) {
       gsap.to(cv, {
         opacity: 0,
@@ -231,7 +254,7 @@ export function ScratchHeal() {
     heal.current = { active: false, x: -1, tween: null };
     strokes.current = [];
     drawing.current = null;
-    if (band.current) gsap.set(band.current, { opacity: 0 });
+    if (band.current) band.current.style.opacity = "0";
     dirty.current = true;
     setStatus("");
   };

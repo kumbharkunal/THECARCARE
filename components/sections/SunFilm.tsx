@@ -3,7 +3,7 @@ import { Img } from "@/components/ui/Img";
 import { WhatsAppButton } from "@/components/ui/Social";
 import { CompareSlider } from "@/components/ui/CompareSlider";
 import { ShadeGuide } from "@/components/sections/ShadeGuide";
-import { StackMotion } from "@/components/sections/StackMotion";
+import { StackIsland } from "@/components/shell/islands";
 import type { ImageSlot } from "@/lib/images";
 
 export function SunFilm() {
@@ -75,7 +75,7 @@ export function SunFilm() {
 
         <ShadeGuide />
       </div>
-      <StackMotion />
+      <StackIsland />
     </section>
   );
 }

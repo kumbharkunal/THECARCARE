@@ -1,7 +1,7 @@
 "use client";
 
-// GSAP core and useGSAP load with the page; ScrollTrigger, SplitText and DrawSVG load after
-// first paint (they are only needed below the fold), keeping them out of the first-load JS.
+// Imported only by the motion islands (components/shell/islands.tsx), which load once the
+// page is idle: GSAP core, useGSAP and the scroll plugins never count toward first-load JS.
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
@@ -11,6 +11,7 @@ gsap.registerEase("squeegee", (p: number) => cubicBezier(0.22, 1, 0.36, 1, p));
 gsap.defaults({ ease: "squeegee", duration: 1 });
 
 export type MotionPlugins = {
+  gsap: typeof gsap;
   ScrollTrigger: typeof import("gsap/ScrollTrigger").ScrollTrigger;
   SplitText: typeof import("gsap/SplitText").SplitText;
 };
@@ -25,7 +26,7 @@ export function loadMotionPlugins(): Promise<MotionPlugins> {
   ]).then(([st, split, draw]) => {
     gsap.registerPlugin(st.ScrollTrigger, split.SplitText, draw.DrawSVGPlugin);
     st.ScrollTrigger.config({ ignoreMobileResize: true });
-    return { ScrollTrigger: st.ScrollTrigger, SplitText: split.SplitText };
+    return { gsap, ScrollTrigger: st.ScrollTrigger, SplitText: split.SplitText };
   });
   return pluginsPromise;
 }

@@ -2,12 +2,14 @@
 
 import Image from "next/image";
 import { useCallback, useEffect, useRef } from "react";
-import { animate, useMotionValue, useMotionValueEvent } from "motion/react";
+import { useMotionValue, useMotionValueEvent } from "framer-motion";
 import { CaretLeft, CaretRight } from "@phosphor-icons/react/dist/ssr";
 import { getImage, type ImageSlot } from "@/lib/images";
 import { Placeholder } from "@/components/ui/Img";
+import { loadAnimate, readyAnimate } from "@/lib/animate";
 
-const SPRING = { type: "spring", stiffness: 420, damping: 38, mass: 0.9 } as const;
+type Spring = { type: "spring"; stiffness: number; damping: number; mass: number };
+const SPRING: Spring = { type: "spring", stiffness: 420, damping: 38, mass: 0.9 };
 
 // Fine concentric swirl marks around the main reflection (seeded, so server and client agree).
 function swirlArcs(cx: number, cy: number, count = 46) {
@@ -73,13 +75,22 @@ export function CompareSlider({ slot, alt, sizes, mode, label, beforeLabel, afte
         if (!entry.isIntersecting || played.current) return;
         played.current = true;
         io.disconnect();
-        if (!dragging.current) animate(pos, 50, { duration: 1.4, ease: [0.22, 1, 0.36, 1] });
+        loadAnimate().then((animate) => {
+          if (!dragging.current) animate(pos, 50, { duration: 1.4, ease: [0.22, 1, 0.36, 1] });
+        });
       },
       { threshold: 0.4 },
     );
     io.observe(el);
     return () => io.disconnect();
   }, [pos]);
+
+  // Motion's spring once it has loaded (with the motion islands); a direct jump before that.
+  const springTo = (target: number, spring: Spring) => {
+    const animate = readyAnimate();
+    if (animate) animate(pos, target, spring);
+    else pos.set(target);
+  };
 
   const toPercent = (clientX: number) => {
     const rect = frame.current!.getBoundingClientRect();
@@ -91,7 +102,7 @@ export function CompareSlider({ slot, alt, sizes, mode, label, beforeLabel, afte
     played.current = true;
     dragging.current = true;
     frame.current?.setPointerCapture(event.pointerId);
-    animate(pos, toPercent(event.clientX), { ...SPRING, stiffness: 600 });
+    springTo(toPercent(event.clientX), { ...SPRING, stiffness: 600 });
     knob.current?.focus({ preventScroll: true });
   };
   const onPointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
@@ -120,7 +131,7 @@ export function CompareSlider({ slot, alt, sizes, mode, label, beforeLabel, afte
     if (!(event.key in targets)) return;
     event.preventDefault();
     played.current = true;
-    animate(pos, Math.min(100, Math.max(0, targets[event.key])), SPRING);
+    springTo(Math.min(100, Math.max(0, targets[event.key])), SPRING);
   };
 
   if (!img) return <Placeholder slot={slot} className={className} />;

@@ -1,7 +1,7 @@
 "use client";
 
 import { useId, useRef, useState } from "react";
-import { m } from "motion/react";
+import { m } from "framer-motion";
 import { Check } from "@phosphor-icons/react/dist/ssr";
 import { site } from "@/content/site";
 import { waLink } from "@/lib/wa";

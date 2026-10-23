@@ -1,18 +1,33 @@
 "use client";
 
-import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
-import { LazyMotion, MotionConfig } from "motion/react";
-import { ReactLenis, useLenis } from "lenis/react";
-import { gsap, loadMotionPlugins, type MotionPlugins } from "@/lib/gsap";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type ReactNode,
+  type RefObject,
+} from "react";
+import dynamic from "next/dynamic";
+import { LazyMotion, MotionConfig } from "framer-motion";
+import type Lenis from "lenis";
+import type { MotionPlugins } from "@/lib/gsap";
+import { loadAnimate } from "@/lib/animate";
 
 const loadFeatures = () => import("@/lib/motion-features").then((mod) => mod.default);
+const MotionRuntime = dynamic(() => import("@/components/shell/MotionRuntime"), { ssr: false });
 
 type MotionState = {
-  /** ScrollTrigger and SplitText once loaded (after first paint); null before that. */
+  /** GSAP, ScrollTrigger and SplitText once loaded (after the page is idle); null before that. */
   plugins: MotionPlugins | null;
   /** prefers-reduced-motion: reduce. False until mounted. */
   reduced: boolean;
   mounted: boolean;
+  /** True once the page has loaded and gone idle: the cue for motion islands to load. */
+  idle: boolean;
   /** Smooth-scrolls to an in-page target (Lenis when running, native otherwise) and moves focus. */
   scrollToHash: (hash: string) => void;
   /** Pause or resume page scrolling (menu sheet). */
@@ -23,11 +38,25 @@ const MotionContext = createContext<MotionState>({
   plugins: null,
   reduced: false,
   mounted: false,
+  idle: false,
   scrollToHash: () => {},
   setScrollLocked: () => {},
 });
 
 export const useMotion = () => useContext(MotionContext);
+
+// Wiring for MotionRuntime only: it reports the loaded plugins and owns the Lenis instance.
+type RuntimeState = {
+  smooth: boolean;
+  setPlugins: (plugins: MotionPlugins) => void;
+  lenisRef: RefObject<Lenis | null>;
+};
+const RuntimeContext = createContext<RuntimeState | null>(null);
+export function useMotionRuntime() {
+  const runtime = useContext(RuntimeContext);
+  if (!runtime) throw new Error("useMotionRuntime outside Providers");
+  return runtime;
+}
 
 function navOffset(): number {
   const value = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop);
@@ -35,12 +64,9 @@ function navOffset(): number {
 }
 
 export function Providers({ children }: { children: ReactNode }) {
-  const lenis = useLenis();
-  const lenisRef = useRef(lenis);
-  useEffect(() => {
-    lenisRef.current = lenis;
-  }, [lenis]);
+  const lenisRef = useRef<Lenis | null>(null);
   const [env, setEnv] = useState({ mounted: false, reduced: false });
+  const [idle, setIdle] = useState(false);
   const [plugins, setPlugins] = useState<MotionPlugins | null>(null);
   const smooth = env.mounted && !env.reduced;
 
@@ -53,40 +79,22 @@ export function Providers({ children }: { children: ReactNode }) {
     return () => mq.removeEventListener("change", update);
   }, []);
 
-  // ScrollTrigger, SplitText and DrawSVG load once the page is idle.
+  // Motion loads after the load event, once the main thread is idle.
   useEffect(() => {
-    let cancelled = false;
-    const start = () =>
-      loadMotionPlugins().then((loaded) => {
-        if (cancelled) return;
-        setPlugins(loaded);
-        document.fonts?.ready.then(() => loaded.ScrollTrigger.refresh());
-      });
-    const idle = "requestIdleCallback" in window;
-    const handle = idle ? window.requestIdleCallback(start, { timeout: 700 }) : window.setTimeout(start, 150);
+    let handle = 0;
+    const hasIdle = "requestIdleCallback" in window;
+    const ready = () => {
+      const go = () => setIdle(true);
+      handle = hasIdle ? window.requestIdleCallback(go, { timeout: 1200 }) : window.setTimeout(go, 200);
+    };
+    if (document.readyState === "complete") ready();
+    else window.addEventListener("load", ready, { once: true });
     return () => {
-      cancelled = true;
-      if (idle) window.cancelIdleCallback(handle);
+      window.removeEventListener("load", ready);
+      if (hasIdle) window.cancelIdleCallback(handle);
       else window.clearTimeout(handle);
     };
   }, []);
-
-  // One clock: the GSAP ticker drives Lenis.
-  useEffect(() => {
-    if (!smooth) return;
-    const update = (time: number) => lenisRef.current?.raf(time * 1000);
-    gsap.ticker.add(update);
-    gsap.ticker.lagSmoothing(0);
-    return () => gsap.ticker.remove(update);
-  }, [smooth]);
-
-  // Keep ScrollTrigger in step with Lenis.
-  useEffect(() => {
-    if (!smooth || !lenis || !plugins) return;
-    const off = lenis.on("scroll", plugins.ScrollTrigger.update);
-    plugins.ScrollTrigger.refresh();
-    return off;
-  }, [smooth, lenis, plugins]);
 
   const scrollToHash = useCallback(
     (hash: string) => {
@@ -134,24 +142,27 @@ export function Providers({ children }: { children: ReactNode }) {
     document.documentElement.classList.toggle("scroll-locked", locked);
   }, []);
 
+  // Motion's spring engine for the menu and sliders arrives with the islands.
+  useEffect(() => {
+    if (idle) void loadAnimate();
+  }, [idle]);
+
   const value = useMemo<MotionState>(
-    () => ({ plugins, reduced: env.reduced, mounted: env.mounted, scrollToHash, setScrollLocked }),
-    [plugins, env.reduced, env.mounted, scrollToHash, setScrollLocked],
+    () => ({ plugins, reduced: env.reduced, mounted: env.mounted, idle, scrollToHash, setScrollLocked }),
+    [plugins, env.reduced, env.mounted, idle, scrollToHash, setScrollLocked],
   );
+  const runtime = useMemo<RuntimeState>(() => ({ smooth, setPlugins, lenisRef }), [smooth]);
 
   return (
     <MotionContext.Provider value={value}>
-      <MotionConfig reducedMotion="user">
-        <LazyMotion features={loadFeatures} strict>
-          {smooth ? (
-            <ReactLenis
-              root
-              options={{ autoRaf: false, lerp: 0.11, syncTouch: false, smoothWheel: true, stopInertiaOnNavigate: true }}
-            />
-          ) : null}
-          {children}
-        </LazyMotion>
-      </MotionConfig>
+      <RuntimeContext.Provider value={runtime}>
+        <MotionConfig reducedMotion="user">
+          <LazyMotion features={loadFeatures} strict>
+            {idle ? <MotionRuntime /> : null}
+            {children}
+          </LazyMotion>
+        </MotionConfig>
+      </RuntimeContext.Provider>
     </MotionContext.Provider>
   );
 }
